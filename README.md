@@ -9,9 +9,9 @@ Git is a high-level swift framework based on the command line Git utility in mac
 - [Requirements](##requirements)
 - [Installation](##installation)
 - [Cloning a remote repository](##cloning-a-remote-repository)
-- [Simple example](###simple-example)
-- [Providing credentials](###providing-credentials)
-- [Receiving the progress ](###receiving-the-progress)
+ - [Simple example](###simple-example)
+ - [Providing credentials](###providing-credentials)
+ - [Receiving the progress ](###receiving-the-progress)
 
 ## Features
 
@@ -43,13 +43,13 @@ $ brew update
 $ brew install carthage
 ```
 
-To integrate Alamofire into your Xcode project using Carthage, specify it in your `Cartfile`:
+To integrate Git.framework into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
 github "way-to-code/git-macOS" ~> 1.0
 ```
 
-Run `carthage update` to build the framework and drag the built `Alamofire.framework` into your Xcode project.
+Run `carthage update` to build the framework and drag the built `Git.framework` into your Xcode project.
 
 ### Manually
 
