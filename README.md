@@ -1,5 +1,7 @@
 # Git.framework
-![alt-текст](https://raw.githubusercontent.com/way-to-code/git-macOS/master/logo.png "A high-level swift framework to work with git command line in macOS")
+<p align="center">
+<img src="https://raw.githubusercontent.com/way-to-code/git-macOS/master/logo.png" alt="A high-level swift framework to work with git command line in macOS"/>
+</p>
 
 Git is a high-level swift framework based on the command line Git utility in macOS.
 
