@@ -1,15 +1,57 @@
-Git is a high-level framework based on the command line git utility in macOS written in swift.
+# Git.framework
+![alt-текст](https://raw.githubusercontent.com/way-to-code/git-macOS/master/logo.png "A high-level swift framework to work with git command line in macOS")
 
-- [Requirements](#requirements)
-- [Cloning a remote repository](#cloning-a-remote-repository)
-- [Simple example](##simple-example)
-- [Providing credentials](##providing-credentials)
+Git is a high-level swift framework based on the command line Git utility in macOS.
+
+- [Features](##features)
+- [Requirements](##requirements)
+- [Installation](##installation)
+- [Cloning a remote repository](##cloning-a-remote-repository)
+-- [Simple example](###simple-example)
+-- [Providing credentials](###providing-credentials)
+-- [Receiving the progress ](###receiving-the-progress)
+
+## Features
+
+- Cloning remote repositories;
+- Getting the list of references (branches, tags) in repositories;
 
 ## Requirements
 
-- macOS 10.10+
+- macOS 10.12+
 - Xcode 10+
 - Swift 4.2+
+- Git for Mac 2.15+
+
+## Installation
+
+Before installing this framework, please make sure you're using the correct version of Git in your system. You can check the current version via Terminal app:
+
+```
+git --version
+$ git version 2.15.1
+```
+
+### Carthage
+
+To install Carthage you can use [Homebrew](http://brew.sh/). Use the following command in Terminal app:
+
+```bash
+$ brew update
+$ brew install carthage
+```
+
+To integrate Alamofire into your Xcode project using Carthage, specify it in your `Cartfile`:
+
+```ogdl
+github "way-to-code/git-macOS" ~> 1.0
+```
+
+Run `carthage update` to build the framework and drag the built `Alamofire.framework` into your Xcode project.
+
+### Manually
+
+You can install Git.framework manually. Clone the project locally, build and integrate to your project as a framework
 
 ## Cloning a remote repository
 
