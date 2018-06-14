@@ -25,6 +25,9 @@ enum RepositoryError: Error {
     /// Occurs when trying to perform an operation on a repository that is not cloned or initilized with a localpath
     case repositoryNotInitialized
     
+    /// Occurs on an attempt to clone a repository that has been already cloned, or initialized with a local path.
+    case repositoryHasBeenAlreadyCloned
+    
     /// Occurs when trying to perform an operation on a repository, but a local path no longer exists in the system
     case repositoryLocalPathNotExists
     
@@ -33,6 +36,9 @@ enum RepositoryError: Error {
     
     /// Occurs when the clone operation finishes with an error
     case cloneError(message: String)
+    
+    /// Occurs when trying to create a temporary path on the local machine, but fallen
+    case unableToCreateTemporaryPath
 }
 
 /// Common delegate for handling repository events
@@ -95,6 +101,20 @@ public protocol Repository: class {
     ///   - options: The operation options. Use this if you want to customize the behaviour of the clone operation
     /// - Throws: An exception if a repository can not be copied
     func clone(at localPath: String, options: GitCloneOptions) throws
+    
+    /// Creates a working copy of a remote repository locally at temporary path.
+    ///
+    ///
+    /// Repository will be cloned to a new directory on your local machine created temporarily.
+    /// You must ensure that there is enougth space or permissions are granted for writing.
+    /// In case a temporary directory can not be created, an exception is raised.
+    ///
+    /// Temporary directory will be removed as soon as the instance of a Repository object is deallocated.
+    /// You can obtain the path to the created directory by using **localPath** property
+    ///
+    /// - Parameter options: The operation options. Use this if you want to customize the behaviour of the clone operation
+    /// - Throws: An exception in case something went wrong
+    func cloneAtTemporaryPath(options: GitCloneOptions) throws
     
     /// Fetches a list of references in this repository
     ///

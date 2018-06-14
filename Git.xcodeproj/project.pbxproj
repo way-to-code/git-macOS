@@ -10,6 +10,8 @@
 		8440CC4E20B20E3600228218 /* Git.h in Headers */ = {isa = PBXBuildFile; fileRef = 8440CC2B20B20BC100228218 /* Git.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		845D244020C37F9800130D6E /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845D243F20C37F9800130D6E /* Repository.swift */; };
 		845D244220C3845400130D6E /* CredentialsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845D244120C3845400130D6E /* CredentialsProvider.swift */; };
+		846852A520D0362F00936A12 /* FileManager+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846852A420D0362F00936A12 /* FileManager+Utils.swift */; };
+		846852A620D2E66E00936A12 /* FileManager+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846852A420D0362F00936A12 /* FileManager+Utils.swift */; };
 		848F548F20CB1CDA00BB36A4 /* CloneOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848F548E20CB1CDA00BB36A4 /* CloneOptions.swift */; };
 		848F549020CB1F0900BB36A4 /* CloneOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848F548E20CB1CDA00BB36A4 /* CloneOptions.swift */; };
 		84B122B420C886FD00DCAAAA /* GitRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B122B320C886FD00DCAAAA /* GitRepository.swift */; };
@@ -56,6 +58,7 @@
 		8440CC5220B20EE600228218 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		845D243F20C37F9800130D6E /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		845D244120C3845400130D6E /* CredentialsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialsProvider.swift; sourceTree = "<group>"; };
+		846852A420D0362F00936A12 /* FileManager+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Utils.swift"; sourceTree = "<group>"; };
 		848F548E20CB1CDA00BB36A4 /* CloneOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloneOptions.swift; sourceTree = "<group>"; };
 		84A72CFA20CCA96800011545 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		84B122B320C886FD00DCAAAA /* GitRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitRepository.swift; sourceTree = "<group>"; };
@@ -120,9 +123,26 @@
 				8440CC4820B20CC900228218 /* Info-macOS.plist */,
 				84B122CF20C88BC600DCAAAA /* Core */,
 				84B122CE20C88B3000DCAAAA /* Classes */,
+				846852A220D0360200936A12 /* Extensions */,
 				84B122CC20C88B1300DCAAAA /* Protocols */,
 			);
 			path = Sources;
+			sourceTree = "<group>";
+		};
+		846852A220D0360200936A12 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				846852A320D0360C00936A12 /* FileManager */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		846852A320D0360C00936A12 /* FileManager */ = {
+			isa = PBXGroup;
+			children = (
+				846852A420D0362F00936A12 /* FileManager+Utils.swift */,
+			);
+			path = FileManager;
 			sourceTree = "<group>";
 		};
 		848F548B20CB1C3700BB36A4 /* Clone */ = {
@@ -307,6 +327,7 @@
 				845D244020C37F9800130D6E /* Repository.swift in Sources */,
 				84B122B420C886FD00DCAAAA /* GitRepository.swift in Sources */,
 				84B122D820C8C03800DCAAAA /* CloneTask.swift in Sources */,
+				846852A520D0362F00936A12 /* FileManager+Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,6 +344,7 @@
 				84B122C820C8883D00DCAAAA /* GitRepository.swift in Sources */,
 				84C7121220CC2DF4002659CA /* GitFormatDecoder.swift in Sources */,
 				84B122DB20C9C19100DCAAAA /* RepositoryTask.swift in Sources */,
+				846852A620D2E66E00936A12 /* FileManager+Utils.swift in Sources */,
 				84B122EA20C9FD1300DCAAAA /* JSONFormatterTest.swift in Sources */,
 				84B122C720C8883D00DCAAAA /* Repository.swift in Sources */,
 				84B122E420C9E42900DCAAAA /* ReferencesTask.swift in Sources */,

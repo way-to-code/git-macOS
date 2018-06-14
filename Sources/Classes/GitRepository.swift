@@ -25,6 +25,7 @@ public class GitRepository: Repository {
     private(set) public var localPath: String?
     private(set) public var remoteURL: URL?
     private(set) public var credentialsProvider: CredentialsProvider
+    private var isTemporaryPath = false
     
     required public init(from remoteURL: URL,
                          using credentialsProvider: CredentialsProvider = GitCredentialsProvider.anonymousProvider) {
@@ -45,7 +46,15 @@ public class GitRepository: Repository {
         }
     }
     
+    deinit {
+        if isTemporaryPath {
+            cleanupTemporaryPath()
+        }
+    }
+    
     public func clone(at localPath: String, options: GitCloneOptions = GitCloneOptions.default) throws {
+        // check a repository is not cloned yet
+        try ensureNotClonedAlready()
         // check for an active operation
         try ensureNoActiveOperations()
         // check a valid path for cloning
@@ -68,6 +77,29 @@ public class GitRepository: Repository {
         
         // store local cloned path of the repo
         self.localPath = localPath
+    }
+    
+    public func cloneAtTemporaryPath(options: GitCloneOptions = GitCloneOptions.default) throws {
+        // check for an active operation
+        try ensureNoActiveOperations()
+        
+        let temporaryPath = try FileManager.createTemporaryDirectory()
+        isTemporaryPath = true
+        
+        do {
+            try clone(at: temporaryPath, options: options)
+        } catch {
+            // in case the clone fallen, clean up
+            cleanupTemporaryPath()
+            throw error
+        }
+    }
+    
+    private func cleanupTemporaryPath() {
+        guard let path = localPath else {
+            return
+        }
+        FileManager.removeDirectory(at: path)
     }
     
     public func fetchReferences() throws -> [RepositoryReference] {
@@ -111,6 +143,12 @@ extension GitRepository {
             guard content.count == 0 else {
                 throw RepositoryError.cloneErrorDirectoryIsNotEmpty(atPath: localPath)
             }
+        }
+    }
+    
+    func ensureNotClonedAlready() throws {
+        if localPath != nil {
+            throw RepositoryError.repositoryHasBeenAlreadyCloned
         }
     }
     
