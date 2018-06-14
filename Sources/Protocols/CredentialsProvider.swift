@@ -42,5 +42,4 @@ public protocol CredentialsProvider {
     
     /// Constructs a new URL from the specified repository URL adding authorization info
     func urlByAddingCredentials(to sourceURL: URL) throws -> URL
-
 }

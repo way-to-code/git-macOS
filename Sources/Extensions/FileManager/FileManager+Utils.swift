@@ -55,4 +55,9 @@ extension FileManager {
             do { try fileManager.removeItem(atPath: path) } catch _ as NSError {}
         }
     }
+    
+    /// Writes a content to a file at the specified path
+    static func writeFile(to path: String, content: String, overwrite: Bool = true) {
+        do { try content.write(toFile: path, atomically: true, encoding: .utf8) }  catch _ as NSError {}
+    }
 }
