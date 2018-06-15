@@ -30,7 +30,7 @@ import Foundation
     }
     
     /// Returns an object from decoded content (if possible)
-    subscript<T>(dynamicMember key: String) -> T? {
+    public subscript<T>(dynamicMember key: String) -> T? {
         return value(for: key)
     }
 
