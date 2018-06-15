@@ -25,6 +25,8 @@ public class GitCloneOptions {
         return GitCloneOptions()
     }
     
+    public init() {}
+    
     public enum CheckoutOptions {
         /// Checkout of HEAD is performed after the clone is complete. This is default option
         case checkout
