@@ -31,9 +31,9 @@ import Foundation
     
     /// Returns an object from decoded content (if possible)
     subscript<T>(dynamicMember key: String) -> T? {
-        return nil
+        return value(for: key)
     }
-    
+
     /// Encodes a state of a coder to a raw data. Default implementation does nothing.
     ///
     /// You must provide you own encoding logic in subclasses
@@ -52,9 +52,16 @@ import Foundation
     open func decode() throws {
     }
     
+    /// Returns a value for the specified key.
+    ///
+    /// You may override this method and provide your own implementation
+    open func value<T>(for key: String) -> T? {
+        return nil
+    }
+    
     public var content: Data {
         return file.content
     }
     
-    private weak var file: Accessible!
+    private(set) public weak var file: Accessible!
 }
