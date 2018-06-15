@@ -34,7 +34,7 @@ public class GitFileStorage: FileStorage {
         
         let filePath = fullPath(of: file, relatedTo: repoPath)
         
-        guard let content = FileManager.default.contents(atPath: filePath) else {
+        guard let content = try String(contentsOfFile: filePath).data(using: .utf8) else {
             throw FileStorageError.unableToReadFile(atPath: filePath)
         }
         
@@ -63,6 +63,6 @@ public class GitFileStorage: FileStorage {
 // MARK: - Private
 extension GitFileStorage {
     func fullPath(of file: Accessible, relatedTo path: String) -> String {
-        return URL(fileURLWithPath: path).appendingPathComponent(file.path).absoluteString
+        return URL(fileURLWithPath: path).appendingPathComponent(file.path).path
     }
 }
