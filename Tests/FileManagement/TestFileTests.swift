@@ -25,11 +25,12 @@ class TestFileTests: XCTestCase {
     func testFileIntegration() {
         let storage = TestFileStorage()
         let file = TestFile(relativePath: "empty", in: storage)
+        try? file.read()
         
         // ensure that a content is properly set on a file
-        XCTAssert(file?.content == TestFileStorage.sharedContent)
+        XCTAssert(file.content == TestFileStorage.sharedContent)
         
         // ensure that a content is properly set on a coder
-        XCTAssert(file?.coder.content == TestFileStorage.sharedContent)
+        XCTAssert(file.coder.content == TestFileStorage.sharedContent)
     }
 }

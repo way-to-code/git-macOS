@@ -27,7 +27,6 @@ import Foundation
     /// - Parameter file: A file that will be used by a coder
     public required init(file: Accessible) {
         self.file = file
-        try? decode()
     }
     
     /// Returns an object from decoded content (if possible)

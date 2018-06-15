@@ -43,30 +43,34 @@ open class File<T: FileCoder>: Accessible {
     ///   - path: A relative path to a file in a storage
     ///   - storage: A storage reponsible for read/write operations
     ///   - options: A file options
-    public init?(relativePath path: String, in storage: FileStorage, options: FileOptions = .default) {
+    public init(relativePath path: String, in storage: FileStorage, options: FileOptions = .default) {
         self.path = path
         self.storage = storage
         self.content = Data()
         self.options = options
         
-        do {
-            self.content = try storage.read(contentOf: self)
-        } catch {
-            return nil
-        }
-        
+        self.coder = T(file: self)
+    }
+    
+    /// Reads a content of a file with a specified set of options.
+    ///
+    /// Use this method when you want to load and decode a file
+    public func read(options: FileOptions = .default) throws {
+        content = try storage.read(contentOf: self)
+
         if options.annotations {
             // load annotations
-            self.annotations = storage.read(annotationsOf: self)
+            annotations = storage.read(annotationsOf: self)
         }
         
-        self.coder = T(file: self)
+        // decode the content
+        try coder.decode()
     }
     
     // MARK: - Properties
     
     /// A list of line by line annotations
-    public var annotations = [FileAnnotationRecord]()
+    private(set) public var annotations = [FileAnnotationRecord]()
 
     /// A content coder that works with a content
     private(set) public var coder: T!
