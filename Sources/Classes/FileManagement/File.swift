@@ -67,6 +67,11 @@ open class File<T: FileCoder>: Accessible {
         try coder.decode()
     }
     
+    /// Saves changes made in a coder to a file
+    public func save() throws {
+        try storage.write(file: self)
+    }
+    
     // MARK: - Properties
     
     /// A list of line by line annotations
