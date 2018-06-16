@@ -69,6 +69,7 @@ open class File<T: FileCoder>: Accessible {
     
     /// Saves changes made in a coder to a file
     public func save() throws {
+        try content = coder.encode()
         try storage.write(file: self)
     }
     
