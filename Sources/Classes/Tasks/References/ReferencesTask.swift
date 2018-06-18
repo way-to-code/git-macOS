@@ -41,15 +41,17 @@ class ReferencesTask: RepositoryTask, TaskRequirable {
     }
     
     func handle(output: String) {
-        let decoder = GitFormatDecoder()
-        let objects: [GitReference] = decoder.decode(output)
-        
-        references.append(contentsOf: objects)
     }
     
     func handle(errorOutput: String) {
     }
     
     func finish(terminationStatus: Int32) throws {
+        if terminationStatus == 0, let output = task?.output {
+            let decoder = GitFormatDecoder()
+            let objects: [GitReference] = decoder.decode(output)
+            
+            references.append(contentsOf: objects)
+        }
     }
 }

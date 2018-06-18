@@ -47,11 +47,18 @@ class ProcessTask {
     private var pipe = Pipe()
     private var errorPipe = Pipe()
     private var process: Process!
+    private var processGroup = DispatchGroup()
     
     private(set) var output = ""
     private(set) var errorOutput = ""
     private(set) var isRunning = false
-
+    
+    private var outputStreamGroup = DispatchGroup()
+    private var outputStreamRunning = false
+    
+    private var errorOutputStreamGroup = DispatchGroup()
+    private var errorOutputStreamRunning = false
+    
     // MARK: - Public (Init)
     weak var delegate: ProcessTaskDelegate?
     
@@ -65,44 +72,69 @@ class ProcessTask {
         isRunning = true
         
         if let workingPath = workingPath {
-            process.currentDirectoryPath = workingPath
+            process.currentDirectoryURL = URL(fileURLWithPath: workingPath)
         }
+        
+        outputStreamGroup.enter()
+        outputStreamRunning = true
+        
+        errorOutputStreamGroup.enter()
+        errorOutputStreamRunning = true
+        
+        process.terminationHandler = commandTerminationHandler
 
         pipe.fileHandleForReading.readabilityHandler = { pipe in
             let reiceivedData = String(data: pipe.availableData, encoding: String.Encoding.utf8) ?? ""
             
             if reiceivedData.count == 0 {
-                guard self.isRunning else { return }
-                pipe.waitForDataInBackgroundAndNotify()
+                if self.isRunning {
+                    // continue listening
+                    pipe.waitForDataInBackgroundAndNotify()
+                } else if self.outputStreamRunning {
+                    // close the stream
+                    self.outputStreamRunning = false
+                    self.outputStreamGroup.leave()
+                }
+                
+                return
             }
 
-            DispatchQueue.main.sync {
-                self.delegate?.task(self, didReceiveOutput: reiceivedData)
-            }
             self.output += reiceivedData
             pipe.waitForDataInBackgroundAndNotify()
+            
+            DispatchQueue.main.async {
+                self.delegate?.task(self, didReceiveOutput: reiceivedData)
+            }
         }
         
         errorPipe.fileHandleForReading.readabilityHandler = { pipe in
             let reiceivedData = String(data: pipe.availableData, encoding: String.Encoding.utf8) ?? ""
             
             if reiceivedData.count == 0 {
-                guard self.isRunning else { return }
-                pipe.waitForDataInBackgroundAndNotify()
-            }
-            
-            DispatchQueue.main.sync {
-                self.delegate?.task(self, didReceiveErrorOutput: reiceivedData)
+                if self.isRunning {
+                    // continue listening
+                    pipe.waitForDataInBackgroundAndNotify()
+                } else if self.errorOutputStreamRunning {
+                    // close the stream
+                    self.errorOutputStreamRunning = false
+                    self.errorOutputStreamGroup.leave()
+                }
+                
+                return
             }
             
             self.errorOutput += reiceivedData
             pipe.waitForDataInBackgroundAndNotify()
+            
+            DispatchQueue.main.async {
+                self.delegate?.task(self, didReceiveErrorOutput: reiceivedData)
+            }
         }
-
-        process.terminationHandler = commandTerminationHandler
-
-        process.launch()
-        process.waitUntilExit()
+        
+        // run a task and wait until all streams are finished
+        processGroup.enter()
+        try? process.run()
+        processGroup.wait()
     }
     
     func cancel() {
@@ -127,11 +159,19 @@ class ProcessTask {
     
     private func commandTerminationHandler(task: Process) {
         isRunning = false
+        
+        // give a chance for pipes to finish processing
+        outputStreamGroup.wait()
+        errorOutputStreamGroup.wait()
+        
+        // clean up the pipes
         pipe.fileHandleForReading.readabilityHandler = nil
         errorPipe.fileHandleForReading.readabilityHandler = nil
         
         DispatchQueue.main.async {
             self.delegate?.task(self, didFinishWithTerminationCode: self.terminationStatus())
         }
+        
+        self.processGroup.leave()
     }
 }
