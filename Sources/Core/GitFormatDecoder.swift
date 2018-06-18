@@ -65,8 +65,10 @@ class GitFormatDecoder {
     /// - Parameter sequence: A string that needs to be escaped for JSON format
     /// - Returns: A JSON-escaped string
     func escapedSequence(_ sequence: String) -> String {
+        var sequence = sequence.trimmingCharacters(in: .whitespacesAndNewlines)
+        
         // see https://www.json.org/json-ru.html
-        var sequence = sequence.replacingOccurrences(of: "\\", with: "\\\\")
+        sequence = sequence.replacingOccurrences(of: "\\", with: "\\\\")
         sequence = sequence.replacingOccurrences(of: "//", with: "////")
         sequence = sequence.replacingOccurrences(of: "\"", with: "\\\"")
         sequence = sequence.replacingOccurrences(of: "\n", with: "\\n")
