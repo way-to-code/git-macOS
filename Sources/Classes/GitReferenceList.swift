@@ -25,6 +25,11 @@ public class GitReferenceList {
         self.references = references
     }
     
+    /// Returns the current (active reference in this repository (if any)
+    public var currentReference: RepositoryReference? {
+        return references.first(where: {$0.active})
+    }
+    
     /// Only local branches from this list or an empty array
     public var localBranches: [RepositoryReference] {
         return objects(startingFrom: "refs/heads")
