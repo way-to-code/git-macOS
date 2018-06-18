@@ -18,10 +18,11 @@
 import Foundation
 
 struct GitReference: RepositoryReference, Codable {
-
+    
     var id: String
     var parentId: String?
     
+    var active: Bool
     var author: String
     var date: Date
     var message: String?

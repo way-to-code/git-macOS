@@ -118,9 +118,9 @@ public protocol Repository: class {
     
     /// Fetches a list of references in this repository
     ///
-    /// - Returns: An array containing a list of references or an empty array
+    /// - Returns: GitReferenceList - a list of references
     /// - Throws: An exception in case any error occured
-    func fetchReferences() throws -> [RepositoryReference]
+    func fetchReferences() throws -> GitReferenceList
     
     /// Cancels an active repository operation. In case no active operation is started, nothing happens
     func cancel()

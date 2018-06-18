@@ -63,7 +63,7 @@ class GitFormatEncoder {
             return values[index]
         }
     }
-    
+
     /// Converts JSON structure to git appropriate format for --format command
     func encode() -> String {
         var output = "--format={"
@@ -72,7 +72,18 @@ class GitFormatEncoder {
         
         for (index, key) in keys.enumerated() {
             let value = values[index]
-            output += "\(quotes)\(key)\(quotes):\(quotes)%(\(value))\(quotes),"
+            
+            // add a key
+            output += "\(quotes)\(key)\(quotes):"
+            
+            if value.starts(with: "%") {
+                // already have formatting (for conditional bindings for example)
+                output.append(value)
+            } else {
+                output.append("\(quotes)%(\(value))\(quotes)")
+            }
+            
+            output += ","
         }
 
         return output.trimmingCharacters(in: CharacterSet(charactersIn: ",")) + "}\(GitFormatEncoder.lineSeparator)"

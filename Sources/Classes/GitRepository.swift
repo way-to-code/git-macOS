@@ -102,7 +102,7 @@ public class GitRepository: Repository {
         FileManager.removeDirectory(at: path)
     }
     
-    public func fetchReferences() throws -> [RepositoryReference] {
+    public func fetchReferences() throws -> GitReferenceList {
         // check for an active operation
         try ensureNoActiveOperations()
         
@@ -112,7 +112,7 @@ public class GitRepository: Repository {
         let task = ReferencesTask(owner: self)
         try task.run()
         
-        return task.references
+        return GitReferenceList(task.references)
     }
     
     public func cancel() {

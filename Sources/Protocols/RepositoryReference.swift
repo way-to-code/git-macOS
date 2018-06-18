@@ -23,6 +23,9 @@ public protocol RepositoryReference {
     /// A unique id of a reference in SHA-1
     var id: String { get }
     
+    /// Determines whether this reference is the current reference or not
+    var active: Bool { get }
+    
     /// A parent id of a reference if a reference has parent
     var parentId: String? { get }
     

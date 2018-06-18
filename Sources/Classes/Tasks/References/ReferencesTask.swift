@@ -36,6 +36,7 @@ class ReferencesTask: RepositoryTask, TaskRequirable {
         writer.parentId = "parent"
         writer.date = "creatordate:iso8601-strict"
         writer.message = "contents"
+        writer.active = "%(if)%(HEAD)%(then)true%(else)false%(end)"
         
         add([writer.encode()])
     }
