@@ -10,6 +10,7 @@
 		8408533720D3231B005E2AA8 /* FileAnnotationRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8408533620D3231B005E2AA8 /* FileAnnotationRecord.swift */; };
 		8408533820D32730005E2AA8 /* FileAnnotationRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8408533620D3231B005E2AA8 /* FileAnnotationRecord.swift */; };
 		8408533A20D333DC005E2AA8 /* GitFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8408533920D333DC005E2AA8 /* GitFile.swift */; };
+		840D89AC20E18802002E09F4 /* GitRepositoryErrorFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840D89AB20E18802002E09F4 /* GitRepositoryErrorFormatter.swift */; };
 		8411C3C720D85FEA00B0ED4F /* GitReferenceList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8411C3C620D85FEA00B0ED4F /* GitReferenceList.swift */; };
 		8411C3C820D85FEA00B0ED4F /* GitReferenceList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8411C3C620D85FEA00B0ED4F /* GitReferenceList.swift */; };
 		8413B9EE20D869E8008F6C97 /* GitReferenceListTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8413B9ED20D869E8008F6C97 /* GitReferenceListTest.swift */; };
@@ -70,6 +71,7 @@
 /* Begin PBXFileReference section */
 		8408533620D3231B005E2AA8 /* FileAnnotationRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAnnotationRecord.swift; sourceTree = "<group>"; };
 		8408533920D333DC005E2AA8 /* GitFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitFile.swift; sourceTree = "<group>"; };
+		840D89AB20E18802002E09F4 /* GitRepositoryErrorFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitRepositoryErrorFormatter.swift; sourceTree = "<group>"; };
 		8411C3C620D85FEA00B0ED4F /* GitReferenceList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitReferenceList.swift; sourceTree = "<group>"; };
 		8413B9ED20D869E8008F6C97 /* GitReferenceListTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitReferenceListTest.swift; sourceTree = "<group>"; };
 		8440CC2B20B20BC100228218 /* Git.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Git.h; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 				84B122D920C9BFE400DCAAAA /* Tasks */,
 				84B122C920C8896100DCAAAA /* GitCredentialsProvider.swift */,
 				84B122B320C886FD00DCAAAA /* GitRepository.swift */,
+				840D89AB20E18802002E09F4 /* GitRepositoryErrorFormatter.swift */,
 				84B122DF20C9E0B600DCAAAA /* GitReference.swift */,
 				8411C3C620D85FEA00B0ED4F /* GitReferenceList.swift */,
 			);
@@ -394,6 +397,7 @@
 				84BD16BC20D2FB640038F377 /* File.swift in Sources */,
 				845D244020C37F9800130D6E /* Repository.swift in Sources */,
 				84BD16C220D312180038F377 /* GitFileStorage.swift in Sources */,
+				840D89AC20E18802002E09F4 /* GitRepositoryErrorFormatter.swift in Sources */,
 				84B122B420C886FD00DCAAAA /* GitRepository.swift in Sources */,
 				84B122D820C8C03800DCAAAA /* CloneTask.swift in Sources */,
 				846852A520D0362F00936A12 /* FileManager+Utils.swift in Sources */,
