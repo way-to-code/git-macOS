@@ -48,6 +48,9 @@ class GitRepositoryErrorFormatter {
             
         case .unableToCreateTemporaryPath:
             return "[GIT.framework] RE0007: Unable to create a temporary directory on the local machine."
+            
+        case .checkoutError(let message):
+            return "[GIT.framework] RE0008: An error occurred during checking out branch. Error says: '\(message)'"
         }
     }
 }

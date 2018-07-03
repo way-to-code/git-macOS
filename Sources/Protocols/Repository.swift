@@ -37,6 +37,9 @@ enum RepositoryError: Error {
     /// Occurs when the clone operation finishes with an error
     case cloneError(message: String)
     
+    /// Occurs when the checkout operation finishes with an error
+    case checkoutError(message: String)
+    
     /// Occurs when trying to create a temporary path on the local machine, but fallen
     case unableToCreateTemporaryPath
 }
@@ -121,6 +124,12 @@ public protocol Repository: class {
     /// - Returns: GitReferenceList - a list of references
     /// - Throws: An exception in case any error occured
     func fetchReferences() throws -> GitReferenceList
+    
+    /// Switches repository to the specified reference
+    ///
+    /// - Parameter reference: A reference to that repository should be switched
+    /// - Throws: An exception in case switch operation has been fallen
+    func checkout(reference: RepositoryReference) throws
     
     /// Cancels an active repository operation. In case no active operation is started, nothing happens
     func cancel()

@@ -18,7 +18,7 @@
 import Foundation
 
 public class GitRepository: Repository {
-
+    
     // MARK: - Repository
     public weak var delegate: RepositoryDelegate?
     
@@ -113,6 +113,17 @@ public class GitRepository: Repository {
         try task.run()
         
         return GitReferenceList(task.references)
+    }
+    
+    public func checkout(reference: RepositoryReference) throws {
+        // check for an active operation
+        try ensureNoActiveOperations()
+        
+        // local path must be valid
+        try validateLocalPath()
+        
+        let task = CheckoutTask(reference: reference, owner: self)
+        try task.run()
     }
     
     public func cancel() {

@@ -20,6 +20,7 @@ xcuserdata/
 
 ## OS X
 .DS_STORE
+.DS_Store
 
 ## Obj-C/Swift specific
 *.hmap
