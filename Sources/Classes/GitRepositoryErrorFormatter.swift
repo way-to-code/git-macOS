@@ -51,6 +51,9 @@ class GitRepositoryErrorFormatter {
             
         case .checkoutError(let message):
             return "[GIT.framework] RE0008: An error occurred during checking out branch. Error says: '\(message)'"
+            
+        case .fetchError(let message):
+            return "[GIT.framework] RE0009: An error occurred during fetch operation. Error says: '\(message)'"
         }
     }
 }

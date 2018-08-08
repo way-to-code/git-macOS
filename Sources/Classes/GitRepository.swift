@@ -18,7 +18,7 @@
 import Foundation
 
 public class GitRepository: Repository {
-    
+
     // MARK: - Repository
     public weak var delegate: RepositoryDelegate?
     
@@ -100,6 +100,17 @@ public class GitRepository: Repository {
             return
         }
         FileManager.removeDirectory(at: path)
+    }
+    
+    public func fetchRemotes(options: GitFetchOptions = GitFetchOptions.default) throws {
+        // check for an active operation
+        try ensureNoActiveOperations()
+        
+        // local path must be valid
+        try validateLocalPath()
+        
+        let task = FetchTask(owner: self, options: options)
+        try task.run()
     }
     
     public func fetchReferences() throws -> GitReferenceList {

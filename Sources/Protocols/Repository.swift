@@ -40,6 +40,9 @@ enum RepositoryError: Error {
     /// Occurs when the checkout operation finishes with an error
     case checkoutError(message: String)
     
+    /// Occurs when the fetch operation finishes with an error
+    case fetchError(message: String)
+    
     /// Occurs when trying to create a temporary path on the local machine, but fallen
     case unableToCreateTemporaryPath
 }
@@ -53,6 +56,12 @@ public protocol RepositoryDelegate: class {
     ///   - progress: Output string receved from repository
     func repository(_ repository: Repository, didProgressClone progress: String)
     
+    /// Occurs when a fetch operation receives a progress
+    ///
+    /// - Parameters:
+    ///   - repository: A repository reponsible for an event
+    func repository(_ repository: Repository, didProgressFetch progress: String)
+    
     /// Occurs when a task is being started
     ///
     /// - Parameters:
@@ -63,6 +72,9 @@ public protocol RepositoryDelegate: class {
 
 public extension RepositoryDelegate {
     func repository(_ repository: Repository, didProgressClone progress: String) {
+    }
+    
+    func repository(_ repository: Repository, didProgressFetch progress: String) {
     }
     
     func repository(_ repository: Repository, willStartTaskWithArguments arguments: [String]) {
@@ -124,6 +136,12 @@ public protocol Repository: class {
     /// - Returns: GitReferenceList - a list of references
     /// - Throws: An exception in case any error occured
     func fetchReferences() throws -> GitReferenceList
+    
+    /// Fetches branches and/or tags (collectively, "refs") from a repository, along with the objects necessary to complete their histories
+    ///
+    /// - Parameter options: The operation options. Use this if you want to customize the behaviour of the fetch operation
+    /// - Throws: An exception in case any error occured
+    func fetchRemotes(options: GitFetchOptions) throws
     
     /// Switches repository to the specified reference
     ///
