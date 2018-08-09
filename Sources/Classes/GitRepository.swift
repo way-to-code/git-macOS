@@ -113,7 +113,7 @@ public class GitRepository: Repository {
         try task.run()
     }
     
-    public func fetchReferences() throws -> GitReferenceList {
+    public func listReferences() throws -> GitReferenceList {
         // check for an active operation
         try ensureNoActiveOperations()
         

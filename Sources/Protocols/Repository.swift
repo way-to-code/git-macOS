@@ -141,7 +141,7 @@ public protocol Repository: class {
     ///
     /// - Returns: GitReferenceList - a list of references
     /// - Throws: An exception in case any error occured
-    func fetchReferences() throws -> GitReferenceList
+    func listReferences() throws -> GitReferenceList
     
     /// Lists all remotes in this repository and returns a list object
     ///
