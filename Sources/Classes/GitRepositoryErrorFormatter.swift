@@ -54,6 +54,12 @@ class GitRepositoryErrorFormatter {
             
         case .fetchError(let message):
             return "[GIT.framework] RE0009: An error occurred during fetch operation. Error says: '\(message)'"
+            
+        case .unableToListRemotes(let message):
+            return "[GIT.framework] RE0010: An error occurred during listing remotes operation. Error says: '\(message)'"
+            
+        case .unableToRenameRemote(let message):
+            return "[GIT.framework] RE0011: An error occurred during renaming a remote. Error says: '\(message)'"
         }
     }
 }

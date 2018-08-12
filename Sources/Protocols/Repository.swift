@@ -43,6 +43,12 @@ enum RepositoryError: Error {
     /// Occurs when the fetch operation finishes with an error
     case fetchError(message: String)
     
+    /// Occurs when the list remotes operation finishes with an error
+    case unableToListRemotes(message: String)
+    
+    /// Occurs when the rename remote operation finishes with an error
+    case unableToRenameRemote(message: String)
+    
     /// Occurs when trying to create a temporary path on the local machine, but fallen
     case unableToCreateTemporaryPath
 }
@@ -136,6 +142,11 @@ public protocol Repository: class {
     /// - Returns: GitReferenceList - a list of references
     /// - Throws: An exception in case any error occured
     func fetchReferences() throws -> GitReferenceList
+    
+    /// Lists all remotes in this repository and returns a list object
+    ///
+    /// - Throws: An exception in case any error occured
+    func listRemotes() throws -> GitRemoteList
     
     /// Fetches branches and/or tags (collectively, "refs") from a repository, along with the objects necessary to complete their histories
     ///

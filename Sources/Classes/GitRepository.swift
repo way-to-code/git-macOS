@@ -126,6 +126,32 @@ public class GitRepository: Repository {
         return GitReferenceList(task.references)
     }
     
+    public func listRemotes() throws -> GitRemoteList {
+        // check for an active operation
+        try ensureNoActiveOperations()
+        
+        // local path must be valid
+        try validateLocalPath()
+        
+        // load the list of remotes in a repository
+        let listRemotesTask = RemoteListTask(owner: self)
+        try listRemotesTask.run()
+        
+        var remotes = [GitRemote]()
+        
+        // and then obtain an additional information
+        for remoteName in listRemotesTask.remoteNames {
+            let urlTask = RemoteURLTask(owner: self, remoteName: remoteName)
+            try urlTask.run()
+            
+            guard let url = urlTask.remoteURLs.first else { continue }
+            let remote = GitRemote(name: remoteName, url: url, repository: self)
+            remotes.append(remote)
+        }
+
+        return GitRemoteList(remotes: remotes)
+    }
+    
     public func checkout(reference: RepositoryReference) throws {
         // check for an active operation
         try ensureNoActiveOperations()
@@ -144,6 +170,22 @@ public class GitRepository: Repository {
     
     // MARK: - Private
     var activeTask: RepositoryTask?
+}
+
+// MARK: - Internal (Remotes)
+extension GitRepository {
+    
+    /// Renames the specified remote to a new name
+    func renameRemote(_ remote: GitRemote, to name: String) throws {
+        // check for an active operation
+        try ensureNoActiveOperations()
+        
+        // local path must be valid
+        try validateLocalPath()
+        
+        let task = RemoteRenameTask(owner: self, remote: remote, name: name)
+        try task.run()
+    }
 }
 
 // MARK: - Internal

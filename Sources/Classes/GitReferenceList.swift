@@ -37,7 +37,7 @@ public class GitReferenceList {
     
     /// Only remote branches from this list or an empty array
     public var remoteBranches: [RepositoryReference] {
-        return objects(startingFrom: "refs/remotes/origin")
+        return objects(startingFrom: "refs/remotes")
     }
     
     /// The master branch (if present)
