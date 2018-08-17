@@ -40,8 +40,14 @@ enum RepositoryError: Error {
     /// Occurs when the checkout operation finishes with an error
     case checkoutError(message: String)
     
+    /// Occurs when the commit operation finishes with an error
+    case commitError(message: String)
+    
     /// Occurs when the fetch operation finishes with an error
     case fetchError(message: String)
+    
+    /// Occurs when the push operation finishes with an error
+    case pushError(message: String)
     
     /// Occurs when the list remotes operation finishes with an error
     case unableToListRemotes(message: String)
@@ -62,6 +68,20 @@ public protocol RepositoryDelegate: class {
     ///   - progress: Output string receved from repository
     func repository(_ repository: Repository, didProgressClone progress: String)
     
+    /// Occurs when a commit operation receives a progress
+    ///
+    /// - Parameters:
+    ///   - repository: A repository reponsible for an event
+    ///   - progress: Output string receved from repository
+    func repository(_ repository: Repository, didProgressCommit progress: String)
+    
+    /// Occurs when a push operation receives a progress
+    ///
+    /// - Parameters:
+    ///   - repository: A repository reponsible for an event
+    ///   - progress: Output string receved from repository
+    func repository(_ repository: Repository, didProgressPush progress: String)
+    
     /// Occurs when a fetch operation receives a progress
     ///
     /// - Parameters:
@@ -77,10 +97,16 @@ public protocol RepositoryDelegate: class {
 }
 
 public extension RepositoryDelegate {
+    func repository(_ repository: Repository, didProgressCommit progress: String) {
+    }
+    
     func repository(_ repository: Repository, didProgressClone progress: String) {
     }
     
     func repository(_ repository: Repository, didProgressFetch progress: String) {
+    }
+    
+    func repository(_ repository: Repository, didProgressPush progress: String) {
     }
     
     func repository(_ repository: Repository, willStartTaskWithArguments arguments: [String]) {
@@ -159,6 +185,18 @@ public protocol Repository: class {
     /// - Parameter reference: A reference to that repository should be switched
     /// - Throws: An exception in case switch operation has been fallen
     func checkout(reference: RepositoryReference) throws
+    
+    /// Commits all local changes in this repository
+    ///
+    /// - Parameter options: Options for a commit including a commit message
+    /// - Throws: An exception in case the operation has been fallen
+    func commit(options: GitCommitOptions) throws
+    
+    /// Sends data back to a remote repository
+    ///
+    /// - Parameter options: Options for pushing data
+    /// - Throws: An exception in case the operation has been fallen
+    func push(options: GitPushOptions) throws
     
     /// Cancels an active repository operation. In case no active operation is started, nothing happens
     func cancel()

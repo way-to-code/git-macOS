@@ -19,6 +19,14 @@
 		56466BA6211DBC2B001EF6C3 /* GitRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561497AE211DA19C00EF4574 /* GitRemote.swift */; };
 		56466BA8211DBFDD001EF6C3 /* RemoteRenameTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56466BA7211DBFDD001EF6C3 /* RemoteRenameTask.swift */; };
 		56466BA9211DBFDD001EF6C3 /* RemoteRenameTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56466BA7211DBFDD001EF6C3 /* RemoteRenameTask.swift */; };
+		5673ED752126C7A300083229 /* CommitOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673ED742126C7A300083229 /* CommitOptions.swift */; };
+		5673ED762126C7A300083229 /* CommitOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673ED742126C7A300083229 /* CommitOptions.swift */; };
+		5673ED782126CB5200083229 /* CommitTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673ED772126CB5200083229 /* CommitTask.swift */; };
+		5673ED792126CB5200083229 /* CommitTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673ED772126CB5200083229 /* CommitTask.swift */; };
+		5673ED7C2126DD7500083229 /* GitPushOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673ED7B2126DD7500083229 /* GitPushOptions.swift */; };
+		5673ED7D2126DD7500083229 /* GitPushOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673ED7B2126DD7500083229 /* GitPushOptions.swift */; };
+		5673ED7F2126DF2500083229 /* PushTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673ED7E2126DF2500083229 /* PushTask.swift */; };
+		5673ED802126DF2500083229 /* PushTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673ED7E2126DF2500083229 /* PushTask.swift */; };
 		8408533720D3231B005E2AA8 /* FileAnnotationRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8408533620D3231B005E2AA8 /* FileAnnotationRecord.swift */; };
 		8408533820D32730005E2AA8 /* FileAnnotationRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8408533620D3231B005E2AA8 /* FileAnnotationRecord.swift */; };
 		8408533A20D333DC005E2AA8 /* GitFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8408533920D333DC005E2AA8 /* GitFile.swift */; };
@@ -95,6 +103,10 @@
 		561497B5211DAE3300EF4574 /* RemoteListTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteListTask.swift; sourceTree = "<group>"; };
 		561497B7211DB3FB00EF4574 /* RemoteURLTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteURLTask.swift; sourceTree = "<group>"; };
 		56466BA7211DBFDD001EF6C3 /* RemoteRenameTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteRenameTask.swift; sourceTree = "<group>"; };
+		5673ED742126C7A300083229 /* CommitOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitOptions.swift; sourceTree = "<group>"; };
+		5673ED772126CB5200083229 /* CommitTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitTask.swift; sourceTree = "<group>"; };
+		5673ED7B2126DD7500083229 /* GitPushOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitPushOptions.swift; sourceTree = "<group>"; };
+		5673ED7E2126DF2500083229 /* PushTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushTask.swift; sourceTree = "<group>"; };
 		8408533620D3231B005E2AA8 /* FileAnnotationRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAnnotationRecord.swift; sourceTree = "<group>"; };
 		8408533920D333DC005E2AA8 /* GitFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitFile.swift; sourceTree = "<group>"; };
 		840D89AB20E18802002E09F4 /* GitRepositoryErrorFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitRepositoryErrorFormatter.swift; sourceTree = "<group>"; };
@@ -163,6 +175,24 @@
 				561497B7211DB3FB00EF4574 /* RemoteURLTask.swift */,
 			);
 			path = Remotes;
+			sourceTree = "<group>";
+		};
+		5673ED732126C78900083229 /* Commit */ = {
+			isa = PBXGroup;
+			children = (
+				5673ED742126C7A300083229 /* CommitOptions.swift */,
+				5673ED772126CB5200083229 /* CommitTask.swift */,
+			);
+			path = Commit;
+			sourceTree = "<group>";
+		};
+		5673ED7A2126DD6000083229 /* Push */ = {
+			isa = PBXGroup;
+			children = (
+				5673ED7B2126DD7500083229 /* GitPushOptions.swift */,
+				5673ED7E2126DF2500083229 /* PushTask.swift */,
+			);
+			path = Push;
 			sourceTree = "<group>";
 		};
 		8408533B20D33578005E2AA8 /* References */ = {
@@ -292,8 +322,10 @@
 			isa = PBXGroup;
 			children = (
 				841FA50920EC32F100566F6F /* Checkout */,
+				5673ED732126C78900083229 /* Commit */,
 				848F548B20CB1C3700BB36A4 /* Clone */,
 				84B8375F211B787F0031AD29 /* Fetch */,
+				5673ED7A2126DD6000083229 /* Push */,
 				8408533B20D33578005E2AA8 /* References */,
 				561497B4211DAE1F00EF4574 /* Remotes */,
 				84B83763211B7DA40031AD29 /* ArgumentConvertible.swift */,
@@ -450,15 +482,19 @@
 				8411C3C720D85FEA00B0ED4F /* GitReferenceList.swift in Sources */,
 				84B122E020C9E0B700DCAAAA /* GitReference.swift in Sources */,
 				561497B6211DAE3300EF4574 /* RemoteListTask.swift in Sources */,
+				5673ED7F2126DF2500083229 /* PushTask.swift in Sources */,
 				84B122E620C9EDBC00DCAAAA /* GitFormatEncoder.swift in Sources */,
 				56466BA8211DBFDD001EF6C3 /* RemoteRenameTask.swift in Sources */,
+				5673ED752126C7A300083229 /* CommitOptions.swift in Sources */,
 				84BD16BE20D2FC360038F377 /* FileCoder.swift in Sources */,
 				84C7121120CC2DF4002659CA /* GitFormatDecoder.swift in Sources */,
 				561497B3211DAC7300EF4574 /* GitRemoteList.swift in Sources */,
+				5673ED7C2126DD7500083229 /* GitPushOptions.swift in Sources */,
 				561497AF211DA19C00EF4574 /* GitRemote.swift in Sources */,
 				84B122D620C8B82000DCAAAA /* RepositoryTask.swift in Sources */,
 				84B83761211B78B00031AD29 /* GitFetchOptions.swift in Sources */,
 				848F548F20CB1CDA00BB36A4 /* CloneOptions.swift in Sources */,
+				5673ED782126CB5200083229 /* CommitTask.swift in Sources */,
 				561497B1211DA1CB00EF4574 /* RepositoryRemote.swift in Sources */,
 				84B122DD20C9E04500DCAAAA /* RepositoryReference.swift in Sources */,
 				8408533720D3231B005E2AA8 /* FileAnnotationRecord.swift in Sources */,
@@ -483,9 +519,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				56466BA4211DBBF5001EF6C3 /* RemoteURLTask.swift in Sources */,
+				5673ED802126DF2500083229 /* PushTask.swift in Sources */,
 				84B83765211B7DA40031AD29 /* ArgumentConvertible.swift in Sources */,
 				84B122E720C9EDBC00DCAAAA /* GitFormatEncoder.swift in Sources */,
+				5673ED762126C7A300083229 /* CommitOptions.swift in Sources */,
 				84B122D220C88BEF00DCAAAA /* ProcessTask.swift in Sources */,
+				5673ED792126CB5200083229 /* CommitTask.swift in Sources */,
 				56466BA9211DBFDD001EF6C3 /* RemoteRenameTask.swift in Sources */,
 				84B122DE20C9E04500DCAAAA /* RepositoryReference.swift in Sources */,
 				84B122BC20C8875600DCAAAA /* CredentialsProviderTest.swift in Sources */,
@@ -499,6 +538,7 @@
 				84BD16C620D314F90038F377 /* TestFileStorage.swift in Sources */,
 				84C7121220CC2DF4002659CA /* GitFormatDecoder.swift in Sources */,
 				84BD16CE20D315F50038F377 /* TestContentCoder.swift in Sources */,
+				5673ED7D2126DD7500083229 /* GitPushOptions.swift in Sources */,
 				84B122DB20C9C19100DCAAAA /* RepositoryTask.swift in Sources */,
 				846852A620D2E66E00936A12 /* FileManager+Utils.swift in Sources */,
 				84BD16D020D319230038F377 /* TestFileTests.swift in Sources */,

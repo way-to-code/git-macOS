@@ -52,6 +52,17 @@ public class GitRepository: Repository {
         }
     }
     
+    public func commit(options: GitCommitOptions) throws {
+        // check for an active operation
+        try ensureNoActiveOperations()
+        
+        // local path must be valid
+        try validateLocalPath()
+        
+        let task = CommitTask(owner: self, options: options)
+        try task.run()
+    }
+
     public func clone(at localPath: String, options: GitCloneOptions = GitCloneOptions.default) throws {
         // check a repository is not cloned yet
         try ensureNotClonedAlready()
@@ -163,6 +174,17 @@ public class GitRepository: Repository {
         try task.run()
     }
     
+    public func push(options: GitPushOptions = GitPushOptions.default) throws {
+        // check for an active operation
+        try ensureNoActiveOperations()
+        
+        // local path must be valid
+        try validateLocalPath()
+        
+        let task = PushTask(owner: self, options: options)
+        try task.run()
+    }
+
     public func cancel() {
         activeTask?.cancel()
         activeTask = nil

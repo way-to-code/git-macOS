@@ -52,7 +52,8 @@ extension FileManager {
         
         // check existence
         if fileManager.fileExists(atPath: path) {
-            do { try fileManager.removeItem(atPath: path) } catch _ as NSError {}
+            do { try fileManager.removeItem(atPath: path) } catch {
+            }
         }
     }
     

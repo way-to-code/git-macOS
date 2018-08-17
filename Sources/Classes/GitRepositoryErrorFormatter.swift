@@ -60,6 +60,12 @@ class GitRepositoryErrorFormatter {
             
         case .unableToRenameRemote(let message):
             return "[GIT.framework] RE0011: An error occurred during renaming a remote. Error says: '\(message)'"
+            
+        case .commitError(let message):
+            return "[GIT.framework] RE0012: An error occurred during committing changes. Error says: '\(message)'"
+
+        case .pushError(let message):
+            return "[GIT.framework] RE0013: An error occurred during pushing changes. Error says: '\(message)'"
         }
     }
 }
