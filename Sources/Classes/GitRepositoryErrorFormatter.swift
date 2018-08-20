@@ -66,6 +66,9 @@ class GitRepositoryErrorFormatter {
 
         case .pushError(let message):
             return "[GIT.framework] RE0013: An error occurred during pushing changes. Error says: '\(message)'"
+            
+        case .unableToChangeRemoteURL(let message):
+            return "[GIT.framework] RE0014: An error occurred during trying to change and url of a remots. Error says: '\(message)'"
         }
     }
 }

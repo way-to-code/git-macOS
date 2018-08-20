@@ -208,6 +208,18 @@ extension GitRepository {
         let task = RemoteRenameTask(owner: self, remote: remote, name: name)
         try task.run()
     }
+    
+    /// Changes an url of a remote to a new URL
+    func changeRemoteURL(_ remote: GitRemote, to newURL: URL) throws {
+        // check for an active operation
+        try ensureNoActiveOperations()
+        
+        // local path must be valid
+        try validateLocalPath()
+        
+        let task = RemoteURLChangeTask(owner: self, remote: remote, url: newURL)
+        try task.run()
+    }
 }
 
 // MARK: - Internal

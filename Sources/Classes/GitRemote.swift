@@ -37,4 +37,10 @@ struct GitRemote: RepositoryRemote {
         // as the remote name is changed, change a name in this reference
         self.name = name
     }
+    
+    mutating func changeURL(to newUrl: URL) throws {
+        try repository?.changeRemoteURL(self, to: newUrl)
+        
+        self.url = newUrl
+    }
 }

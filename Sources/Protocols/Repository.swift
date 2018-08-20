@@ -55,6 +55,9 @@ enum RepositoryError: Error {
     /// Occurs when the rename remote operation finishes with an error
     case unableToRenameRemote(message: String)
     
+    /// Occurs when the rename remote operation finishes with an error
+    case unableToChangeRemoteURL(message: String)
+    
     /// Occurs when trying to create a temporary path on the local machine, but fallen
     case unableToCreateTemporaryPath
 }

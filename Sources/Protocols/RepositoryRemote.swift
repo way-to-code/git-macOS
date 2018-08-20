@@ -31,4 +31,9 @@ public protocol RepositoryRemote {
     /// - Parameter name: A new name to use for this remote.
     /// - Throws: An exception if a rename operation has been fallen
     mutating func rename(to name: String) throws
+    
+    /// Changes a remote URL for this remote. See git remote set-url command for details
+    ///
+    /// - Parameter url: A new URL of a remote
+    mutating func changeURL(to newUrl: URL) throws
 }
