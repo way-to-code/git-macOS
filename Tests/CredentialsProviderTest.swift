@@ -35,11 +35,24 @@ class CredentialsProviderTests: XCTestCase {
     
     /// Checks if provider correctly adds credentials to URL
     func testAddingCredentialsToURL() {
-        let provider = GitCredentialsProvider(username: "user", password: "password")
+        // # test 1
+        var provider = GitCredentialsProvider(username: "user", password: "password")
         let url = URL(string: "git://example.com/repo.git")!
         
-        let encodedURL = try! provider.urlByAddingCredentials(to: url)
+        var encodedURL = try! provider.urlByAddingCredentials(to: url)
         XCTAssert(encodedURL.absoluteString == "git://user:password@example.com/repo.git")
+        
+        // # test 2
+        // passsword is empty, only a username
+        provider = GitCredentialsProvider(username: "user", password: "")
+        encodedURL = try! provider.urlByAddingCredentials(to: url)
+        XCTAssert(encodedURL.absoluteString == "git://user@example.com/repo.git")
+        
+        // # test 3
+        // passsword is nil
+        provider = GitCredentialsProvider(username: "user", password: nil)
+        encodedURL = try! provider.urlByAddingCredentials(to: url)
+        XCTAssert(encodedURL.absoluteString == "git://user@example.com/repo.git")
     }
     
     /// Checks if provider correctly raises errors when using urlByAddingCredentials

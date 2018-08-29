@@ -265,7 +265,7 @@ extension GitRepository {
         let output = output.trimmingCharacters(in: .newlines)
         
         var replacingWith = ""
-        let escapedPassword = credentialsProvider.escapedPassword
+        let escapedPassword = credentialsProvider.escapedPassword ?? ""
 
         for _ in escapedPassword {
             replacingWith += "*"

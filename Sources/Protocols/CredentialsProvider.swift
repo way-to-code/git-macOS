@@ -35,10 +35,10 @@ public protocol CredentialsProvider {
     
     var username: String { get }
     
-    var password: String { get }
+    var password: String? { get }
     
     /// Password with escaped characters if needed
-    var escapedPassword: String { get }
+    var escapedPassword: String? { get }
     
     /// Constructs a new URL from the specified repository URL adding authorization info
     func urlByAddingCredentials(to sourceURL: URL) throws -> URL
