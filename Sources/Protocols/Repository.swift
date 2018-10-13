@@ -166,6 +166,12 @@ public protocol Repository: class {
     /// - Throws: An exception in case something went wrong
     func cloneAtTemporaryPath(options: GitCloneOptions) throws
     
+    /// Fetches log records for this repository and the returns the list of fetched records
+    ///
+    /// - Returns: GitLogRecordList - a list of log records
+    /// - Throws: An exception in case something went wrong
+    func listLogRecords(options: GitLogOptions) throws -> GitLogRecordList
+    
     /// Fetches a list of references in this repository
     ///
     /// - Returns: GitReferenceList - a list of references

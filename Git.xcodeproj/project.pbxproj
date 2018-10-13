@@ -29,6 +29,11 @@
 		5673ED802126DF2500083229 /* PushTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673ED7E2126DF2500083229 /* PushTask.swift */; };
 		56839F4A212ACFB200E161E9 /* RemoteURLChangeTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56839F49212ACFB200E161E9 /* RemoteURLChangeTask.swift */; };
 		56839F4B212ACFB200E161E9 /* RemoteURLChangeTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56839F49212ACFB200E161E9 /* RemoteURLChangeTask.swift */; };
+		8406B5D42171F95F00E381FD /* GitLogRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8406B5D32171F95F00E381FD /* GitLogRecord.swift */; };
+		8406B5D82171FBFB00E381FD /* LogTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8406B5D72171FBFB00E381FD /* LogTask.swift */; };
+		8406B5D92171FBFB00E381FD /* LogTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8406B5D72171FBFB00E381FD /* LogTask.swift */; };
+		8406B5DE217202BF00E381FD /* LogTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8406B5DC217202BF00E381FD /* LogTest.swift */; };
+		8406B5E22172036100E381FD /* FileTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8406B5E02172036100E381FD /* FileTest.swift */; };
 		8408533720D3231B005E2AA8 /* FileAnnotationRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8408533620D3231B005E2AA8 /* FileAnnotationRecord.swift */; };
 		8408533820D32730005E2AA8 /* FileAnnotationRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8408533620D3231B005E2AA8 /* FileAnnotationRecord.swift */; };
 		8408533A20D333DC005E2AA8 /* GitFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8408533920D333DC005E2AA8 /* GitFile.swift */; };
@@ -86,6 +91,14 @@
 		84BD16D020D319230038F377 /* TestFileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BD16CF20D319230038F377 /* TestFileTests.swift */; };
 		84C7121120CC2DF4002659CA /* GitFormatDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C7121020CC2DF4002659CA /* GitFormatDecoder.swift */; };
 		84C7121220CC2DF4002659CA /* GitFormatDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C7121020CC2DF4002659CA /* GitFormatDecoder.swift */; };
+		84DB39992172091200EC5D97 /* LogRepository.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 84DB39982172091200EC5D97 /* LogRepository.bundle */; };
+		84DB399A21720CE400EC5D97 /* GitLogRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8406B5D32171F95F00E381FD /* GitLogRecord.swift */; };
+		84DB399C2172159600EC5D97 /* GitLogRecordList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DB399B2172159600EC5D97 /* GitLogRecordList.swift */; };
+		84DB399D2172159600EC5D97 /* GitLogRecordList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DB399B2172159600EC5D97 /* GitLogRecordList.swift */; };
+		84DB399F2172184900EC5D97 /* GitLogOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DB399E2172184900EC5D97 /* GitLogOptions.swift */; };
+		84DB39A02172184900EC5D97 /* GitLogOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DB399E2172184900EC5D97 /* GitLogOptions.swift */; };
+		84DB39A321721D0000EC5D97 /* Formatter+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DB39A221721D0000EC5D97 /* Formatter+Date.swift */; };
+		84DB39A421721D0000EC5D97 /* Formatter+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DB39A221721D0000EC5D97 /* Formatter+Date.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,6 +123,10 @@
 		5673ED7B2126DD7500083229 /* GitPushOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitPushOptions.swift; sourceTree = "<group>"; };
 		5673ED7E2126DF2500083229 /* PushTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushTask.swift; sourceTree = "<group>"; };
 		56839F49212ACFB200E161E9 /* RemoteURLChangeTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteURLChangeTask.swift; sourceTree = "<group>"; };
+		8406B5D32171F95F00E381FD /* GitLogRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GitLogRecord.swift; path = Sources/Classes/GitLogRecord.swift; sourceTree = SOURCE_ROOT; };
+		8406B5D72171FBFB00E381FD /* LogTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogTask.swift; sourceTree = "<group>"; };
+		8406B5DC217202BF00E381FD /* LogTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogTest.swift; sourceTree = "<group>"; };
+		8406B5E02172036100E381FD /* FileTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileTest.swift; sourceTree = "<group>"; };
 		8408533620D3231B005E2AA8 /* FileAnnotationRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAnnotationRecord.swift; sourceTree = "<group>"; };
 		8408533920D333DC005E2AA8 /* GitFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitFile.swift; sourceTree = "<group>"; };
 		840D89AB20E18802002E09F4 /* GitRepositoryErrorFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitRepositoryErrorFormatter.swift; sourceTree = "<group>"; };
@@ -149,6 +166,10 @@
 		84BD16CD20D315F50038F377 /* TestContentCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestContentCoder.swift; sourceTree = "<group>"; };
 		84BD16CF20D319230038F377 /* TestFileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestFileTests.swift; sourceTree = "<group>"; };
 		84C7121020CC2DF4002659CA /* GitFormatDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitFormatDecoder.swift; sourceTree = "<group>"; };
+		84DB39982172091200EC5D97 /* LogRepository.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = LogRepository.bundle; sourceTree = "<group>"; };
+		84DB399B2172159600EC5D97 /* GitLogRecordList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitLogRecordList.swift; sourceTree = "<group>"; };
+		84DB399E2172184900EC5D97 /* GitLogOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitLogOptions.swift; sourceTree = "<group>"; };
+		84DB39A221721D0000EC5D97 /* Formatter+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Formatter+Date.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,6 +218,32 @@
 				5673ED7E2126DF2500083229 /* PushTask.swift */,
 			);
 			path = Push;
+			sourceTree = "<group>";
+		};
+		8406B5D62171FBE200E381FD /* Log */ = {
+			isa = PBXGroup;
+			children = (
+				84DB399E2172184900EC5D97 /* GitLogOptions.swift */,
+				8406B5D72171FBFB00E381FD /* LogTask.swift */,
+			);
+			path = Log;
+			sourceTree = "<group>";
+		};
+		8406B5DB217202A900E381FD /* LogTest */ = {
+			isa = PBXGroup;
+			children = (
+				84DB39982172091200EC5D97 /* LogRepository.bundle */,
+				8406B5DC217202BF00E381FD /* LogTest.swift */,
+			);
+			path = LogTest;
+			sourceTree = "<group>";
+		};
+		8406B5DF2172035700E381FD /* FileTest */ = {
+			isa = PBXGroup;
+			children = (
+				8406B5E02172036100E381FD /* FileTest.swift */,
+			);
+			path = FileTest;
 			sourceTree = "<group>";
 		};
 		8408533B20D33578005E2AA8 /* References */ = {
@@ -252,6 +299,7 @@
 			isa = PBXGroup;
 			children = (
 				846852A320D0360C00936A12 /* FileManager */,
+				84DB39A121721CEE00EC5D97 /* Formatter */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -276,6 +324,8 @@
 		84B122BA20C8875600DCAAAA /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				8406B5DF2172035700E381FD /* FileTest */,
+				8406B5DB217202A900E381FD /* LogTest */,
 				84BD16C320D314C10038F377 /* FileManagement */,
 				84B122C420C887D100DCAAAA /* Info.plist */,
 				84B122BB20C8875600DCAAAA /* CredentialsProviderTest.swift */,
@@ -302,12 +352,14 @@
 				84BD16BA20D2FB3E0038F377 /* FileManagement */,
 				84B122D920C9BFE400DCAAAA /* Tasks */,
 				84B122C920C8896100DCAAAA /* GitCredentialsProvider.swift */,
-				84B122B320C886FD00DCAAAA /* GitRepository.swift */,
-				840D89AB20E18802002E09F4 /* GitRepositoryErrorFormatter.swift */,
+				8406B5D32171F95F00E381FD /* GitLogRecord.swift */,
+				84DB399B2172159600EC5D97 /* GitLogRecordList.swift */,
 				84B122DF20C9E0B600DCAAAA /* GitReference.swift */,
 				8411C3C620D85FEA00B0ED4F /* GitReferenceList.swift */,
 				561497AE211DA19C00EF4574 /* GitRemote.swift */,
 				561497B2211DAC7300EF4574 /* GitRemoteList.swift */,
+				84B122B320C886FD00DCAAAA /* GitRepository.swift */,
+				840D89AB20E18802002E09F4 /* GitRepositoryErrorFormatter.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -329,6 +381,7 @@
 				5673ED732126C78900083229 /* Commit */,
 				848F548B20CB1C3700BB36A4 /* Clone */,
 				84B8375F211B787F0031AD29 /* Fetch */,
+				8406B5D62171FBE200E381FD /* Log */,
 				5673ED7A2126DD6000083229 /* Push */,
 				8408533B20D33578005E2AA8 /* References */,
 				561497B4211DAE1F00EF4574 /* Remotes */,
@@ -368,6 +421,14 @@
 				84BD16C420D314F90038F377 /* TestFileStorage.swift */,
 			);
 			path = FileManagement;
+			sourceTree = "<group>";
+		};
+		84DB39A121721CEE00EC5D97 /* Formatter */ = {
+			isa = PBXGroup;
+			children = (
+				84DB39A221721D0000EC5D97 /* Formatter+Date.swift */,
+			);
+			path = Formatter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -469,6 +530,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84DB39992172091200EC5D97 /* LogRepository.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -483,6 +545,7 @@
 				84B122E320C9E42900DCAAAA /* ReferencesTask.swift in Sources */,
 				84B122CA20C8896100DCAAAA /* GitCredentialsProvider.swift in Sources */,
 				84B122D120C88BEF00DCAAAA /* ProcessTask.swift in Sources */,
+				8406B5D82171FBFB00E381FD /* LogTask.swift in Sources */,
 				8411C3C720D85FEA00B0ED4F /* GitReferenceList.swift in Sources */,
 				84B122E020C9E0B700DCAAAA /* GitReference.swift in Sources */,
 				561497B6211DAE3300EF4574 /* RemoteListTask.swift in Sources */,
@@ -493,6 +556,7 @@
 				84BD16BE20D2FC360038F377 /* FileCoder.swift in Sources */,
 				84C7121120CC2DF4002659CA /* GitFormatDecoder.swift in Sources */,
 				561497B3211DAC7300EF4574 /* GitRemoteList.swift in Sources */,
+				84DB399F2172184900EC5D97 /* GitLogOptions.swift in Sources */,
 				5673ED7C2126DD7500083229 /* GitPushOptions.swift in Sources */,
 				561497AF211DA19C00EF4574 /* GitRemote.swift in Sources */,
 				56839F4A212ACFB200E161E9 /* RemoteURLChangeTask.swift in Sources */,
@@ -504,15 +568,18 @@
 				84B122DD20C9E04500DCAAAA /* RepositoryReference.swift in Sources */,
 				8408533720D3231B005E2AA8 /* FileAnnotationRecord.swift in Sources */,
 				845D244220C3845400130D6E /* CredentialsProvider.swift in Sources */,
+				84DB399C2172159600EC5D97 /* GitLogRecordList.swift in Sources */,
 				84BD16C020D2FFC00038F377 /* FileStorage.swift in Sources */,
 				561497B8211DB3FB00EF4574 /* RemoteURLTask.swift in Sources */,
 				84BD16BC20D2FB640038F377 /* File.swift in Sources */,
 				84B83767211B7F1A0031AD29 /* FetchTask.swift in Sources */,
+				84DB39A321721D0000EC5D97 /* Formatter+Date.swift in Sources */,
 				845D244020C37F9800130D6E /* Repository.swift in Sources */,
 				84BD16C220D312180038F377 /* GitFileStorage.swift in Sources */,
 				841FA50B20EC331000566F6F /* CheckoutTask.swift in Sources */,
 				840D89AC20E18802002E09F4 /* GitRepositoryErrorFormatter.swift in Sources */,
 				84B122B420C886FD00DCAAAA /* GitRepository.swift in Sources */,
+				8406B5D42171F95F00E381FD /* GitLogRecord.swift in Sources */,
 				84B122D820C8C03800DCAAAA /* CloneTask.swift in Sources */,
 				84B83764211B7DA40031AD29 /* ArgumentConvertible.swift in Sources */,
 				846852A520D0362F00936A12 /* FileManager+Utils.swift in Sources */,
@@ -528,6 +595,7 @@
 				84B83765211B7DA40031AD29 /* ArgumentConvertible.swift in Sources */,
 				84B122E720C9EDBC00DCAAAA /* GitFormatEncoder.swift in Sources */,
 				5673ED762126C7A300083229 /* CommitOptions.swift in Sources */,
+				8406B5E22172036100E381FD /* FileTest.swift in Sources */,
 				84B122D220C88BEF00DCAAAA /* ProcessTask.swift in Sources */,
 				5673ED792126CB5200083229 /* CommitTask.swift in Sources */,
 				56466BA9211DBFDD001EF6C3 /* RemoteRenameTask.swift in Sources */,
@@ -545,10 +613,14 @@
 				84BD16CE20D315F50038F377 /* TestContentCoder.swift in Sources */,
 				56839F4B212ACFB200E161E9 /* RemoteURLChangeTask.swift in Sources */,
 				5673ED7D2126DD7500083229 /* GitPushOptions.swift in Sources */,
+				8406B5D92171FBFB00E381FD /* LogTask.swift in Sources */,
 				84B122DB20C9C19100DCAAAA /* RepositoryTask.swift in Sources */,
+				8406B5DE217202BF00E381FD /* LogTest.swift in Sources */,
 				846852A620D2E66E00936A12 /* FileManager+Utils.swift in Sources */,
 				84BD16D020D319230038F377 /* TestFileTests.swift in Sources */,
+				84DB39A02172184900EC5D97 /* GitLogOptions.swift in Sources */,
 				84B122EA20C9FD1300DCAAAA /* JSONFormatterTest.swift in Sources */,
+				84DB39A421721D0000EC5D97 /* Formatter+Date.swift in Sources */,
 				56466BA5211DBC1D001EF6C3 /* RepositoryRemote.swift in Sources */,
 				8411C3C820D85FEA00B0ED4F /* GitReferenceList.swift in Sources */,
 				84B83768211B7F1A0031AD29 /* FetchTask.swift in Sources */,
@@ -558,8 +630,10 @@
 				84B122E420C9E42900DCAAAA /* ReferencesTask.swift in Sources */,
 				84B83762211B7B480031AD29 /* GitFetchOptions.swift in Sources */,
 				84B122DA20C9C18E00DCAAAA /* CloneTask.swift in Sources */,
+				84DB399A21720CE400EC5D97 /* GitLogRecord.swift in Sources */,
 				84B122E120C9E0B700DCAAAA /* GitReference.swift in Sources */,
 				8408533820D32730005E2AA8 /* FileAnnotationRecord.swift in Sources */,
+				84DB399D2172159600EC5D97 /* GitLogRecordList.swift in Sources */,
 				56466BA2211DBBE9001EF6C3 /* GitRemoteList.swift in Sources */,
 				56466BA6211DBC2B001EF6C3 /* GitRemote.swift in Sources */,
 				84B122CB20C8896100DCAAAA /* GitCredentialsProvider.swift in Sources */,

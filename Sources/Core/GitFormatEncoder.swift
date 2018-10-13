@@ -1,5 +1,5 @@
 //
-//  GitOutputWriter.swift
+//  GitFormatEncoder.swift
 //  Git-macOS
 //
 //  Copyright (c) 2018 Max A. Akhmatov
@@ -20,6 +20,16 @@ import Foundation
 @dynamicMemberLookup
 class GitFormatEncoder {
     
+    /// Encoding strategy for % symbol
+    enum PercentEncodingStrategy {
+        
+        /// In case a percent is found, the content will be wrapped with quotes (to provide a simple JSON)
+        case wrapWithQuotes
+        
+        /// In case a percent is found, no wrapping is happen. May be used for conditional formatting which already have nessesary escaping
+        case keepUntouch
+    }
+    
     static var lineSeparator: String {
         return "$(END_OF_LINE)$"
     }
@@ -31,6 +41,9 @@ class GitFormatEncoder {
     // in order to use ordered key/values, use two separate arrays
     private var keys = [String]()
     private var values = [String]()
+    
+    /// A strategy for wrapping % character into quotes
+    var percentEscapingStrategy = PercentEncodingStrategy.keepUntouch
 
     subscript(dynamicMember key: String) -> String? {
         set {
@@ -77,8 +90,13 @@ class GitFormatEncoder {
             output += "\(quotes)\(key)\(quotes):"
             
             if value.starts(with: "%") {
-                // already have formatting (for conditional bindings for example)
-                output.append(value)
+                if percentEscapingStrategy == .keepUntouch {
+                    // already have formatting (for conditional bindings for example)
+                    output.append(value)
+                } else {
+                    // just need to wrap into quotes
+                    output.append("\(quotes)\(value)\(quotes)")
+                }
             } else {
                 output.append("\(quotes)%(\(value))\(quotes)")
             }

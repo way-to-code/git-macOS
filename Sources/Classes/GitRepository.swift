@@ -124,6 +124,19 @@ public class GitRepository: Repository {
         try task.run()
     }
     
+    public func listLogRecords(options: GitLogOptions = GitLogOptions.default) throws -> GitLogRecordList {
+        // check for an active operation
+        try ensureNoActiveOperations()
+        
+        // local path must be valid
+        try validateLocalPath()
+        
+        let task = LogTask(owner: self, options: options)
+        try task.run()
+        
+        return task.records
+    }
+    
     public func listReferences() throws -> GitReferenceList {
         // check for an active operation
         try ensureNoActiveOperations()
