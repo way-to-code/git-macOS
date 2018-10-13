@@ -137,7 +137,7 @@ public class GitRepository: Repository {
         return task.records
     }
     
-    public func listUncommitedChanges(comparedTo remote: RepositoryRemote) throws -> GitLogRecordList {
+    public func listPendingLogRecords(comparedTo remote: RepositoryRemote) throws -> GitLogRecordList {
         // check for an active operation
         try ensureNoActiveOperations()
         
