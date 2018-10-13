@@ -99,6 +99,8 @@
 		84DB39A02172184900EC5D97 /* GitLogOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DB399E2172184900EC5D97 /* GitLogOptions.swift */; };
 		84DB39A321721D0000EC5D97 /* Formatter+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DB39A221721D0000EC5D97 /* Formatter+Date.swift */; };
 		84DB39A421721D0000EC5D97 /* Formatter+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DB39A221721D0000EC5D97 /* Formatter+Date.swift */; };
+		84EF21282172264A0030667A /* RepositoryLogRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EF21272172264A0030667A /* RepositoryLogRecord.swift */; };
+		84EF21292172264A0030667A /* RepositoryLogRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EF21272172264A0030667A /* RepositoryLogRecord.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -170,6 +172,7 @@
 		84DB399B2172159600EC5D97 /* GitLogRecordList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitLogRecordList.swift; sourceTree = "<group>"; };
 		84DB399E2172184900EC5D97 /* GitLogOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitLogOptions.swift; sourceTree = "<group>"; };
 		84DB39A221721D0000EC5D97 /* Formatter+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Formatter+Date.swift"; sourceTree = "<group>"; };
+		84EF21272172264A0030667A /* RepositoryLogRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryLogRecord.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -342,6 +345,7 @@
 				845D243F20C37F9800130D6E /* Repository.swift */,
 				84B122DC20C9E04500DCAAAA /* RepositoryReference.swift */,
 				561497B0211DA1CB00EF4574 /* RepositoryRemote.swift */,
+				84EF21272172264A0030667A /* RepositoryLogRecord.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -543,6 +547,7 @@
 			files = (
 				8408533A20D333DC005E2AA8 /* GitFile.swift in Sources */,
 				84B122E320C9E42900DCAAAA /* ReferencesTask.swift in Sources */,
+				84EF21282172264A0030667A /* RepositoryLogRecord.swift in Sources */,
 				84B122CA20C8896100DCAAAA /* GitCredentialsProvider.swift in Sources */,
 				84B122D120C88BEF00DCAAAA /* ProcessTask.swift in Sources */,
 				8406B5D82171FBFB00E381FD /* LogTask.swift in Sources */,
@@ -595,6 +600,7 @@
 				84B83765211B7DA40031AD29 /* ArgumentConvertible.swift in Sources */,
 				84B122E720C9EDBC00DCAAAA /* GitFormatEncoder.swift in Sources */,
 				5673ED762126C7A300083229 /* CommitOptions.swift in Sources */,
+				84EF21292172264A0030667A /* RepositoryLogRecord.swift in Sources */,
 				8406B5E22172036100E381FD /* FileTest.swift in Sources */,
 				84B122D220C88BEF00DCAAAA /* ProcessTask.swift in Sources */,
 				5673ED792126CB5200083229 /* CommitTask.swift in Sources */,

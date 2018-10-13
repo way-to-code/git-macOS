@@ -21,10 +21,10 @@ import Foundation
 public class GitLogRecordList {
     
     // MARK: - Public
-    required public init(_ records: [GitLogRecord]) {
+    required public init(_ records: [RepositoryLogRecord]) {
         self.records = records
     }
     
     // MARK: - Private
-    private(set) public var records: [GitLogRecord]
+    private(set) public var records: [RepositoryLogRecord]
 }

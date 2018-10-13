@@ -1,5 +1,5 @@
 //
-//  GitLogRecord.swift
+//  RepositoryLogRecord.swift
 //  Git-macOS
 //
 //  Copyright (c) 2018 Max A. Akhmatov
@@ -17,30 +17,30 @@
 
 import Foundation
 
-/// Describes a log record from a single commit
-public class GitLogRecord: RepositoryLogRecord, Codable {
+/// Describes a single log record in a repository
+public protocol RepositoryLogRecord {
     
     /// Commit hash
-    private(set) public var hash: String
+    var hash: String { get }
     
     /// Abbreviated commit hash
-    private(set) public var shortHash: String
+    var shortHash: String { get }
     
     /// An author name
-    private(set) public var authorName: String
+    var authorName: String { get }
     
     /// An email of an author
-    private(set) public var authorEmail: String
+    var authorEmail: String { get }
     
     /// A commit subject
-    private(set) public var subject: String
+    var subject: String { get }
     
     /// A commit body
-    private(set) public var body: String
+    var body: String { get }
     
     /// Committer date, strict ISO 8601 format
-    private(set) public var commiterDate: Date
+    var commiterDate: Date { get }
     
     /// Reference names
-    private(set) public var refNames: String
+    var refNames: String { get }
 }
