@@ -172,6 +172,12 @@ public protocol Repository: class {
     /// - Throws: An exception in case something went wrong
     func listLogRecords(options: GitLogOptions) throws -> GitLogRecordList
     
+    /// Fetches all uncommited changes in local repository comparing to the specified remote. The current branch is taken while comparison
+    ///
+    /// - Returns: A list of log records which are not commited yet
+    /// - Throws: An exception in case something went wrong
+    func listUncommitedChanges(comparedTo remote: RepositoryRemote) throws -> GitLogRecordList
+    
     /// Fetches a list of references in this repository
     ///
     /// - Returns: GitReferenceList - a list of references

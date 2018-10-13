@@ -37,6 +37,17 @@ public class GitLogOptions: ArgumentConvertible {
     /// Show commits older than a specific date.
     public var before: Date?
     
+    internal struct ReferenceComparator: ArgumentConvertible {
+        var remoteReference: String
+        var localReference: String
+        
+        func toArguments() -> [String] {
+            return ["\(remoteReference)..\(localReference)"]
+        }
+    }
+    
+    internal var compareReference: ReferenceComparator?
+    
     func toArguments() -> [String] {
         var arguments = [String]()
         
@@ -54,6 +65,10 @@ public class GitLogOptions: ArgumentConvertible {
         
         if let author = author {
             arguments.append("--author=\"\(author)\"")
+        }
+        
+        if let comparator = compareReference {
+            arguments.append(contentsOf: comparator.toArguments())
         }
         
         return arguments
