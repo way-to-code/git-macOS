@@ -20,6 +20,8 @@ Git is a high-level swift framework based on the command line Git utility in mac
 - Checking out references (git checkout);
 - Working with remotes;
 - Committing local changes and pushing to a remote repository (git commit and git push);
+- Getting log records for repository (git log);
+- Listing pending log records (committed locally, but not pushed yet). 
 
 ## Requirements
 
@@ -49,7 +51,7 @@ $ brew install carthage
 To integrate Git.framework into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "way-to-code/git-macOS" ~> 1.3.2
+github "way-to-code/git-macOS" ~> 1.4
 ```
 
 Run `carthage update` to build the framework and drag the built `Git.framework` into your Xcode project.
