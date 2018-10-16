@@ -38,11 +38,22 @@ public class GitLogOptions: ArgumentConvertible {
     public var before: Date?
     
     internal struct ReferenceComparator: ArgumentConvertible {
+        enum Strategy {
+            case compareRemoteWithLocal
+            case compareLocalWithRemote
+        }
+        
+        var strategy = Strategy.compareRemoteWithLocal
+        
         var remoteReference: String
         var localReference: String
         
         func toArguments() -> [String] {
-            return ["\(remoteReference)..\(localReference)"]
+            switch strategy {
+                case .compareRemoteWithLocal: return ["\(remoteReference)..\(localReference)"]
+                case .compareLocalWithRemote: return ["\(localReference)..\(remoteReference)"]
+            }
+            
         }
     }
     

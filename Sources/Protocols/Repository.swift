@@ -174,9 +174,22 @@ public protocol Repository: class {
     
     /// Fetches all pending changes (committed, but not pushed yet) in local repository comparing to the specified remote. The current branch is taken while comparison
     ///
+    /// Changes are retrived for **the current reference only**.
+    ///
     /// - Returns: A list of log records which are not commited yet
     /// - Throws: An exception in case something went wrong
     func listPendingLogRecords(comparedTo remote: RepositoryRemote) throws -> GitLogRecordList
+    
+    /// Fetches all upcoming changes in the specified remote and returns the list of those changes. The current branch is taken while comparison
+    ///
+    /// Before check for upcoming changes is done, *git fetch* is performed to obtain changes from a remote.
+    /// You can use this method to determine, for example, if a pull is required on a local repository or not.
+    /// Changes are retrived for **the current reference only**.
+    ///
+    /// - Parameter remote: A remote to use for a comparison
+    /// - Returns: A list of log records commited remotely, but not presented in a local repository
+    /// - Throws: An exeception in case something went wrong
+    func fetchUpcomingLogRecords(comparedTo remote: RepositoryRemote) throws -> GitLogRecordList
     
     /// Fetches a list of references in this repository
     ///

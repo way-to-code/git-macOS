@@ -152,9 +152,35 @@ public class GitRepository: Repository {
         
         let logOptions = GitLogOptions()
         logOptions.compareReference =
-            GitLogOptions.ReferenceComparator(remoteReference: "\(remote.name)/\(activeReference.name)", localReference: activeReference.name)
+            GitLogOptions.ReferenceComparator(strategy: .compareRemoteWithLocal,
+                                              remoteReference: "\(remote.name)/\(activeReference.name)", localReference: activeReference.name)
         
         return try listLogRecords(options: logOptions)
+    }
+    
+    public func fetchUpcomingLogRecords(comparedTo remote: RepositoryRemote) throws -> GitLogRecordList {
+        // check for an active operation
+        try ensureNoActiveOperations()
+        
+        // local path must be valid
+        try validateLocalPath()
+        
+        // before listing, fetch a remote
+        try fetchRemotes()
+        
+        let references = try listReferences()
+        guard let activeReference = references.currentReference else {
+            // fallback, as the current reference can not be obtained
+            return GitLogRecordList([])
+        }
+        
+        let logOptions = GitLogOptions()
+        logOptions.compareReference =
+            GitLogOptions.ReferenceComparator(strategy: .compareLocalWithRemote,
+                                              remoteReference: "\(remote.name)/\(activeReference.name)", localReference: activeReference.name)
+        
+        return try listLogRecords(options: logOptions)
+        
     }
     
     public func listReferences() throws -> GitReferenceList {
