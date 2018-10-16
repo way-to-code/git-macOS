@@ -26,18 +26,34 @@ public class GitPushOptions: ArgumentConvertible {
     }
     
     public enum BranchOptions: ArgumentConvertible {
-        /// Push all branches (i.e. refs under refs/heads/); cannot be used with other <refspec>.
+        /// Push all branches (i.e. refs under refs/heads/); cannot be used with other refspec.
+        ///
+        /// This equals to a raw git command:
+        /// ````
+        /// git push --all
+        /// ````
         case all
+        
+        /// Push a single branch that matches the specified name in a remote.
+        ///
+        /// This equals to a raw git command:
+        /// ````
+        /// git push origin master
+        /// ````
+        /// Where *origin* is a **remote**, and *master* is a **name** of a branch
+        case single(name: String, remote: RepositoryRemote)
         
         func toArguments() -> [String] {
             switch self {
             case .all:
                 return ["--all"]
+            case .single(let name, let remote):
+                return [remote.name, name]
             }
         }
     }
     
-    /// By using this option you may specify that branches you want to push, By default all branches are pushed
+    /// By using this option you may specify those branches you want to push. By default all branches are pushed
     public var branches = BranchOptions.all
     
     func toArguments() -> [String] {
