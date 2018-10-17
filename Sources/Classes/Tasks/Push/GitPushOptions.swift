@@ -25,6 +25,9 @@ public class GitPushOptions: ArgumentConvertible {
         return GitPushOptions()
     }
     
+    public init() {
+    }
+    
     public enum BranchOptions: ArgumentConvertible {
         /// Push all branches (i.e. refs under refs/heads/); cannot be used with other refspec.
         ///
