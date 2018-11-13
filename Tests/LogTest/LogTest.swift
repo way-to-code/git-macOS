@@ -46,6 +46,21 @@ class LogTest: FileTest {
         XCTAssert(log.records.count == 2)
     }
     
+    /// Tests fetching log from different threads simulateosly
+    func testFetchingLogAsync() {
+        let expectation = XCTestExpectation()
+        expectation.expectedFulfillmentCount = 10
+        
+        for _ in 1...10 {
+            DispatchQueue.global(qos: .background).async {
+                self.testFetchingLog()
+                expectation.fulfill()
+            }
+        }
+        
+        wait(for: [expectation], timeout: 20.0)
+    }
+    
     func testFetchingLogLimit() {
         guard let repository = self.repository else {
             XCTFail("Unable to initialize repository for tests")

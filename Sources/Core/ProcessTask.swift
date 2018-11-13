@@ -44,20 +44,34 @@ protocol ProcessTaskDelegate: class {
 class ProcessTask {
     
     // MARK: - Private (Properties)
-    private var pipe = Pipe()
-    private var errorPipe = Pipe()
+    private var runLoop: CFRunLoop!
+
     private var process: Process!
-    private var processGroup = DispatchGroup()
+    private var standartStream: ProcessListener!
+    private var errorStream: ProcessListener!
     
     private(set) var output = ""
     private(set) var errorOutput = ""
-    private(set) var isRunning = false
+
+    private var _isFinished: Bool = false
+    private let isFinishedLockQueue = DispatchQueue(label: "ProcessTask.isFinished.lock")
+    
+    private var isFinished: Bool {
+        get {
+            return isFinishedLockQueue.sync {
+                return _isFinished
+            }
+        }
+        
+        set {
+            isFinishedLockQueue.sync {
+                _isFinished = newValue
+            }
+        }
+    }
     
     private var outputStreamGroup = DispatchGroup()
-    private var outputStreamRunning = false
-    
     private var errorOutputStreamGroup = DispatchGroup()
-    private var errorOutputStreamRunning = false
     
     // MARK: - Public (Init)
     weak var delegate: ProcessTaskDelegate?
@@ -65,113 +79,114 @@ class ProcessTask {
     init(arguments: [String]) {
         process = createProcess()
         process.arguments = arguments
+        
+        standartStream = ProcessListener(process: process, type: .standart)
+        errorStream = ProcessListener(process: process, type: .error)
+        
+        standartStream.delegate = self
+        errorStream.delegate = self
     }
-
+    
     // MARK: - Public
     func run(workingPath: String? = nil) {
-        isRunning = true
-        
         if let workingPath = workingPath {
             process.currentDirectoryURL = URL(fileURLWithPath: workingPath)
         }
         
         outputStreamGroup.enter()
-        outputStreamRunning = true
-        
         errorOutputStreamGroup.enter()
-        errorOutputStreamRunning = true
         
         process.terminationHandler = commandTerminationHandler
-
-        pipe.fileHandleForReading.readabilityHandler = { pipe in
-            let reiceivedData = String(data: pipe.availableData, encoding: String.Encoding.utf8) ?? ""
-            
-            if reiceivedData.count == 0 {
-                if self.isRunning {
-                    // continue listening
-                    pipe.waitForDataInBackgroundAndNotify()
-                } else if self.outputStreamRunning {
-                    // close the stream
-                    self.outputStreamRunning = false
-                    self.outputStreamGroup.leave()
-                }
-                
-                return
-            }
-
-            self.output += reiceivedData
-            pipe.waitForDataInBackgroundAndNotify()
-            
-            DispatchQueue.main.async {
-                self.delegate?.task(self, didReceiveOutput: reiceivedData)
-            }
+        
+        standartStream.startListening()
+        errorStream.startListening()
+        
+        // before the process is started, obtain a reference to the current run loop
+        runLoop = CFRunLoopGetCurrent()
+        guard runLoop != nil else {
+            errorOutput = "Internal problem has occured. If you see this issue, please file a bug to the github page of Git.framework. Error details: unable to obtain a reference to the current run loop on thread \(Thread.current)"
+            return
         }
         
-        errorPipe.fileHandleForReading.readabilityHandler = { pipe in
-            let reiceivedData = String(data: pipe.availableData, encoding: String.Encoding.utf8) ?? ""
-            
-            if reiceivedData.count == 0 {
-                if self.isRunning {
-                    // continue listening
-                    pipe.waitForDataInBackgroundAndNotify()
-                } else if self.errorOutputStreamRunning {
-                    // close the stream
-                    self.errorOutputStreamRunning = false
-                    self.errorOutputStreamGroup.leave()
-                }
-                
-                return
-            }
-            
-            self.errorOutput += reiceivedData
-            pipe.waitForDataInBackgroundAndNotify()
-            
-            DispatchQueue.main.async {
-                self.delegate?.task(self, didReceiveErrorOutput: reiceivedData)
-            }
+        do {
+            try process.run()
         }
+        catch {
+            errorOutput = error.localizedDescription
+            return
+        }
+
+        // a task might be already finished at this time, ensure if waiting is required
+        guard !isFinished else { return }
         
-        // run a task and wait until all streams are finished
-        processGroup.enter()
-        try? process.run()
-        processGroup.wait()
+        // wait until task is completed and streams are finished
+        CFRunLoopRun()
     }
     
     func cancel() {
+        process.interrupt()
         process.terminate()
-        pipe.fileHandleForReading.readabilityHandler = nil
-        errorPipe.fileHandleForReading.readabilityHandler = nil
+        standartStream.stopListening()
+        errorStream.stopListening()
     }
     
     func terminationStatus() -> Int32 {
+        guard isFinished else {
+            return -1
+        }
+        
         return process.terminationStatus
     }
     
     // MARK: - Private (Internal)
+
     private func createProcess() -> Process {
         let process = Process()
-        process.launchPath = "/usr/bin/env"
-        process.standardOutput = pipe
-        process.standardError = errorPipe
+        process.executableURL = URL(fileURLWithPath: "/usr/bin/env")
         
         return process
     }
     
     private func commandTerminationHandler(task: Process) {
-        isRunning = false
-        
-        // give a chance for pipes to finish processing
+        // give a chance for streams to finish processing
         outputStreamGroup.wait()
         errorOutputStreamGroup.wait()
-        
-        // clean up the pipes
-        pipe.fileHandleForReading.readabilityHandler = nil
-        errorPipe.fileHandleForReading.readabilityHandler = nil
+    
+        isFinished = true
+
+        // finish streams
+        standartStream.stopListening()
+        errorStream.stopListening()
         
         DispatchQueue.main.async {
             self.delegate?.task(self, didFinishWithTerminationCode: self.terminationStatus())
         }
         
-        self.processGroup.leave()
+        CFRunLoopStop(runLoop)
+    }
+}
+
+// MARK: - ProcessListenerDelegate
+extension ProcessTask: ProcessListenerDelegate {
+    func listener(_ listener: ProcessListener, didReceiveData data: String) {
+        if listener === standartStream {
+            output += data
+            DispatchQueue.main.async {
+                self.delegate?.task(self, didReceiveOutput: data)
+            }
+        } else if listener === errorStream {
+            errorOutput += data
+            DispatchQueue.main.async {
+                self.delegate?.task(self, didReceiveErrorOutput: data)
+            }
+        }
+    }
+    
+    func listenerDidFinish(_ listener: ProcessListener) {
+        if listener === standartStream {
+            outputStreamGroup.leave()
+        } else if listener === errorStream {
+            errorOutputStreamGroup.leave()
+        }
     }
 }
