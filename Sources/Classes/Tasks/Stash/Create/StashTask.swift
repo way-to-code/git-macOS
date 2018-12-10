@@ -1,5 +1,5 @@
 //
-//  GitLogRecordList.swift
+//  ArgumentConvertible.swift
 //  Git-macOS
 //
 //  Copyright (c) 2018 Max A. Akhmatov
@@ -17,14 +17,27 @@
 
 import Foundation
 
-/// List containing log records
-public class GitLogRecordList {
-    
-    // MARK: - Public
-    required public init(_ records: [RepositoryLogRecord] = []) {
-        self.records = records
+class StashTask: RepositoryTask, TaskRequirable {
+    var name: String {
+        return "stash"
     }
     
-    // MARK: - Private
-    private(set) public var records: [RepositoryLogRecord]
+    required init(owner: GitRepository, options: ArgumentConvertible) {
+        super.init(owner: owner)
+        workingPath = repository.localPath
+        
+        add(options.toArguments())
+    }
+    
+    func handle(output: String) {
+    }
+    
+    func handle(errorOutput: String) {
+    }
+    
+    func finish(terminationStatus: Int32) throws {
+        guard terminationStatus == 0 else {
+            throw RepositoryError.stashError(message: task?.errorOutput ?? "uknown error")
+        }
+    }
 }

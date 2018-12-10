@@ -120,7 +120,9 @@ class ProcessTask {
         guard !isFinished else { return }
         
         // wait until task is completed and streams are finished
-        CFRunLoopRun()
+        if runLoop != nil {
+            CFRunLoopRun()
+        }
     }
     
     func cancel() {
@@ -163,6 +165,7 @@ class ProcessTask {
         }
         
         CFRunLoopStop(runLoop)
+        runLoop = nil
     }
 }
 

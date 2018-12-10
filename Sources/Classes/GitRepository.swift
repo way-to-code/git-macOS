@@ -52,6 +52,34 @@ public class GitRepository: Repository {
         }
     }
     
+    @discardableResult
+    public func stashCreate(options: GitStashOptions = GitStashOptions.default) throws -> RepositoryStashRecord? {
+        // check for an active operation
+        try ensureNoActiveOperations()
+        
+        // local path must be valid
+        try validateLocalPath()
+        
+        // before stash is created, get the list of records in order to compare the number of records
+        let recordsBefore = try listStashRecords()
+        
+        let task = StashTask(owner: self, options: options)
+        try task.run()
+        
+        let recordsAfter = try listStashRecords()
+        
+        guard recordsAfter.records.count > recordsBefore.records.count else {
+            /// a new record is not created (probably, nothing to stash)
+            return nil
+        }
+        
+        guard let record = recordsAfter.records.first else {
+            throw RepositoryError.stashError(message: "Unable to retreive a newly created record from repository")
+        }
+        
+        return record
+    }
+    
     public func commit(options: GitCommitOptions) throws {
         // check for an active operation
         try ensureNoActiveOperations()
@@ -132,6 +160,19 @@ public class GitRepository: Repository {
         try validateLocalPath()
         
         let task = LogTask(owner: self, options: options)
+        try task.run()
+        
+        return task.records
+    }
+    
+    public func listStashRecords() throws -> GitStashRecordList {
+        // check for an active operation
+        try ensureNoActiveOperations()
+        
+        // local path must be valid
+        try validateLocalPath()
+        
+        let task = StashListTask(owner: self, options: GitStashListOptions())
         try task.run()
         
         return task.records
@@ -233,6 +274,27 @@ public class GitRepository: Repository {
         try task.run()
     }
     
+    public func pull(options: GitPullOptions = GitPullOptions.default) throws {
+        // check for an active operation
+        try ensureNoActiveOperations()
+        
+        // local path must be valid
+        try validateLocalPath()
+        
+        // # ensure a repository has at least one remote
+        guard let remotes = try? listRemotes() else {
+            throw RepositoryError.pullFallenRemotesNotFound
+        }
+        
+        guard remotes.remotes.count > 0 else {
+            throw RepositoryError.pullFallenRemotesNotFound
+        }
+        
+        // # pull
+        let task = PullTask(owner: self, options: options)
+        try task.run()
+    }
+    
     public func push(options: GitPushOptions = GitPushOptions.default) throws {
         // check for an active operation
         try ensureNoActiveOperations()
@@ -243,7 +305,57 @@ public class GitRepository: Repository {
         let task = PushTask(owner: self, options: options)
         try task.run()
     }
-
+    
+    public func stashApply(options: GitStashApplyOptions = .default) throws {
+        // check for an active operation
+        try ensureNoActiveOperations()
+        
+        // local path must be valid
+        try validateLocalPath()
+        
+        var resultingOptions = options
+        
+        if let record = options.stash {
+            // a record is provided, validate it exists in the list
+            
+            guard let foundRecord = stashRecord(from: record) else {
+                // fallback as the record has not been found
+                throw RepositoryError.unableToApplyStashRecordNotFound(record: record)
+            }
+            
+            // a stash index may be changed after the stash is done, adjust it
+            resultingOptions = options.clone(options: options, for: foundRecord)
+        }
+        
+        // apply a stash
+        let task = StashApplyTask(owner: self, options: resultingOptions)
+        try task.run()
+    }
+    
+    public func stashDrop(record: RepositoryStashRecord?) throws {
+        // check for an active operation
+        try ensureNoActiveOperations()
+        
+        // local path must be valid
+        try validateLocalPath()
+        
+        var resultingRecord = record
+        
+        if let record = record {
+            guard let foundRecord = stashRecord(from: record) else {
+                // fallback as the record has not been found
+                throw RepositoryError.unableToDropStashRecordNotFound(record: record)
+            }
+            
+            resultingRecord = foundRecord
+        }
+        
+        // run the dro task
+        let task = StashDropTask(owner: self, options: GitStashDropOptions(stash: resultingRecord))
+        try task.run()
+        
+    }
+    
     public func cancel() {
         activeTask?.cancel()
         activeTask = nil
@@ -278,6 +390,26 @@ extension GitRepository {
         
         let task = RemoteURLChangeTask(owner: self, remote: remote, url: newURL)
         try task.run()
+    }
+}
+
+// MARK: - Internal (Stash)
+extension GitRepository {
+
+    /// Searches an actual stash record in repository by the specified stash record
+    fileprivate func stashRecord(from record: RepositoryStashRecord) -> RepositoryStashRecord? {
+        // first of all, get stash list
+        guard let stashlist = try? listStashRecords() else {
+            return nil
+        }
+        
+        // find a record by a hash
+        guard let foundRecord = stashlist.records.first(where: { $0.hash == record.hash }) else {
+            // fallback as the record has not been found
+            return nil
+        }
+        
+        return foundRecord
     }
 }
 

@@ -17,7 +17,7 @@
 
 import Foundation
 
-enum RepositoryError: Error {
+public enum RepositoryError: Error {
     /// Occurs when trying to perform an operation on repository when active operation already in progress.
     /// If you want to make two or more operations at ones, you can create a new repository instance and do operation here
     case activeOperationInProgress
@@ -30,6 +30,18 @@ enum RepositoryError: Error {
     
     /// Occurs when trying to perform an operation on a repository, but a local path no longer exists in the system
     case repositoryLocalPathNotExists
+    
+    /// Occurs when a new stash creation is fallen
+    case stashError(message: String)
+    
+    /// Occurs when applying a stash has been fallen
+    case stashApplyError(message: String)
+    
+    /// Occurs when a stash conflict is detected during the stash operation
+    case stashApplyConflict(message: String)
+    
+    /// Occurs when a stash drop operation is fallen
+    case stashDropError(message: String)
     
     /// Occurs when the clone operation can not be started because the specified path is not an empty folder
     case cloneErrorDirectoryIsNotEmpty(atPath: String)
@@ -49,6 +61,12 @@ enum RepositoryError: Error {
     /// Occurs when the push operation finishes with an error
     case pushError(message: String)
     
+    /// Occurs when the pull operation finishes with an error
+    case pullError(message: String)
+    
+    /// Occurs when trying to perform a pull operation when no remotes are set up on a repository
+    case pullFallenRemotesNotFound
+    
     /// Occurs when the list remotes operation finishes with an error
     case unableToListRemotes(message: String)
     
@@ -60,6 +78,12 @@ enum RepositoryError: Error {
     
     /// Occurs when trying to create a temporary path on the local machine, but fallen
     case unableToCreateTemporaryPath
+    
+    /// Occurs when stash apply operation has been fallen in case no stash record is found
+    case unableToApplyStashRecordNotFound(record: RepositoryStashRecord)
+    
+    /// Occurs when stash drop operation has been fallen in case no stash record is found
+    case unableToDropStashRecordNotFound(record: RepositoryStashRecord)
 }
 
 /// Common delegate for handling repository events
@@ -84,6 +108,13 @@ public protocol RepositoryDelegate: class {
     ///   - repository: A repository reponsible for an event
     ///   - progress: Output string receved from repository
     func repository(_ repository: Repository, didProgressPush progress: String)
+    
+    /// Occurs when a pull operation receives a progress
+    ///
+    /// - Parameters:
+    ///   - repository: A repository reponsible for an event
+    ///   - progress: Output string receved from repository
+    func repository(_ repository: Repository, didProgressPull progress: String)
     
     /// Occurs when a fetch operation receives a progress
     ///
@@ -110,6 +141,9 @@ public extension RepositoryDelegate {
     }
     
     func repository(_ repository: Repository, didProgressPush progress: String) {
+    }
+    
+    func repository(_ repository: Repository, didProgressPull progress: String) {
     }
     
     func repository(_ repository: Repository, willStartTaskWithArguments arguments: [String]) {
@@ -172,6 +206,12 @@ public protocol Repository: class {
     /// - Throws: An exception in case something went wrong
     func listLogRecords(options: GitLogOptions) throws -> GitLogRecordList
     
+    /// Gets all stash records for this repository and the returns the list of records
+    ///
+    /// - Returns: GitStashRecordList - a list of stash records
+    /// - Throws: An exception in case something went wrong
+    func listStashRecords() throws -> GitStashRecordList
+    
     /// Fetches all pending changes (committed, but not pushed yet) in local repository comparing to the specified remote. The current branch is taken while comparison
     ///
     /// Changes are retrived for **the current reference only**.
@@ -220,11 +260,44 @@ public protocol Repository: class {
     /// - Throws: An exception in case the operation has been fallen
     func commit(options: GitCommitOptions) throws
     
+    /// Fetches data from the remote repository and integrates the changes an active local branch
+    ///
+    /// - Parameter options: Options for pulling data
+    /// - Throws: An exception in case the operation has been fallen
+    func pull(options: GitPullOptions) throws
+    
     /// Sends data back to a remote repository
     ///
     /// - Parameter options: Options for pushing data
     /// - Throws: An exception in case the operation has been fallen
     func push(options: GitPushOptions) throws
+    
+    /// Applies a stash with the specified options to the working copy.
+    ///
+    /// If no stash options are provided, by default the first stash is applied if possible
+    ///
+    /// - Parameter options: Options specifying how stash apply should behave
+    /// - Throws: An exception in case the operation has been fallen
+    func stashApply(options: GitStashApplyOptions) throws
+    
+    /// Creates a new stash record using the specified options.
+    ///
+    /// If no stash is created, the method returns nil as a result.
+    ///
+    /// - Parameter options: The operation options. Use this if you want to customize the behaviour of the stash operation
+    /// - Throws: An exception in case stash operation has been fallen
+    @discardableResult
+    func stashCreate(options: GitStashOptions) throws -> RepositoryStashRecord?
+    
+    /// Removes a single stash record from repository.
+    ///
+    /// If no record is provided as an argument, this method will try to remove this latest stash record.
+    /// In this case, if no record is deleted, nothing will happen (method won't raise an exception).
+    ///
+    /// However, in case of providing a record to be dropped, you must ensure, the record still exists in repository, otherwise an exception will be raised.
+    ///
+    /// - Parameter record: A record to be removed or nil if you want to remove the lastest stash record
+    func stashDrop(record: RepositoryStashRecord?) throws
     
     /// Cancels an active repository operation. In case no active operation is started, nothing happens
     func cancel()

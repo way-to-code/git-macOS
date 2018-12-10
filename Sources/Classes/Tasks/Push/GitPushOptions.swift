@@ -17,7 +17,7 @@
 
 import Foundation
 
-/// A set of options used by the git clone operation
+/// A set of options used by the git push operation
 public class GitPushOptions: ArgumentConvertible {
     
     /// Returns the default options for the push operation

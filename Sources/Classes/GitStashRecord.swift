@@ -1,5 +1,5 @@
 //
-//  GitLogRecordList.swift
+//  GitLogRecord.swift
 //  Git-macOS
 //
 //  Copyright (c) 2018 Max A. Akhmatov
@@ -17,14 +17,8 @@
 
 import Foundation
 
-/// List containing log records
-public class GitLogRecordList {
-    
-    // MARK: - Public
-    required public init(_ records: [RepositoryLogRecord] = []) {
-        self.records = records
-    }
-    
-    // MARK: - Private
-    private(set) public var records: [RepositoryLogRecord]
+/// Describes a single stash record
+public class GitStashRecord: GitLogRecord, RepositoryStashRecord {
+
+    internal(set) public var stackIndex: Int = 0
 }

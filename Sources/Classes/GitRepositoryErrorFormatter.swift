@@ -29,46 +29,70 @@ class GitRepositoryErrorFormatter {
     class func message(from error: RepositoryError) -> String {
         switch error {
         case .activeOperationInProgress:
-            return "[GIT.framework] RE0001: An attempt to perform an operation on repository when active operation already in progress."
+            return "[GIT.framework] RE0010: An attempt to perform an operation on repository when active operation already in progress."
             
         case .repositoryNotInitialized:
-            return "[GIT.framework] RE0002: An attempt to perform an operation on repository which is not initialized yet. Please initialize the repository with remote URL or local path."
+            return "[GIT.framework] RE0020: An attempt to perform an operation on repository which is not initialized yet. Please initialize the repository with remote URL or local path."
             
         case .repositoryHasBeenAlreadyCloned:
-            return "[GIT.framework] RE0003: An attempt to clone a repository that has been already cloned. Please create a new instance of repository and try to clone it again"
+            return "[GIT.framework] RE0030: An attempt to clone a repository that has been already cloned. Please create a new instance of repository and try to clone it again"
             
         case .repositoryLocalPathNotExists:
-            return "[GIT.framework] RE0004: Local path for the repository is no longer valid."
+            return "[GIT.framework] RE0040: Local path for the repository is no longer valid."
             
         case .cloneErrorDirectoryIsNotEmpty(let atPath):
-            return "[GIT.framework] RE0005: Unable to clone a repository at '\(atPath)'. Path is not empty."
+            return "[GIT.framework] RE0050: Unable to clone a repository at '\(atPath)'. Path is not empty."
             
         case .cloneError(let message):
-            return "[GIT.framework] RE0006: An error occurred during cloning a repository. Error says: '\(message)'"
+            return "[GIT.framework] RE0060: An error occurred during cloning a repository. Error says: '\(message)'"
             
         case .unableToCreateTemporaryPath:
-            return "[GIT.framework] RE0007: Unable to create a temporary directory on the local machine."
+            return "[GIT.framework] RE0070: Unable to create a temporary directory on the local machine."
             
         case .checkoutError(let message):
-            return "[GIT.framework] RE0008: An error occurred during checking out branch. Error says: '\(message)'"
+            return "[GIT.framework] RE0080: An error occurred during checking out branch. Error says: '\(message)'"
             
         case .fetchError(let message):
-            return "[GIT.framework] RE0009: An error occurred during fetch operation. Error says: '\(message)'"
+            return "[GIT.framework] RE0090: An error occurred during fetch operation. Error says: '\(message)'"
             
         case .unableToListRemotes(let message):
-            return "[GIT.framework] RE0010: An error occurred during listing remotes operation. Error says: '\(message)'"
+            return "[GIT.framework] RE0100: An error occurred during listing remotes operation. Error says: '\(message)'"
             
         case .unableToRenameRemote(let message):
-            return "[GIT.framework] RE0011: An error occurred during renaming a remote. Error says: '\(message)'"
+            return "[GIT.framework] RE0110: An error occurred during renaming a remote. Error says: '\(message)'"
             
         case .commitError(let message):
-            return "[GIT.framework] RE0012: An error occurred during committing changes. Error says: '\(message)'"
+            return "[GIT.framework] RE0120: An error occurred during committing changes. Error says: '\(message)'"
 
         case .pushError(let message):
-            return "[GIT.framework] RE0013: An error occurred during pushing changes. Error says: '\(message)'"
+            return "[GIT.framework] RE0130: An error occurred during pushing changes. Error says: '\(message)'"
             
         case .unableToChangeRemoteURL(let message):
-            return "[GIT.framework] RE0014: An error occurred during trying to change and url of a remots. Error says: '\(message)'"
+            return "[GIT.framework] RE0140: An error occurred while trying to change and url of a remote. Error says: '\(message)'"
+            
+        case .stashError(let message):
+            return "[GIT.framework] RE0150: An error occurred while trying to create a new stash. Error says: '\(message)'"
+            
+        case .stashApplyError(let message):
+            return "[GIT.framework] RE0160: An error occurred while trying to apply a stash to a working copy. Error says: '\(message)'"
+            
+        case .stashApplyConflict(let message):
+            return "[GIT.framework] RE0170: A conflict has been detected while trying to apply a stash. Error says: '\(message)'"
+            
+        case .unableToApplyStashRecordNotFound(let record):
+             return "[GIT.framework] RE0180: An error occurred while trying to apply a stash record \(record.shortHash). It seems this stash record no longer exists"
+            
+        case .stashDropError(let message):
+            return "[GIT.framework] RE0190: An error occurred while trying to drop a stash record. Error says: '\(message)'"
+            
+        case .unableToDropStashRecordNotFound(let record):
+            return "[GIT.framework] RE0200: An error occurred while trying to drop a stash record \(record.shortHash). It seems this stash record no longer exists"
+            
+        case .pullError(let message):
+            return "[GIT.framework] RE0210: An error occurred while pulling data. Error says: '\(message)"
+            
+        case .pullFallenRemotesNotFound:
+            return "[GIT.framework] RE0220: Unable to pull on this repository. Remotes are not set up. Please make sure at least one remote is set."
         }
     }
 }

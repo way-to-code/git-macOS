@@ -1,2 +1,4 @@
-0000000000000000000000000000000000000000 648bc2c3b21ce4b5f1ec916d5d7b950d0e7ba5d1 Max A. Akhmatov <akhmatov.max@gmail.com> 1539425774 +0400	commit (initial): Added test file1.txt
-648bc2c3b21ce4b5f1ec916d5d7b950d0e7ba5d1 68bc5ffa10b3d93b9f38e0cfec3b6b46afb74c24 Max A. Akhmatov <akhmatov.max@gmail.com> 1539431097 +0400	commit: Added a new line to the file
+0000000000000000000000000000000000000000 648bc2c3b21ce4b5f1ec916d5d7b950d0e7ba5d1 Max A. Akhmatov <example@example.com> 1539425774 +0400	commit (initial): Added test file1.txt
+648bc2c3b21ce4b5f1ec916d5d7b950d0e7ba5d1 68bc5ffa10b3d93b9f38e0cfec3b6b46afb74c24 Max A. Akhmatov <example@example.com> 1539431097 +0400	commit: Added a new line to the file
+68bc5ffa10b3d93b9f38e0cfec3b6b46afb74c24 68bc5ffa10b3d93b9f38e0cfec3b6b46afb74c24 Max A. Akhmatov <example@example.com> 1542314098 +0400	reset: moving to HEAD
+68bc5ffa10b3d93b9f38e0cfec3b6b46afb74c24 68bc5ffa10b3d93b9f38e0cfec3b6b46afb74c24 Max A. Akhmatov <example@example.com> 1542314146 +0400	reset: moving to HEAD

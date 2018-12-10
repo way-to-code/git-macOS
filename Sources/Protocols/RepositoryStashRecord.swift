@@ -1,5 +1,5 @@
 //
-//  GitLogRecordList.swift
+//  RepositoryStashRecord.swift
 //  Git-macOS
 //
 //  Copyright (c) 2018 Max A. Akhmatov
@@ -17,14 +17,12 @@
 
 import Foundation
 
-/// List containing log records
-public class GitLogRecordList {
+/// Describes a single shash record in a repository
+public protocol RepositoryStashRecord: RepositoryLogRecord {
     
-    // MARK: - Public
-    required public init(_ records: [RepositoryLogRecord] = []) {
-        self.records = records
-    }
-    
-    // MARK: - Private
-    private(set) public var records: [RepositoryLogRecord]
+    /// An index of this stash record in repository.
+    ///
+    /// In general, you **must not** count on a value of the property as it may become invalid, for example when stash records are changed outside.
+    /// Only the **hash** field can be used to unique identify a stash record.
+    var stackIndex: Int { get }
 }
