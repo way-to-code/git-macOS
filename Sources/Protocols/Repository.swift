@@ -227,9 +227,20 @@ public protocol Repository: class {
     /// Changes are retrived for **the current reference only**.
     ///
     /// - Parameter remote: A remote to use for a comparison
-    /// - Returns: A list of log records commited remotely, but not presented in a local repository
-    /// - Throws: An exeception in case something went wrong
+    /// - Returns: A list of log records commited remotely, but not presented in a working copy
+    /// - Throws: An exception in case something went wrong
     func fetchUpcomingLogRecords(comparedTo remote: RepositoryRemote) throws -> GitLogRecordList
+    
+    /// Lists all upcoming changes in the specified remote and returns the list of those changes. The current branch is taken while comparison
+    ///
+    /// In comparison to *fetchUpcomingLogRecords*, this method doesn't download the latest changes from the remote.
+    /// If you absolutely sure that repository is already up to date, you can use this method to get the upcoming commit records as soon as possible.
+    /// Changes are retrived for **the current reference only**.
+    ///
+    /// - Parameter remote: A remote to use for a comparison
+    /// - Returns: A list of log records commited remotely, but not presented in a working copy
+    /// - Throws: An exception in case something went wrong
+    func listUpcomingLogRecords(comparedTo remote: RepositoryRemote) throws -> GitLogRecordList
     
     /// Fetches a list of references in this repository
     ///

@@ -200,28 +200,11 @@ public class GitRepository: Repository {
     }
     
     public func fetchUpcomingLogRecords(comparedTo remote: RepositoryRemote) throws -> GitLogRecordList {
-        // check for an active operation
-        try ensureNoActiveOperations()
-        
-        // local path must be valid
-        try validateLocalPath()
-        
-        // before listing, fetch a remote
-        try fetchRemotes()
-        
-        let references = try listReferences()
-        guard let activeReference = references.currentReference else {
-            // fallback, as the current reference can not be obtained
-            return GitLogRecordList([])
-        }
-        
-        let logOptions = GitLogOptions()
-        logOptions.compareReference =
-            GitLogOptions.ReferenceComparator(strategy: .compareLocalWithRemote,
-                                              remoteReference: "\(remote.name)/\(activeReference.name)", localReference: activeReference.name)
-        
-        return try listLogRecords(options: logOptions)
-        
+        return try fetchUpcomingLogRecords(comparedTo: remote, fetch: true)
+    }
+    
+    public func listUpcomingLogRecords(comparedTo remote: RepositoryRemote) throws -> GitLogRecordList {
+        return try fetchUpcomingLogRecords(comparedTo: remote, fetch: false)
     }
     
     public func listReferences() throws -> GitReferenceList {
@@ -464,5 +447,32 @@ extension GitRepository {
         
         // # remove passwords
         return output.replacingOccurrences(of: escapedPassword, with: replacingWith)
+    }
+    
+    fileprivate func fetchUpcomingLogRecords(comparedTo remote: RepositoryRemote, fetch: Bool) throws -> GitLogRecordList {
+        // check for an active operation
+        try ensureNoActiveOperations()
+        
+        // local path must be valid
+        try validateLocalPath()
+        
+        // before listing, fetch a remote
+        if fetch {
+            try fetchRemotes()
+        }
+        
+        let references = try listReferences()
+        guard let activeReference = references.currentReference else {
+            // fallback, as the current reference can not be obtained
+            return GitLogRecordList([])
+        }
+        
+        let logOptions = GitLogOptions()
+        logOptions.compareReference =
+            GitLogOptions.ReferenceComparator(strategy: .compareLocalWithRemote,
+                                              remoteReference: "\(remote.name)/\(activeReference.name)", localReference: activeReference.name)
+        
+        return try listLogRecords(options: logOptions)
+        
     }
 }
