@@ -35,7 +35,10 @@ class LogTask: RepositoryTask, TaskRequirable {
         writer.authorName = "%an"
         writer.authorEmail = "%ae"
         writer.subject = "%s"
-        writer.body = "%b"
+        
+        // raw body (unwrapped subject and body)
+        // in case using just %b, all newlines will be cut off from the resulting body
+        writer.body = "%B"
         
         // strict ISO 8601 format
         writer.commiterDate = "%cI"
