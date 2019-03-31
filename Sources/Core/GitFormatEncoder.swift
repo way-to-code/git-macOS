@@ -47,7 +47,7 @@ class GitFormatEncoder {
 
     subscript(dynamicMember key: String) -> String? {
         set {
-            if let index = keys.index(where: {$0 == key}), index >= 0 {
+            if let index = keys.firstIndex(where: {$0 == key}), index >= 0 {
                 // an object already exists
                 guard let value = newValue else {
                     keys.remove(at: index)
@@ -68,7 +68,7 @@ class GitFormatEncoder {
         }
         
         get {
-            guard let index = keys.index(where: {$0 == key}), index >= 0 else {
+            guard let index = keys.firstIndex(where: {$0 == key}), index >= 0 else {
                 // value not found
                 return nil
             }
