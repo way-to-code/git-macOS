@@ -49,6 +49,8 @@ open class File<T: FileCoder>: Accessible {
         self.content = Data()
         self.options = options
         
+        self.areUpdatesActive = false
+        
         self.coder = T(file: self)
     }
     
@@ -69,8 +71,25 @@ open class File<T: FileCoder>: Accessible {
     
     /// Saves changes made in a coder to a file
     public func save() throws {
+        guard !areUpdatesActive else { return }
+        
         try content = coder.encode()
         try storage.write(file: self)
+    }
+    
+    /// Begins an update on this file.
+    ///
+    /// While an update is active, all save calls on this file are ignored until endUpdates method is not called
+    public func beginUpdates() {
+        areUpdatesActive = true
+    }
+    
+    /// Finishes updates on this file and saves all changes
+    public func endUpdates() throws {
+        guard areUpdatesActive else { return }
+        areUpdatesActive = false
+        
+        try save()
     }
     
     // MARK: - Properties
@@ -94,4 +113,7 @@ open class File<T: FileCoder>: Accessible {
     
     /// A file storage responsible for read/write operations
     private var storage: FileStorage
+    
+    /// Indicates whether an active saving transation has been started
+    private var areUpdatesActive: Bool
 }
