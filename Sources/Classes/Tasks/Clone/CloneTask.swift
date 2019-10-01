@@ -25,6 +25,8 @@ class CloneTask: RepositoryTask, TaskRequirable {
                   options: GitCloneOptions) {
         super.init(owner: owner)
         
+        workingPath = repository.localPath
+        
         add([remoteURL, localPath])
         add(options.toArguments())
     }
@@ -35,16 +37,16 @@ class CloneTask: RepositoryTask, TaskRequirable {
     }
     
     func handle(output: String) {
+        repository.delegate?.repository(repository, didProgressClone: output)
     }
     
     func handle(errorOutput: String) {
-        repository.delegate?.repository(repository, didProgressClone: errorOutput)
     }
     
     func finish(terminationStatus: Int32) throws {
         guard terminationStatus == 0 else {
             // fallback, as the clone was fallen
-            let output = repository.outputByRemovingSensitiveData(from: task?.errorOutput ?? "")
+            let output = repository.outputByRemovingSensitiveData(from: self.output ?? "")
             throw RepositoryError.cloneError(message: output)
         }
     }

@@ -56,12 +56,12 @@ class RemoteURLTask: RepositoryTask, TaskRequirable {
     func finish(terminationStatus: Int32) throws {
         guard terminationStatus == 0 else {
             // fallback, as an operation was fallen
-            let output = repository.outputByRemovingSensitiveData(from: task?.errorOutput ?? "")
+            let output = repository.outputByRemovingSensitiveData(from: self.output ?? "")
             throw RepositoryError.unableToListRemotes(message: output)
         }
         
         // parse URLs
-        let remotes = task?.output.trimmingCharacters(in: .whitespacesAndNewlines).split(separator: "\n")
+        let remotes = self.output?.trimmingCharacters(in: .whitespacesAndNewlines).split(separator: "\n")
         
         for remoteURL in remotes ?? [] {
             guard let url = URL(string: String(remoteURL)) else {

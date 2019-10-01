@@ -15,13 +15,13 @@ Git is a high-level swift framework based on the command line Git utility in mac
 
 ## Features
 
-- Cloning remote repositories (git clone and git fetch);
+- Cloning remote repositories (`git clone` and `git fetch`). Including shallow clone support (`--depth` option);
 - Getting the list of references (branches, tags) in repositories;
-- Checking out references (git checkout);
-- Working with remotes;
-- Committing local changes and pushing to a remote repository (git commit and git push);
-- Getting log records for repository (git log);
-- Listing pending log records (committed locally, but not pushed yet). 
+- Checking out references (`git checkout`);
+- Working with remotes (listing, renaming, setting urls);
+- Committing local changes and pushing to a remote repository (`git commit` and `git push`);
+- Getting log records for a repository (`git log`);
+- Listing pending log records (committed locally, but not pushed yet) and upcoming log records (commited on a remote, but not presented in the working copy).
 
 ## Requirements
 
@@ -51,7 +51,7 @@ $ brew install carthage
 To integrate Git.framework into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "way-to-code/git-macOS" ~> 1.5.2
+github "way-to-code/git-macOS" ~> 1.6
 ```
 
 Run `carthage update` to build the framework and drag the built `Git.framework` into your Xcode project.
@@ -104,7 +104,7 @@ repository.delegate = progressTracker
 
 // implement RepositoryDelegate protocol in order to track the events
 extension MyCustomObject: RepositoryDelegate {
-    func repository(_ repository: Repository, didProgressClone progress: String) {
-    }
+func repository(_ repository: Repository, didProgressClone progress: String) {
+}
 }
 ```

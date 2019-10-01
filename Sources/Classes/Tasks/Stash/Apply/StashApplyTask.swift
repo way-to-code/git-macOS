@@ -39,15 +39,15 @@ class StashApplyTask: RepositoryTask, TaskRequirable {
         guard terminationStatus == 0 else {
             if checkForConflict() {
                 // a conflict has been detected
-                throw RepositoryError.stashApplyConflict(message: task?.output ?? "")
+                throw RepositoryError.stashApplyConflict(message: self.output ?? "")
             }
             
-            throw RepositoryError.stashApplyError(message: task?.errorOutput ?? "uknown error")
+            throw RepositoryError.stashApplyError(message: self.output ?? "uknown error")
         }
     }
     
     private func checkForConflict() -> Bool {
-        guard let output = task?.output else {
+        guard let output = self.output else {
             return false
         }
         

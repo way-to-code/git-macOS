@@ -39,7 +39,7 @@ class CheckoutTask: RepositoryTask, TaskRequirable {
     func finish(terminationStatus: Int32) throws {
         guard terminationStatus == 0 else {
             // fallback, as the clone was fallen
-            let output = repository.outputByRemovingSensitiveData(from: task?.errorOutput ?? "")
+            let output = repository.outputByRemovingSensitiveData(from: self.output ?? "")
             throw RepositoryError.checkoutError(message: output)
         }
     }

@@ -39,7 +39,7 @@ class RemoteRenameTask: RepositoryTask, TaskRequirable {
     func finish(terminationStatus: Int32) throws {
         guard terminationStatus == 0 else {
             // fallback, as an operation was fallen
-            let output = repository.outputByRemovingSensitiveData(from: task?.errorOutput ?? "")
+            let output = repository.outputByRemovingSensitiveData(from: self.output ?? "")
             throw RepositoryError.unableToRenameRemote(message: output)
         }
     }

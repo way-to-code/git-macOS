@@ -37,7 +37,7 @@ class StashTask: RepositoryTask, TaskRequirable {
     
     func finish(terminationStatus: Int32) throws {
         guard terminationStatus == 0 else {
-            throw RepositoryError.stashError(message: task?.errorOutput ?? "uknown error")
+            throw RepositoryError.stashError(message: self.output ?? "uknown error")
         }
     }
 }

@@ -26,7 +26,6 @@ public class GitStashApplyOptions: ArgumentConvertible {
     }
     
     // MARK: - Public
-    
     private init() {
         stash = nil
     }

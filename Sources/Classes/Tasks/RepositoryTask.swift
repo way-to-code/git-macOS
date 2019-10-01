@@ -33,15 +33,28 @@ protocol TaskRequirable: class {
 }
 
 class RepositoryTask {
+    
+    /// A path to git executable file on the disk
+    static var executablePath = "/usr/bin/git"
 
     // MARK: - Private
-    private(set) var task: ProcessTask?
     private(set) weak var repository: GitRepository!
     
+    /// A git operation working directory
     var workingPath: String?
+    
+    /// A git operation parameters
     private var parameters = [String]()
+    
+    /// A posix process for running a new git operation
+    private var process: ProcessSpawn?
+    
+    /// The final task output received from a git operation
+    private(set) var output: String?
+    
     fileprivate weak var __self: TaskRequirable!
     
+    /// MARK: - Public
     init(owner: GitRepository) {
         guard self is TaskRequirable else {
             fatalError("Task must conform to \(String(describing: TaskRequirable.self)) protocol, but it doesn't")
@@ -59,42 +72,47 @@ class RepositoryTask {
     
     final func run() throws {
         // prepare command line arguments
-        var commandLine = ["git", __self.name]
+        var commandLine = [RepositoryTask.executablePath]
+        
+        if let path = workingPath {
+            // Run as if git was started in <path>
+            commandLine.append("-C")
+            commandLine.append(path)
+        }
+        
+        commandLine.append(__self.name)
         commandLine.append(contentsOf: parameters)
         
         // notify about a task 
         repository.delegate?.repository(repository, willStartTaskWithArguments: commandLine)
         
-        let task = ProcessTask(arguments: commandLine)
-        task.delegate = self
-        self.task = task
+        process = try ProcessSpawn(args: commandLine, workingPath: workingPath, output: { [weak self] (output) in
+            if self?.output == nil {
+                self?.output = ""
+            }
+            
+            self?.output?.append(output)
+            
+            DispatchQueue.main.async {
+                self?.__self.handle(output: output)
+            }
+        })
         
-        defer {
-            // clear
-            repository.activeTask = nil
+        guard let process = process else {
+            try __self.finish(terminationStatus: -1)
+            return
         }
 
-        // proceed with the task
-        task.run(workingPath: workingPath)
-        try __self.finish(terminationStatus: task.terminationStatus())
+        defer {
+            // Clean up
+            repository.activeTask = nil
+        }
+        
+        try __self.finish(terminationStatus: process.terminationStatus)
     }
     
     final func cancel() {
-        task?.cancel()
-        task = nil
-    }
-}
-
-// MARK: - ProcessTaskDelegate
-extension RepositoryTask: ProcessTaskDelegate {
-    func task(_ task: ProcessTask, didReceiveOutput output: String) {
-        __self.handle(output: output)
-    }
-    
-    func task(_ task: ProcessTask, didReceiveErrorOutput errorOutput: String) {
-        __self.handle(errorOutput: errorOutput)
-    }
-    
-    func task(_ task: ProcessTask, didFinishWithTerminationCode terminationCode: Int32) {
+        process?.cancel()
+        process = nil
     }
 }

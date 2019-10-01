@@ -27,6 +27,15 @@ public class GitRepository: Repository {
     private(set) public var credentialsProvider: CredentialsProvider
     private var isTemporaryPath = false
     
+    /// Sets up a default path where git executable is located.
+    ///
+    /// By default /usr/bin/git is used
+    ///
+    /// - Parameter path: A new path to the git executable application
+    public static func installExecutablePath(_ path: String) {
+        RepositoryTask.executablePath = path
+    }
+    
     required public init(from remoteURL: URL,
                          using credentialsProvider: CredentialsProvider = GitCredentialsProvider.anonymousProvider) {
         self.remoteURL = remoteURL

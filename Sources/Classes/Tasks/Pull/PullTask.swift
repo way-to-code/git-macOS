@@ -32,15 +32,15 @@ class PullTask: RepositoryTask, TaskRequirable {
     }
     
     func handle(output: String) {
+        repository.delegate?.repository(repository, didProgressPull: output)
     }
     
     func handle(errorOutput: String) {
-        repository.delegate?.repository(repository, didProgressPull: errorOutput)
     }
     
     func finish(terminationStatus: Int32) throws {
         guard terminationStatus == 0 else {
-            throw RepositoryError.pullError(message: task?.errorOutput ?? "")
+            throw RepositoryError.pullError(message: output ?? "")
         }
     }
 }

@@ -48,7 +48,7 @@ class ReferencesTask: RepositoryTask, TaskRequirable {
     }
     
     func finish(terminationStatus: Int32) throws {
-        if terminationStatus == 0, let output = task?.output {
+        if terminationStatus == 0, let output = self.output {
             let decoder = GitFormatDecoder()
             let objects: [GitReference] = decoder.decode(output)
             

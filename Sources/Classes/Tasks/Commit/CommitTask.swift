@@ -32,16 +32,16 @@ class CommitTask: RepositoryTask, TaskRequirable {
     }
     
     func handle(output: String) {
+        repository.delegate?.repository(repository, didProgressCommit: output)
     }
     
     func handle(errorOutput: String) {
-        repository.delegate?.repository(repository, didProgressCommit: errorOutput)
     }
     
     func finish(terminationStatus: Int32) throws {
         guard terminationStatus == 0 else {
             // fallback, as a commit was fallen
-            let output = repository.outputByRemovingSensitiveData(from: task?.errorOutput ?? "")
+            let output = repository.outputByRemovingSensitiveData(from: self.output ?? "")
             throw RepositoryError.commitError(message: output)
         }
     }

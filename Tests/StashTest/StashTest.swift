@@ -86,7 +86,9 @@ class StashTest: FileTest {
         XCTAssert(stash.records.count == 4)
         
         // verify message is applied correctly
-        XCTAssert(stash.records[1].subject.contains(testCase1Message))
+        if stash.records.count > 1 {
+            XCTAssert(stash.records[1].subject.contains(testCase1Message))
+        }
     }
     
     func test4StashApply() {

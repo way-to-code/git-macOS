@@ -29,16 +29,16 @@ class FetchTask: RepositoryTask, TaskRequirable {
     var name: String { return "fetch" }
     
     func handle(output: String) {
+        repository.delegate?.repository(repository, didProgressFetch: output)
     }
     
     func handle(errorOutput: String) {
-        repository.delegate?.repository(repository, didProgressFetch: errorOutput)
     }
     
     func finish(terminationStatus: Int32) throws {
         guard terminationStatus == 0 else {
             // fallback, as the fetch was fallen
-            let output = repository.outputByRemovingSensitiveData(from: task?.errorOutput ?? "")
+            let output = repository.outputByRemovingSensitiveData(from: self.output ?? "")
             throw RepositoryError.fetchError(message: output)
         }
     }

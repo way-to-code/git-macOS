@@ -41,12 +41,12 @@ class RemoteListTask: RepositoryTask, TaskRequirable {
     func finish(terminationStatus: Int32) throws {
         guard terminationStatus == 0 else {
             // fallback, as the fetch was fallen
-            let output = repository.outputByRemovingSensitiveData(from: task?.errorOutput ?? "")
+            let output = repository.outputByRemovingSensitiveData(from: self.output ?? "")
             throw RepositoryError.unableToListRemotes(message: output)
         }
         
         // parse remotes. Each remote is divided by a new line
-        let remotes = task?.output.trimmingCharacters(in: .whitespacesAndNewlines).split(separator: "\n")
+        let remotes = self.output?.trimmingCharacters(in: .whitespacesAndNewlines).split(separator: "\n")
         
         for remoteName in remotes ?? [] {
             remoteNames.append(String(remoteName))
