@@ -90,7 +90,7 @@ final class ProcessSpawn {
     /// Pipes: 0 - for reading, 1: - for writing
     private var outputPipe: [Int32] = [-1, -1]
     
-    public init(args: [String], workingPath: String?, output: OutputClosure? = nil) throws {
+    public init(args: [String], envs: [String], workingPath: String?, output: OutputClosure? = nil) throws {
         (self.args, self.output, self.workingPath)  = (args, output, workingPath)
         
         if pipe(&outputPipe) < 0 {
@@ -108,9 +108,11 @@ final class ProcessSpawn {
         posix_spawn_file_actions_addclose(&childFDActions, outputPipe[1])
         
         let argv: [UnsafeMutablePointer<CChar>?] = args.map{ $0.withCString(strdup) }
+        var envp: [UnsafeMutablePointer<CChar>?] = envs.map{ $0.withCString(strdup) }
         defer { for case let arg? in argv { free(arg) } }
+        defer { for case let env? in envp { free(env) } }
         
-        guard posix_spawn(&pid, argv[0], &childFDActions, nil, argv + [nil], nil) >= 0 else {
+        guard posix_spawn(&pid, argv[0], &childFDActions, nil, argv + [nil], envp + [nil]) >= 0 else {
             throw SpawnError.canNotCreatePosixSpawn
         }
         

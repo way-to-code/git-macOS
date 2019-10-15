@@ -86,7 +86,14 @@ class RepositoryTask {
         // notify about a task 
         repository.delegate?.repository(repository, willStartTaskWithArguments: commandLine)
         
-        process = try ProcessSpawn(args: commandLine, workingPath: workingPath, output: { [weak self] (output) in
+        var environmentVariables = [String]()
+        
+        // Git need to know $HOME environment variable
+        if let home = getenv("HOME") {
+            environmentVariables.append("HOME=\(String(cString:home))")
+        }
+
+        process = try ProcessSpawn(args: commandLine, envs: environmentVariables, workingPath: workingPath, output: { [weak self] (output) in
             if self?.output == nil {
                 self?.output = ""
             }
