@@ -5,14 +5,14 @@
 
 Git is a high-level swift framework based on the command line Git utility in macOS.
 
-- [Features](##features)
-- [Requirements](##requirements)
-- [Installation](##installation)
-- [Basics](##basics)
-- [Quick examples](##quick-examples)
-  - [Simple clone](###simple-clone)
-  - [Providing credentials](###providing-credentials)
-  - [Receiving the progress ](###receiving-the-progress)
+- [Features](#features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Basics](#basics)
+- [Quick examples](#quick-examples)
+  - [Simple clone](#simple-clone)
+  - [Providing credentials](#providing-credentials)
+  - [Receiving the progress ](#receiving-the-progress)
 
 ## Features
 
