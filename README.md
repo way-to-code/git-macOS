@@ -8,8 +8,9 @@ Git is a high-level swift framework based on the command line Git utility in mac
 - [Features](##features)
 - [Requirements](##requirements)
 - [Installation](##installation)
-- [Cloning a remote repository](##cloning-a-remote-repository)
- - [Simple example](###simple-example)
+- [Basics](##basics)
+- [Quick examples](##quick-examples)
+ - [Simple clone](###simple-clone)
  - [Providing credentials](###providing-credentials)
  - [Receiving the progress ](###receiving-the-progress)
 
@@ -21,7 +22,10 @@ Git is a high-level swift framework based on the command line Git utility in mac
 - Working with remotes (listing, renaming, setting urls);
 - Committing local changes and pushing to a remote repository (`git commit` and `git push`);
 - Getting log records for a repository (`git log`);
-- Listing pending log records (committed locally, but not pushed yet) and upcoming log records (commited on a remote, but not presented in the working copy).
+- Listing pending log records (committed locally, but not pushed yet) and upcoming log records (commited on a remote, but not presented in the working copy)
+- Working with stashes (`git stash`);
+
+`Git.framework` has no dependencies. Just clone and build.
 
 ## Requirements
 
@@ -68,9 +72,12 @@ github "way-to-code/git-macOS" ~> 1.5.1
 
 You can install Git.framework manually. Clone the project locally, build and integrate to your project as a framework
 
-## Cloning a remote repository
+## Basics
 
-### Simple example
+Learn the basics of how to use `Git.framework` in the [Wiki page](https://github.com/way-to-code/git-macOS/wiki/Basics)
+
+## Quick examples
+### Simple clone
 
 To clone a remote repository you need to create an object **GitRepository**
 
