@@ -10,9 +10,9 @@ Git is a high-level swift framework based on the command line Git utility in mac
 - [Installation](##installation)
 - [Basics](##basics)
 - [Quick examples](##quick-examples)
- - [Simple clone](###simple-clone)
- - [Providing credentials](###providing-credentials)
- - [Receiving the progress ](###receiving-the-progress)
+  - [Simple clone](###simple-clone)
+  - [Providing credentials](###providing-credentials)
+  - [Receiving the progress ](###receiving-the-progress)
 
 ## Features
 
@@ -77,6 +77,7 @@ You can install Git.framework manually. Clone the project locally, build and int
 Learn the basics of how to use `Git.framework` in the [Wiki page](https://github.com/way-to-code/git-macOS/wiki/Basics)
 
 ## Quick examples
+
 ### Simple clone
 
 To clone a remote repository you need to create an object **GitRepository**
