@@ -17,7 +17,7 @@
 
 import Foundation
 
-struct GitReference: RepositoryReference, Codable {
+class GitReference: RepositoryReference, Codable {
     
     var id: String
     var parentId: String?
@@ -26,11 +26,58 @@ struct GitReference: RepositoryReference, Codable {
     var author: String
     var date: Date
     var message: String?
-    var name: String {
-        return URL(fileURLWithPath: path).lastPathComponent
-    }
+    
+    lazy var name: String = {
+        if path.starts(with: RefPath.heads) {
+            return dropPathComponent(RefPath.heads, from: path)
+        } else if path.starts(with: RefPath.remotes) {
+            // In case of remotes, the remote subpath must be also removed
+            return dropFirstPathComponent(from: dropPathComponent(RefPath.remotes, from: path))
+        } else if path.starts(with: RefPath.tags) {
+            return dropPathComponent(RefPath.tags, from: path)
+        } else if path.starts(with: RefPath.stash) {
+            return dropPathComponent(RefPath.stash, from: path)
+        }
+        
+        return shortName
+    }()
+    
+    lazy var shortName: String = {
+        let components = path.components(separatedBy: RefPath.separator)
+        
+        guard let lastComponent = components.last, lastComponent.count > 0 else {
+            return components.count > 1 ? components[components.count - 2] : path
+        }
+        
+        return lastComponent
+    }()
     
     var path: String
+}
+
+// MARK: - Constants
+extension GitReference {
+    
+    /// Defines contant paths of a reference (the part after $GIT_DIR/)
+    struct RefPath {
+        static let heads = "refs/heads"
+        static let remotes = "refs/remotes"
+        static let tags = "refs/tags"
+        static let stash = "refs/stash"
+        static let master = "refs/heads/master"
+        
+        static let separator = "/"
+        static let separatorCharacterSet = CharacterSet(charactersIn: RefPath.separator)
+    }
+    
+    fileprivate func dropFirstPathComponent(from path: String) -> String {
+        return path.components(separatedBy: RefPath.separator).dropFirst().joined(separator: RefPath.separator)
+    }
+    
+    fileprivate func dropPathComponent(_ component: String, from path: String) -> String {
+        let index = path.index(path.startIndex, offsetBy: component.count + 1)
+        return String(path[index...]).trimmingCharacters(in: RefPath.separatorCharacterSet)
+    }
 }
 
 
