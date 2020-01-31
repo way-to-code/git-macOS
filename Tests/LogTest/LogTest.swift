@@ -17,22 +17,14 @@
 
 import XCTest
 
-class LogTest: FileTest {
+class LogTest: XCTestCase, RepositoryTest {
     
-    var repository: GitRepository? {
-        let bundleURL = URL(fileURLWithPath: pathToFile(named: "LogRepository.bundle"))
-        
-        // As xcode can not work with hidden files rename git to .git
-        let gitURL = bundleURL.appendingPathComponent("git")
-        let dotGitURL = bundleURL.appendingPathComponent(".git")
-        
-        try? FileManager.default.moveItem(at: gitURL, to: dotGitURL)
-        
-        return GitRepository(at: bundleURL.path)
+    var repositoryBundleName: String {
+        return "LogRepository.bundle"
     }
 
     func testFetchingLog() {
-        guard let repository = self.repository else {
+        guard let repository = createRepository() else {
             XCTFail("Unable to initialize repository for tests")
             return
         }
@@ -62,7 +54,7 @@ class LogTest: FileTest {
     }
     
     func testFetchingLogLimit() {
-        guard let repository = self.repository else {
+        guard let repository = createRepository() else {
             XCTFail("Unable to initialize repository for tests")
             return
         }
@@ -80,7 +72,7 @@ class LogTest: FileTest {
     }
     
     func testFetchingLogDates() {
-        guard let repository = self.repository else {
+        guard let repository = createRepository() else {
             XCTFail("Unable to initialize repository for tests")
             return
         }

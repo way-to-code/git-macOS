@@ -161,19 +161,6 @@ public class GitRepository: Repository {
         try task.run()
     }
     
-    public func listLogRecords(options: GitLogOptions = GitLogOptions.default) throws -> GitLogRecordList {
-        // check for an active operation
-        try ensureNoActiveOperations()
-        
-        // local path must be valid
-        try validateLocalPath()
-        
-        let task = LogTask(owner: self, options: options)
-        try task.run()
-        
-        return task.records
-    }
-    
     public func listStashRecords() throws -> GitStashRecordList {
         // check for an active operation
         try ensureNoActiveOperations()
@@ -185,35 +172,6 @@ public class GitRepository: Repository {
         try task.run()
         
         return task.records
-    }
-    
-    public func listPendingLogRecords(comparedTo remote: RepositoryRemote) throws -> GitLogRecordList {
-        // check for an active operation
-        try ensureNoActiveOperations()
-        
-        // local path must be valid
-        try validateLocalPath()
-        
-        let references = try listReferences()
-        guard let activeReference = references.currentReference else {
-            // fallback, as the current reference can not be obtained
-            return GitLogRecordList([])
-        }
-        
-        let logOptions = GitLogOptions()
-        logOptions.compareReference =
-            GitLogOptions.ReferenceComparator(strategy: .compareRemoteWithLocal,
-                                              remoteReference: "\(remote.name)/\(activeReference.name)", localReference: activeReference.name)
-        
-        return try listLogRecords(options: logOptions)
-    }
-    
-    public func fetchUpcomingLogRecords(comparedTo remote: RepositoryRemote) throws -> GitLogRecordList {
-        return try fetchUpcomingLogRecords(comparedTo: remote, fetch: true)
-    }
-    
-    public func listUpcomingLogRecords(comparedTo remote: RepositoryRemote) throws -> GitLogRecordList {
-        return try fetchUpcomingLogRecords(comparedTo: remote, fetch: false)
     }
     
     public func listReferences() throws -> GitReferenceList {
@@ -456,32 +414,5 @@ extension GitRepository {
         
         // # remove passwords
         return output.replacingOccurrences(of: escapedPassword, with: replacingWith)
-    }
-    
-    fileprivate func fetchUpcomingLogRecords(comparedTo remote: RepositoryRemote, fetch: Bool) throws -> GitLogRecordList {
-        // check for an active operation
-        try ensureNoActiveOperations()
-        
-        // local path must be valid
-        try validateLocalPath()
-        
-        // before listing, fetch a remote
-        if fetch {
-            try fetchRemotes()
-        }
-        
-        let references = try listReferences()
-        guard let activeReference = references.currentReference else {
-            // fallback, as the current reference can not be obtained
-            return GitLogRecordList([])
-        }
-        
-        let logOptions = GitLogOptions()
-        logOptions.compareReference =
-            GitLogOptions.ReferenceComparator(strategy: .compareLocalWithRemote,
-                                              remoteReference: "\(remote.name)/\(activeReference.name)", localReference: activeReference.name)
-        
-        return try listLogRecords(options: logOptions)
-        
     }
 }

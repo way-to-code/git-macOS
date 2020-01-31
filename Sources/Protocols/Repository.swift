@@ -212,35 +212,12 @@ public protocol Repository: class {
     /// - Throws: An exception in case something went wrong
     func listStashRecords() throws -> GitStashRecordList
     
-    /// Fetches all pending changes (committed, but not pushed yet) in local repository comparing to the specified remote. The current branch is taken while comparison
+    /// Compares two references with each other and returns log records difference.
+    /// - Parameter options: Options to be used for the comparison.
     ///
-    /// Changes are retrived for **the current reference only**.
-    ///
-    /// - Returns: A list of log records which are not commited yet
-    /// - Throws: An exception in case something went wrong
-    func listPendingLogRecords(comparedTo remote: RepositoryRemote) throws -> GitLogRecordList
-    
-    /// Fetches all upcoming changes in the specified remote and returns the list of those changes. The current branch is taken while comparison
-    ///
-    /// Before check for upcoming changes is done, *git fetch* is performed to obtain changes from a remote.
-    /// You can use this method to determine, for example, if a pull is required on a local repository or not.
-    /// Changes are retrived for **the current reference only**.
-    ///
-    /// - Parameter remote: A remote to use for a comparison
-    /// - Returns: A list of log records commited remotely, but not presented in a working copy
-    /// - Throws: An exception in case something went wrong
-    func fetchUpcomingLogRecords(comparedTo remote: RepositoryRemote) throws -> GitLogRecordList
-    
-    /// Lists all upcoming changes in the specified remote and returns the list of those changes. The current branch is taken while comparison
-    ///
-    /// In comparison to *fetchUpcomingLogRecords*, this method doesn't download the latest changes from the remote.
-    /// If you absolutely sure that repository is already up to date, you can use this method to get the upcoming commit records as soon as possible.
-    /// Changes are retrived for **the current reference only**.
-    ///
-    /// - Parameter remote: A remote to use for a comparison
-    /// - Returns: A list of log records commited remotely, but not presented in a working copy
-    /// - Throws: An exception in case something went wrong
-    func listUpcomingLogRecords(comparedTo remote: RepositoryRemote) throws -> GitLogRecordList
+    /// Depending on the given options local or remote references will be compared.
+    /// When at least one reference participating in the comparison is a remote one, the fetch might occur depending on the fetch strategy specified in the given options.
+    func retrieveLogRecordsComparison(options: GitLogCompareOptions) throws -> GitLogRecordList
     
     /// Fetches a list of references in this repository
     ///

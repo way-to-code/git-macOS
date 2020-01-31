@@ -1,0 +1,3 @@
+0000000000000000000000000000000000000000 dc6b4ea0e6a8681064ac3becc471731eb5784475 Git.framework <example@example.com> 1580494924 +0400	commit (initial): Master: Commit #1
+dc6b4ea0e6a8681064ac3becc471731eb5784475 ba6f6f1cedb456aa4cfe4e83a79e8c83cd922c38 Git.framework <example@example.com> 1580495005 +0400	commit: Master: Commit #2
+ba6f6f1cedb456aa4cfe4e83a79e8c83cd922c38 dd700a2e7514a0ff65faf0e347f36e3a99b8d138 Git.framework <example@example.com> 1580495032 +0400	commit: Master: Commit #3

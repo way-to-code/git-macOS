@@ -1,0 +1,13 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	ignorecase = true
+	precomposeunicode = true
+[user]
+	name = Git.framework
+	email = example@example.com
+[remote "local_remote"]
+	url = .
+	fetch = +refs/heads/*:refs/remotes/local_remote/*

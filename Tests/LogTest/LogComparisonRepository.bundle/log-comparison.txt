@@ -1,0 +1,4 @@
+This file is used for testing log comparison operations in Git.framework.
+
+// File change #1 (master branch)
+// File change #2 (master branch)
