@@ -97,8 +97,10 @@ public extension GitLogCompareOptions {
             throw Exception.unableToRetrieveCurrentReference
         }
         
-        return GitLogCompareOptions(lhsReference: .init(referenceName: reference.name, direction: .local),
-                                    rhsReference: .init(referenceName: reference.name, direction: .remote(remote: remote)))
+        let options = GitLogCompareOptions(lhsReference: .init(referenceName: reference.name, direction: .remote(remote: remote)),
+                                           rhsReference: .init(referenceName: reference.name, direction: .local))
+        options.fetchStrategy = .ignore
+        return options
     }
     
     /// Creates options for retrieving commited to remotes but not presented in the current branch log records
@@ -107,8 +109,8 @@ public extension GitLogCompareOptions {
             throw Exception.unableToRetrieveCurrentReference
         }
         
-        return GitLogCompareOptions(lhsReference: .init(referenceName: reference.name, direction: .remote(remote: remote)),
-                                    rhsReference: .init(referenceName: reference.name, direction: .local))
+        return GitLogCompareOptions(lhsReference: .init(referenceName: reference.name, direction: .local),
+                                    rhsReference: .init(referenceName: reference.name, direction: .remote(remote: remote)))
     }
 }
 
