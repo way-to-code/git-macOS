@@ -30,7 +30,7 @@ public class GitLogCompareOptions {
         rhsReference = nil
     }
     
-    init(lhsReference: Reference, rhsReference: Reference) {
+    public init(lhsReference: Reference, rhsReference: Reference) {
         self.lhsReference = lhsReference
         self.rhsReference = rhsReference
     }
@@ -74,7 +74,7 @@ public extension GitLogCompareOptions {
     /// Describes a reference used for the log comparison
     class Reference {
         
-        required init(referenceName: String, direction: ComparisonDirection) {
+        public required init(referenceName: String, direction: ComparisonDirection) {
             self.name = referenceName
             self.direction = direction
         }
