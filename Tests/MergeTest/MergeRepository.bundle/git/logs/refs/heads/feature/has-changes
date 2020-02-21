@@ -1,0 +1,3 @@
+0000000000000000000000000000000000000000 d3d727ef3818ea2b5238dafcb074da5adb636705 Git.framework <example@example.com> 1581324368 +0400	branch: Created from feature/no-changes
+d3d727ef3818ea2b5238dafcb074da5adb636705 d3d727ef3818ea2b5238dafcb074da5adb636705 Git.framework <example@example.com> 1581324377 +0400	Branch: renamed refs/heads/feature/changes to refs/heads/feature/has-changes
+d3d727ef3818ea2b5238dafcb074da5adb636705 5ab69a88e0985b7a73960a40a7c6b9cd728a3f4e Git.framework <example@example.com> 1581324421 +0400	commit: Commit #4

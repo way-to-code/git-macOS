@@ -84,6 +84,15 @@ public enum RepositoryError: Error {
     
     /// Occurs when stash drop operation has been fallen in case no stash record is found
     case unableToDropStashRecordNotFound(record: RepositoryStashRecord)
+    
+    /// Occurs when the merge operation fails 
+    case mergeHasBeenFallen(message: String)
+    
+    /// Occurs when merge abort operation has been fallen
+    case unableToAbortMerge(message: String)
+    
+    /// Occurs when merge abort operation can not be started, because the merge is not in progress
+    case thereIsNoMergeToAbort
 }
 
 /// Common delegate for handling repository events
@@ -128,6 +137,12 @@ public protocol RepositoryDelegate: class {
     ///   - repository: A repository reponsible for an event
     ///   - arguments: The list of arguments for the starting command
     func repository(_ repository: Repository, willStartTaskWithArguments arguments: [String])
+    
+    /// Occurs when the merge operation finishes
+    /// - Parameters:
+    ///   - repository: A repository responsible for an event
+    ///   - output: A raw output provided by the merge command
+    func repository(_ repository: Repository, didFinishMerge output: String?)
 }
 
 public extension RepositoryDelegate {
@@ -147,6 +162,9 @@ public extension RepositoryDelegate {
     }
     
     func repository(_ repository: Repository, willStartTaskWithArguments arguments: [String]) {
+    }
+    
+    func repository(_ repository: Repository, didFinishMerge output: String?) {
     }
 }
 
@@ -230,6 +248,9 @@ public protocol Repository: class {
     /// - Throws: An exception in case any error occured
     func listRemotes() throws -> GitRemoteList
     
+    /// Lists status of files in repository
+    func listStatus() throws -> GitFileStatusList
+    
     /// Fetches branches and/or tags (collectively, "refs") from a repository, along with the objects necessary to complete their histories
     ///
     /// - Parameter options: The operation options. Use this if you want to customize the behaviour of the fetch operation
@@ -259,6 +280,18 @@ public protocol Repository: class {
     /// - Parameter options: Options for pushing data
     /// - Throws: An exception in case the operation has been fallen
     func push(options: GitPushOptions) throws
+    
+    /// Starts a merge process with the given options
+    /// - Parameter options: The options used for the merge
+    func merge(options: GitMergeOptions) throws
+    
+    /// Aborts a merge if any.
+    ///
+    /// When merge is not in progress throws RepositoryError.thereIsNoMergeToAbort
+    func mergeAbort() throws
+    
+    /// Checks the merge status on a repository
+    func mergeCheckStatus() throws -> GitMergeStatus
     
     /// Applies a stash with the specified options to the working copy.
     ///

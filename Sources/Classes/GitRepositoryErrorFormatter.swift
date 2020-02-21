@@ -93,6 +93,15 @@ class GitRepositoryErrorFormatter {
             
         case .pullFallenRemotesNotFound:
             return "[GIT.framework] RE0220: Unable to pull on this repository. Remotes are not set up. Please make sure at least one remote is set."
+            
+        case .unableToAbortMerge(let message):
+            return "[GIT.framework] RE0230: Unable to abort merge on this repository. Error says: '\(message)'."
+            
+        case .thereIsNoMergeToAbort:
+            return "[GIT.framework] RE0235: Unable to abort merge on this repository. There is no merge to abort."
+            
+        case .mergeHasBeenFallen(let message):
+            return "[GIT.framework] RE0240: Merge operation has been fallen. Error says: '\(message)'"
         }
     }
 }

@@ -44,7 +44,7 @@ class RepositoryTask {
     var workingPath: String?
     
     /// A git operation parameters
-    private var parameters = [String]()
+    private(set) var parameters = [String]()
     
     /// A posix process for running a new git operation
     private var process: ProcessSpawn?

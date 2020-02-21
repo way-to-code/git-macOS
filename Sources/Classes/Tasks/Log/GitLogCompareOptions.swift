@@ -74,6 +74,9 @@ public extension GitLogCompareOptions {
     /// Describes a reference used for the log comparison
     class Reference {
         
+        static var head: String = "HEAD"
+        static var mergeHead: String = "MERGE_HEAD"
+        
         public required init(referenceName: String, direction: ComparisonDirection) {
             self.name = referenceName
             self.direction = direction

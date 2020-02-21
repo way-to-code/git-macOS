@@ -40,7 +40,9 @@ public extension GitRepository {
         var rhsReferenceName: String!
         
         if let lhs = lhs {
-            if let remote = lhs.direction.remote {
+            if lhs.name == GitLogCompareOptions.Reference.mergeHead || lhs.name == GitLogCompareOptions.Reference.head {
+                lhsReferenceName = lhs.name
+            } else if let remote = lhs.direction.remote {
                 shouldFetch = true
                 lhsReferenceName = "\(remote.name)/\(lhs.name)"
             } else if lhs.direction.isLocal {
@@ -49,7 +51,9 @@ public extension GitRepository {
         }
         
         if let rhs = rhs {
-            if let remote = rhs.direction.remote {
+            if rhs.name == GitLogCompareOptions.Reference.mergeHead || rhs.name == GitLogCompareOptions.Reference.head {
+                rhsReferenceName = rhs.name
+            } else if let remote = rhs.direction.remote {
                 shouldFetch = true
                 rhsReferenceName = "\(remote.name)/\(rhs.name)"
             } else if rhs.direction.isLocal {

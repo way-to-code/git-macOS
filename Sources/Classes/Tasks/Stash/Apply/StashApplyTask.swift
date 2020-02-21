@@ -55,7 +55,7 @@ class StashApplyTask: RepositoryTask, TaskRequirable {
         let pattern = "(CONFLICT \\(.+\\):)"
         guard let regex = try? NSRegularExpression(pattern: pattern) else {
             return true
-        }
+        } 
         
         let results = regex.matches(in: output, range: NSRange(output.startIndex..., in: output))
         return results.count > 0
