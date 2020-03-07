@@ -43,9 +43,28 @@ class MergeTask: RepositoryTask, TaskRequirable {
         }
         
         if terminationStatus != 0 {
-            throw RepositoryError.mergeHasBeenFallen(message: output ?? "Unknown error")
+            if checkForConflict() {
+                throw RepositoryError.mergeFinishedWithConflicts
+            } else {
+                throw RepositoryError.mergeHasBeenFallen(message: output ?? "Unknown error")
+            }
         }
         
         repository.delegate?.repository(repository, didFinishMerge: output)
+    }
+    
+    private func checkForConflict() -> Bool {
+        guard let output = self.output else {
+            return false
+        }
+        
+        // This is not a good solution for checking a conflict like this. However, any other solution has not been found.
+        let pattern = "(CONFLICT \\(.+\\):)"
+        guard let regex = try? NSRegularExpression(pattern: pattern) else {
+            return true
+        }
+        
+        let results = regex.matches(in: output, range: NSRange(output.startIndex..., in: output))
+        return results.count > 0
     }
 }

@@ -17,11 +17,11 @@
 
 public extension GitRepository {
     
-    func listStatus() throws -> GitFileStatusList {
+    func listStatus(options: GitStatusOptions = .default) throws -> GitFileStatusList {
         try ensureNoActiveOperations()
         try validateLocalPath()
         
-        let task = StatusTask(owner: self)
+        let task = StatusTask(owner: self, options: options)
         try task.run()
         
         return task.status

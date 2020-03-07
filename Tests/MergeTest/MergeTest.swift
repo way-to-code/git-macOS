@@ -61,7 +61,8 @@ class MergeTest: XCTestCase, RepositoryTest {
             
             repository.delegate = self
             try repository.merge(options: options)
-        } catch RepositoryError.mergeHasBeenFallen {
+        } catch RepositoryError.mergeFinishedWithConflicts {
+            // Pass throw. Consider the merge is finished
         } catch {
             XCTFail("Unable to test merge due to the following error: \(error)")
         }

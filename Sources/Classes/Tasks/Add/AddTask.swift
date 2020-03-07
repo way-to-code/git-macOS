@@ -1,5 +1,5 @@
 //
-//  ResetTask.swift
+//  AddTask.swift
 //  Git-macOS
 //
 //  Copyright (c) Max A. Akhmatov
@@ -17,11 +17,11 @@
 
 import Foundation
 
-class ResetTask: RepositoryTask, TaskRequirable {
+class AddTask: RepositoryTask, TaskRequirable {
     
     // MARK: - TaskRequirable
     var name: String {
-        return "reset"
+        return "add"
     }
     
     required init(owner: GitRepository, options: ArgumentConvertible) {
@@ -39,8 +39,7 @@ class ResetTask: RepositoryTask, TaskRequirable {
     
     func finish(terminationStatus: Int32) throws {
         if terminationStatus != 0 {
-            throw GitRepository.FileError.unableToReset(message: output ?? "Undefined error")
+            throw GitRepository.FileError.unableToAddFiles(message: output ?? "Undefined error")
         }
-
     }
 }

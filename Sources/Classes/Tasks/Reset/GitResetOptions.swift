@@ -27,9 +27,24 @@ public class GitResetOptions: ArgumentConvertible {
     /// A commit to be used for the reset operation. If the commit is not specified, the operation will use the default option defined by git
     public var commit: String?
     
+    // The list of files to be used for a reset
+    internal var files: [String] = []
+    
     // MARK: - ArgumentConvertible
     func toArguments() -> [String] {
         var arguments: [String] = []
+
+        if files.count > 0 {
+            // Do not interpret any more arguments as options.
+            arguments.append("--")
+            
+            // Add file names
+            for file in files {
+                arguments.append(file)
+            }
+            
+            return arguments
+        }
         
         if let mode = mode {
             switch mode {

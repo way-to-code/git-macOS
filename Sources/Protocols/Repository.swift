@@ -88,6 +88,9 @@ public enum RepositoryError: Error {
     /// Occurs when the merge operation fails 
     case mergeHasBeenFallen(message: String)
     
+    /// Occuts when the merge operations finishes, but conflicts have been detected
+    case mergeFinishedWithConflicts
+    
     /// Occurs when merge abort operation has been fallen
     case unableToAbortMerge(message: String)
     
@@ -195,6 +198,26 @@ public protocol Repository: class {
     ///   - credentialsProvider: A provider for credentials
     init?(at localPath: String, using credentialsProvider: CredentialsProvider)
     
+    /// Add file(s) contents to the index
+    /// - Parameters:
+    ///   - files: The list of file name to add to the index. Each file must be a file within the repository folder
+    ///   - options: The set of options to be uses for the operation
+    func add(files: [String], options: GitAddOptions) throws
+    
+    /// Add file(s) contents to the index and immediatelly retrieves the new status of the files
+    /// - Parameters:
+    ///   - files: The list of file name to add to the index. Each file must be a file within the repository folder
+    ///   - options: The set of options to be uses for the operation
+    func addWithStatusCheck(files: [String], options: GitAddOptions) throws -> GitFileStatusList
+    
+    /// Resets file(s) from the index and moves it to worktree
+    /// - Parameter files: The list of file names to remove from the index. Each file must be afile within the repository folder
+    func reset(files: [String]) throws
+    
+    /// Resets file(s) from the index and moves it to worktree and immediatelly retrieves statuses of the given files
+    /// - Parameter files: The list of file names to remove from the index. Each file must be afile within the repository folder
+    func resetWithStatusCheck(files: [String]) throws -> GitFileStatusList
+    
     /// Creates a working copy of a remote repository locally. Repository must be initialized with a remote URL.
     ///
     /// - Parameters:
@@ -249,7 +272,7 @@ public protocol Repository: class {
     func listRemotes() throws -> GitRemoteList
     
     /// Lists status of files in repository
-    func listStatus() throws -> GitFileStatusList
+    func listStatus(options: GitStatusOptions) throws -> GitFileStatusList
     
     /// Fetches branches and/or tags (collectively, "refs") from a repository, along with the objects necessary to complete their histories
     ///

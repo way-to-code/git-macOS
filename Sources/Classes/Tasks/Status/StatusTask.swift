@@ -27,11 +27,11 @@ class StatusTask: RepositoryTask, TaskRequirable {
     // MARK: - Output
     private(set) var status = GitFileStatusList()
     
-    required override init(owner: GitRepository) {
+    required init(owner: GitRepository, options: ArgumentConvertible) {
         super.init(owner: owner)
         
         workingPath = repository.localPath
-        add(["--porcelain"])
+        add(options.toArguments())
     }
     
     func handle(output: String) {
@@ -48,7 +48,10 @@ class StatusTask: RepositoryTask, TaskRequirable {
                 guard line.count > 3 else { continue }
                 
                 let fileState = String(line.prefix(2))
-                let fileName = String(line.suffix(from: line.index(line.startIndex, offsetBy: 3)))
+                var fileName = String(line.suffix(from: line.index(line.startIndex, offsetBy: 3)))
+                
+                // When file name contains spaces, need to ensure leading and trailing quoes escapes are removed
+                fileName = fileName.trimmingCharacters(in: CharacterSet(charactersIn: "\"\\"))
                 
                 try? status.add(.init(path: fileName, state: fileState))
             }

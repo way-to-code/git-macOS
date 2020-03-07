@@ -102,6 +102,9 @@ class GitRepositoryErrorFormatter {
             
         case .mergeHasBeenFallen(let message):
             return "[GIT.framework] RE0240: Merge operation has been fallen. Error says: '\(message)'"
+        
+        case .mergeFinishedWithConflicts:
+            return "[GIT.framework] RE0250: Merge operation has been finished, but conflicts have been detected."
         }
     }
 }
