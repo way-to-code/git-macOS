@@ -59,11 +59,22 @@ public class GitPushOptions: ArgumentConvertible {
     /// By using this option you may specify those branches you want to push. By default all branches are pushed
     public var branches = BranchOptions.all
     
+    /// A list of custom string parameters to be passed for the git push operation.
+    ///
+    /// This is equivalent to `--push-option` in git
+    /// All empty strings in the list are ignored. Each parameter must have at least one character.
+    public var parameters: [String] = []
+    
     func toArguments() -> [String] {
         var arguments = [String]()
         
         // add branch options
         arguments.append(contentsOf: branches.toArguments())
+        
+        // Add custom parameters if any
+        for option in parameters where option.count > 0 {
+            arguments.append("--push-option=\(option)")
+        }
         
         return arguments
     }
