@@ -37,6 +37,11 @@ public class GitLogOptions: ArgumentConvertible {
     /// Show commits older than a specific date.
     public var before: Date?
     
+    /// A reference (branch) to list log records for.
+    ///
+    /// When specified it is equivalent to the following command: git log `<remote_name>/<reference_name>`
+    public var reference: Reference?
+    
     internal struct ReferenceComparator: ArgumentConvertible {
         var lhsReferenceName: String
         var rhsReferenceName: String
@@ -67,11 +72,50 @@ public class GitLogOptions: ArgumentConvertible {
             arguments.append("--author=\"\(author)\"")
         }
         
-        if let comparator = compareReference {
+        if let reference = reference {
+            arguments.append(contentsOf: reference.toArguments())
+        } else if let comparator = compareReference {
             arguments.append(contentsOf: comparator.toArguments())
         }
         
         return arguments
+    }
+}
+
+// MARK: - Reference
+public extension GitLogOptions {
+    
+    struct Reference: ArgumentConvertible {
+
+        // MARK: - Init
+        public init(name: String) {
+            self.name = name
+            self.remote = nil
+        }
+        
+        public init(name: String, remote: RepositoryRemote) {
+            self.name = name
+            self.remote = remote
+        }
+        
+        /// A name of a reference
+        public var name: String
+        
+        /// A name of a remote. If a remote is not provided
+        public var remote: RepositoryRemote?
+        
+        /// The first remote when a remote is not provided.
+        internal var firstRemote: RepositoryRemote?
+        
+        func toArguments() -> [String] {
+            if let remote = firstRemote {
+                return ["\(remote.name)/\(name)"]
+            } else if let remote = remote {
+                return ["\(remote.name)/\(name)"]
+            } else {
+                return []
+            }
+        }
     }
 }
 

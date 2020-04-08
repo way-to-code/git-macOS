@@ -21,6 +21,16 @@ public extension GitRepository {
         try ensureNoActiveOperations()
         try validateLocalPath()
         
+        // Check whether a reference is provided
+        if let reference = options.reference, reference.remote == nil {
+            // Reference is provided, but it is required to take the first available remote
+            let remotes = try listRemotes()
+            
+            if let remote = remotes.remotes.first {
+                options.reference?.firstRemote = remote
+            }
+        }
+        
         let task = LogTask(owner: self, options: options)
         try task.run()
         
