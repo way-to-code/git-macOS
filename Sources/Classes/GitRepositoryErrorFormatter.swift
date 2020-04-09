@@ -105,6 +105,12 @@ class GitRepositoryErrorFormatter {
         
         case .mergeFinishedWithConflicts:
             return "[GIT.framework] RE0250: Merge operation has been finished, but conflicts have been detected."
+            
+        case .cherryPickCouldNotApplyChange(let message):
+            return "[GIT.framework] RE300: A changeset has been reintegrated, but a conflict occured. Error says: '\(message)'"
+            
+        case .cherryPickHasBeenFallen(let message):
+            return "[GIT.framework] RE310: Cherry pick operation has been fallen. Error says: '\(message)'"
         }
     }
 }

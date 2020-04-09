@@ -96,6 +96,12 @@ public enum RepositoryError: Error {
     
     /// Occurs when merge abort operation can not be started, because the merge is not in progress
     case thereIsNoMergeToAbort
+    
+    /// Occurs usually when a conflict occurs during the cherry pick operation
+    case cherryPickCouldNotApplyChange(message: String)
+    
+    /// Occurs when the cherry pick operation fails
+    case cherryPickHasBeenFallen(message: String)
 }
 
 /// Common delegate for handling repository events
@@ -315,6 +321,10 @@ public protocol Repository: class {
     
     /// Checks the merge status on a repository
     func mergeCheckStatus() throws -> GitMergeStatus
+    
+    /// Perform the git cherry pick operation
+    /// - Parameter options: The options used for the cherry pick
+    func cherryPick(options: GitCherryPickOptions) throws
     
     /// Applies a stash with the specified options to the working copy.
     ///
