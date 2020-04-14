@@ -57,6 +57,39 @@ public extension GitRepository {
         
         return try listStatus(options: statusOptions)
     }
+    
+    func discardChanges(in files: [String]) throws {
+        try ensureNoActiveOperations()
+        try validateLocalPath()
+        
+        // #1. Reset all index changes
+        try reset(files: files)
+        
+        // #2. Reset all changes in worktree
+        let checkoutOptions = GitCheckoutOptions(files: files)
+        
+        let checkoutTask = CheckoutTask(owner: self, options: checkoutOptions)
+        try checkoutTask.run()
+    }
+    
+    func discardAllLocalChanges() throws {
+        try ensureNoActiveOperations()
+        try validateLocalPath()
+        
+        // #1. Reset all index changes. All changes from index will be moved to worktree
+        let resetOptions = GitResetOptions()
+        resetOptions.mode = .hard
+        
+        let task = ResetTask(owner: self, options: resetOptions)
+        try task.run()
+        
+        // #2. Reset all worktree changes.
+        let checkoutOptions = GitCheckoutOptions()
+        checkoutOptions.checkoutAllFiles = true
+        
+        let checkoutTask = CheckoutTask(owner: self, options: checkoutOptions)
+        try checkoutTask.run()
+    }
 }
 
 public extension GitRepository {

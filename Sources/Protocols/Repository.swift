@@ -224,6 +224,20 @@ public protocol Repository: class {
     /// - Parameter files: The list of file names to remove from the index. Each file must be afile within the repository folder
     func resetWithStatusCheck(files: [String]) throws -> GitFileStatusList
     
+    /// Discards all local uncommitted changes for the given files
+    ///
+    /// Both files in index and in the worktreee will be reset.
+    ///
+    /// This operation can not be undone!
+    func discardChanges(in files: [String]) throws
+    
+    /// Discards all local uncommitted changes.
+    ///
+    /// Both files in index and in worktree will be reset.
+    ///
+    /// This operation leads to all data loss!
+    func discardAllLocalChanges() throws
+    
     /// Creates a working copy of a remote repository locally. Repository must be initialized with a remote URL.
     ///
     /// - Parameters:
