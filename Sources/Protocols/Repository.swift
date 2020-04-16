@@ -146,7 +146,7 @@ public protocol Repository: class {
     
     /// Discards all local uncommitted changes.
     ///
-    /// Both files in index and in worktree will be reset.
+    /// Both files in index and in worktree will be reset. All untracked files, including subdirectories will be removed.
     ///
     /// This operation leads to all data loss!
     func discardAllLocalChanges() throws

@@ -89,6 +89,14 @@ public extension GitRepository {
         
         let checkoutTask = CheckoutTask(owner: self, options: checkoutOptions)
         try checkoutTask.run()
+        
+        // #3. Remove all untracked files
+        let cleanOptions = GitCleanOptions()
+        cleanOptions.force = true
+        cleanOptions.includeUntrackedSubdirectories = true
+        
+        let cleanTask = CleanTask(owner: self, options: cleanOptions)
+        try cleanTask.run()
     }
 }
 
