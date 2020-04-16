@@ -2,7 +2,7 @@
 //  CommitTask.swift
 //  Git-macOS
 //
-//  Copyright (c) 2018 Max A. Akhmatov
+//  Copyright (c) Max A. Akhmatov
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@ class CommitTask: RepositoryTask, TaskRequirable {
         guard terminationStatus == 0 else {
             // fallback, as a commit was fallen
             let output = repository.outputByRemovingSensitiveData(from: self.output ?? "")
-            throw RepositoryError.commitError(message: output)
+            throw GitError.commitError(message: output)
         }
     }
 }

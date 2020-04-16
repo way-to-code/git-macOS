@@ -42,7 +42,7 @@ class PushTask: RepositoryTask, TaskRequirable {
         guard terminationStatus == 0 else {
             // fallback, as a commit was fallen
             let output = repository.outputByRemovingSensitiveData(from: self.output ?? "")
-            throw RepositoryError.pushError(message: output)
+            throw GitError.pushError(message: output)
         }
     }
 }

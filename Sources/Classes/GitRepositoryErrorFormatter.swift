@@ -24,7 +24,24 @@ extension RepositoryError: LocalizedError {
     }
 }
 
+extension GitError: LocalizedError {
+    
+    public var errorDescription: String? {
+        return GitRepositoryErrorFormatter.message(gitError: self)
+    }
+}
+
 class GitRepositoryErrorFormatter {
+    
+    class func message(gitError error: GitError) -> String {
+        switch error {
+        case .cherryPickCouldNotApplyChange(let message):
+            return "[GIT.framework] RE0300: A changeset has been reintegrated, but a conflict occured. Error says: '\(message)'"
+            
+        default:
+            return error.rawMessage
+        }
+    }
     
     class func message(from error: RepositoryError) -> String {
         switch error {
@@ -43,74 +60,23 @@ class GitRepositoryErrorFormatter {
         case .cloneErrorDirectoryIsNotEmpty(let atPath):
             return "[GIT.framework] RE0050: Unable to clone a repository at '\(atPath)'. Path is not empty."
             
-        case .cloneError(let message):
-            return "[GIT.framework] RE0060: An error occurred during cloning a repository. Error says: '\(message)'"
-            
         case .unableToCreateTemporaryPath:
             return "[GIT.framework] RE0070: Unable to create a temporary directory on the local machine."
             
-        case .checkoutError(let message):
-            return "[GIT.framework] RE0080: An error occurred during checking out branch. Error says: '\(message)'"
-            
-        case .fetchError(let message):
-            return "[GIT.framework] RE0090: An error occurred during fetch operation. Error says: '\(message)'"
-            
-        case .unableToListRemotes(let message):
-            return "[GIT.framework] RE0100: An error occurred during listing remotes operation. Error says: '\(message)'"
-            
-        case .unableToRenameRemote(let message):
-            return "[GIT.framework] RE0110: An error occurred during renaming a remote. Error says: '\(message)'"
-            
-        case .commitError(let message):
-            return "[GIT.framework] RE0120: An error occurred during committing changes. Error says: '\(message)'"
-
-        case .pushError(let message):
-            return "[GIT.framework] RE0130: An error occurred during pushing changes. Error says: '\(message)'"
-            
-        case .unableToChangeRemoteURL(let message):
-            return "[GIT.framework] RE0140: An error occurred while trying to change and url of a remote. Error says: '\(message)'"
-            
-        case .stashError(let message):
-            return "[GIT.framework] RE0150: An error occurred while trying to create a new stash. Error says: '\(message)'"
-            
-        case .stashApplyError(let message):
-            return "[GIT.framework] RE0160: An error occurred while trying to apply a stash to a working copy. Error says: '\(message)'"
-            
-        case .stashApplyConflict(let message):
-            return "[GIT.framework] RE0170: A conflict has been detected while trying to apply a stash. Error says: '\(message)'"
-            
         case .unableToApplyStashRecordNotFound(let record):
              return "[GIT.framework] RE0180: An error occurred while trying to apply a stash record \(record.shortHash). It seems this stash record no longer exists"
-            
-        case .stashDropError(let message):
-            return "[GIT.framework] RE0190: An error occurred while trying to drop a stash record. Error says: '\(message)'"
-            
+                        
         case .unableToDropStashRecordNotFound(let record):
             return "[GIT.framework] RE0200: An error occurred while trying to drop a stash record \(record.shortHash). It seems this stash record no longer exists"
-            
-        case .pullError(let message):
-            return "[GIT.framework] RE0210: An error occurred while pulling data. Error says: '\(message)"
-            
+                        
         case .pullFallenRemotesNotFound:
             return "[GIT.framework] RE0220: Unable to pull on this repository. Remotes are not set up. Please make sure at least one remote is set."
-            
-        case .unableToAbortMerge(let message):
-            return "[GIT.framework] RE0230: Unable to abort merge on this repository. Error says: '\(message)'."
-            
+                        
         case .thereIsNoMergeToAbort:
             return "[GIT.framework] RE0235: Unable to abort merge on this repository. There is no merge to abort."
-            
-        case .mergeHasBeenFallen(let message):
-            return "[GIT.framework] RE0240: Merge operation has been fallen. Error says: '\(message)'"
-        
+                    
         case .mergeFinishedWithConflicts:
             return "[GIT.framework] RE0250: Merge operation has been finished, but conflicts have been detected."
-            
-        case .cherryPickCouldNotApplyChange(let message):
-            return "[GIT.framework] RE300: A changeset has been reintegrated, but a conflict occured. Error says: '\(message)'"
-            
-        case .cherryPickHasBeenFallen(let message):
-            return "[GIT.framework] RE310: Cherry pick operation has been fallen. Error says: '\(message)'"
         }
     }
 }

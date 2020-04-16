@@ -39,10 +39,10 @@ class StashApplyTask: RepositoryTask, TaskRequirable {
         guard terminationStatus == 0 else {
             if checkForConflict() {
                 // a conflict has been detected
-                throw RepositoryError.stashApplyConflict(message: self.output ?? "")
+                throw GitError.stashApplyConflict(message: self.output ?? "")
             }
             
-            throw RepositoryError.stashApplyError(message: self.output ?? "uknown error")
+            throw GitError.stashApplyError(message: self.output ?? "uknown error")
         }
     }
     

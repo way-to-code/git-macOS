@@ -40,7 +40,7 @@ class RemoteRenameTask: RepositoryTask, TaskRequirable {
         guard terminationStatus == 0 else {
             // fallback, as an operation was fallen
             let output = repository.outputByRemovingSensitiveData(from: self.output ?? "")
-            throw RepositoryError.unableToRenameRemote(message: output)
+            throw GitError.remoteUnableToRename(message: output)
         }
     }
 }

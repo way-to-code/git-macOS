@@ -39,14 +39,14 @@ class MergeTask: RepositoryTask, TaskRequirable {
     
     func finish(terminationStatus: Int32) throws {
         if parameters.contains("--abort"), terminationStatus != 0 {
-            throw RepositoryError.unableToAbortMerge(message: output ?? "Unknown error")
+            throw GitError.mergeUnableToAbort(message: output ?? "Unknown error")
         }
         
         if terminationStatus != 0 {
             if checkForConflict() {
                 throw RepositoryError.mergeFinishedWithConflicts
             } else {
-                throw RepositoryError.mergeHasBeenFallen(message: output ?? "Unknown error")
+                throw GitError.mergeHasBeenFallen(message: output ?? "Unknown error")
             }
         }
         

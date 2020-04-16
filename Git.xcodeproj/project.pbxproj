@@ -67,6 +67,8 @@
 		7B52D66423F297AA00D8684E /* GitMergeStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B52D66223F297AA00D8684E /* GitMergeStatus.swift */; };
 		7BA82EC02440B6450046C4DC /* CheckoutOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA82EBF2440B6450046C4DC /* CheckoutOptions.swift */; };
 		7BA82EC12440B6450046C4DC /* CheckoutOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA82EBF2440B6450046C4DC /* CheckoutOptions.swift */; };
+		7BACCD8124485CDE000ECC06 /* RepositoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BACCD8024485CDE000ECC06 /* RepositoryError.swift */; };
+		7BACCD8224485CDE000ECC06 /* RepositoryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BACCD8024485CDE000ECC06 /* RepositoryError.swift */; };
 		7BB2A79A23F1445200C27EAA /* GitRepository+Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB2A79923F1445200C27EAA /* GitRepository+Merge.swift */; };
 		7BB2A79B23F1445200C27EAA /* GitRepository+Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB2A79923F1445200C27EAA /* GitRepository+Merge.swift */; };
 		7BB2A79E23F1450700C27EAA /* MergeTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB2A79D23F1450700C27EAA /* MergeTask.swift */; };
@@ -221,6 +223,7 @@
 		7B4F07E7243F18D5009560DA /* GitRepository+CherryPick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GitRepository+CherryPick.swift"; sourceTree = "<group>"; };
 		7B52D66223F297AA00D8684E /* GitMergeStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitMergeStatus.swift; sourceTree = "<group>"; };
 		7BA82EBF2440B6450046C4DC /* CheckoutOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutOptions.swift; sourceTree = "<group>"; };
+		7BACCD8024485CDE000ECC06 /* RepositoryError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryError.swift; sourceTree = "<group>"; };
 		7BB2A79923F1445200C27EAA /* GitRepository+Merge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GitRepository+Merge.swift"; sourceTree = "<group>"; };
 		7BB2A79D23F1450700C27EAA /* MergeTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeTask.swift; sourceTree = "<group>"; };
 		7BB2A7A023F145C300C27EAA /* MergeOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeOptions.swift; sourceTree = "<group>"; };
@@ -596,6 +599,7 @@
 			children = (
 				845D244120C3845400130D6E /* CredentialsProvider.swift */,
 				845D243F20C37F9800130D6E /* Repository.swift */,
+				7BACCD8024485CDE000ECC06 /* RepositoryError.swift */,
 				84B122DC20C9E04500DCAAAA /* RepositoryReference.swift */,
 				561497B0211DA1CB00EF4574 /* RepositoryRemote.swift */,
 				84EF21272172264A0030667A /* RepositoryLogRecord.swift */,
@@ -899,6 +903,7 @@
 				84076622219E0DAA00872938 /* GitStashListOptions.swift in Sources */,
 				84B122D820C8C03800DCAAAA /* CloneTask.swift in Sources */,
 				7B239D6C23E4A1F20025D052 /* GitRepository+Log.swift in Sources */,
+				7BACCD8124485CDE000ECC06 /* RepositoryError.swift in Sources */,
 				7B33BF60243E24560037C818 /* CherryPickTask.swift in Sources */,
 				84B83764211B7DA40031AD29 /* ArgumentConvertible.swift in Sources */,
 				846852A520D0362F00936A12 /* FileManager+Utils.swift in Sources */,
@@ -959,6 +964,7 @@
 				84076626219E0E7600872938 /* StashTest.swift in Sources */,
 				8407985021B12636008F72F5 /* StashDropTask.swift in Sources */,
 				8406B5DE217202BF00E381FD /* LogTest.swift in Sources */,
+				7BACCD8224485CDE000ECC06 /* RepositoryError.swift in Sources */,
 				846852A620D2E66E00936A12 /* FileManager+Utils.swift in Sources */,
 				7B239D6D23E4A1F20025D052 /* GitRepository+Log.swift in Sources */,
 				8407662A219E15D300872938 /* StashTask.swift in Sources */,

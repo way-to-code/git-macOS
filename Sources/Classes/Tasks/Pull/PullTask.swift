@@ -40,7 +40,7 @@ class PullTask: RepositoryTask, TaskRequirable {
     
     func finish(terminationStatus: Int32) throws {
         guard terminationStatus == 0 else {
-            throw RepositoryError.pullError(message: output ?? "")
+            throw GitError.pullError(message: output ?? "")
         }
     }
 }

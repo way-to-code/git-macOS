@@ -39,7 +39,7 @@ class StashDropTask: RepositoryTask, TaskRequirable {
     
     func finish(terminationStatus: Int32) throws {
         guard terminationStatus == 0 else {
-            throw RepositoryError.stashDropError(message: self.output ?? "uknown error")
+            throw GitError.stashDropError(message: self.output ?? "uknown error")
         }
     }
 }

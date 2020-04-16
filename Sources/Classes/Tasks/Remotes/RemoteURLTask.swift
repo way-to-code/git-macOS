@@ -57,7 +57,7 @@ class RemoteURLTask: RepositoryTask, TaskRequirable {
         guard terminationStatus == 0 else {
             // fallback, as an operation was fallen
             let output = repository.outputByRemovingSensitiveData(from: self.output ?? "")
-            throw RepositoryError.unableToListRemotes(message: output)
+            throw GitError.remoteUnableToList(message: output)
         }
         
         // parse URLs
@@ -65,7 +65,7 @@ class RemoteURLTask: RepositoryTask, TaskRequirable {
         
         for remoteURL in remotes ?? [] {
             guard let url = URL(string: String(remoteURL)) else {
-                throw RepositoryError.unableToListRemotes(message: "Can not obtain an URL for remote \(self.remoteName)")
+                throw GitError.remoteUnableToList(message: "Can not obtain an URL for remote \(self.remoteName)")
             }
             
             remoteURLs.append(url)

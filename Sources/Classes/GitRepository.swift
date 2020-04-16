@@ -83,7 +83,7 @@ public class GitRepository: Repository {
         }
         
         guard let record = recordsAfter.records.first else {
-            throw RepositoryError.stashError(message: "Unable to retreive a newly created record from repository")
+            throw GitError.stashError(message: "Unable to retreive a newly created record from repository")
         }
         
         return record

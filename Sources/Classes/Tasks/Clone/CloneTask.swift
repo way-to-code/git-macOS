@@ -47,7 +47,7 @@ class CloneTask: RepositoryTask, TaskRequirable {
         guard terminationStatus == 0 else {
             // fallback, as the clone was fallen
             let output = repository.outputByRemovingSensitiveData(from: self.output ?? "")
-            throw RepositoryError.cloneError(message: output)
+            throw GitError.cloneError(message: output)
         }
     }
 }

@@ -42,7 +42,7 @@ class RemoteListTask: RepositoryTask, TaskRequirable {
         guard terminationStatus == 0 else {
             // fallback, as the fetch was fallen
             let output = repository.outputByRemovingSensitiveData(from: self.output ?? "")
-            throw RepositoryError.unableToListRemotes(message: output)
+            throw GitError.remoteUnableToList(message: output)
         }
         
         // parse remotes. Each remote is divided by a new line

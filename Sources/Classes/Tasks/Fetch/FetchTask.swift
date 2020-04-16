@@ -39,7 +39,7 @@ class FetchTask: RepositoryTask, TaskRequirable {
         guard terminationStatus == 0 else {
             // fallback, as the fetch was fallen
             let output = repository.outputByRemovingSensitiveData(from: self.output ?? "")
-            throw RepositoryError.fetchError(message: output)
+            throw GitError.fetchError(message: output)
         }
     }
 }

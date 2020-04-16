@@ -40,10 +40,10 @@ class CherryPickTask: RepositoryTask, TaskRequirable {
     func finish(terminationStatus: Int32) throws {
         if terminationStatus != 0 {
             if checkCouldNotApplyError() {
-                throw RepositoryError.cherryPickCouldNotApplyChange(message: output ?? "")
+                throw GitError.cherryPickCouldNotApplyChange(message: output ?? "")
             }
             
-            throw RepositoryError.cherryPickHasBeenFallen(message: output ?? "Unknown error")
+            throw GitError.cherryPickHasBeenFallen(message: output ?? "Unknown error")
         }
     }
     
