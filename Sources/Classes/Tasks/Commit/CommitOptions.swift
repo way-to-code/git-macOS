@@ -24,7 +24,16 @@ public class GitCommitOptions: ArgumentConvertible {
         self.message = message
     }
     
+    public init(message: String, files: FileOptions) {
+        self.message = message
+        self.files = files
+    }
+    
     public enum FileOptions: ArgumentConvertible {
+        
+        /// Tells the command to commit only those files that were added to the index (staged for commit)
+        case staged
+        
         /// Tell the command to automatically stage files that have been modified and deleted, but new files you have not told Git about are not affected.
         case all
         
@@ -32,6 +41,8 @@ public class GitCommitOptions: ArgumentConvertible {
             switch self {
             case .all:
                 return ["--all"]
+            case .staged:
+                return []
             }
         }
     }
