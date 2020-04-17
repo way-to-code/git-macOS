@@ -56,7 +56,7 @@ $ brew install carthage
 To integrate Git.framework into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "way-to-code/git-macOS" ~> 1.9.1
+github "way-to-code/git-macOS" ~> 1.10
 ```
 
 Run `carthage update` to build the framework and drag the built `Git.framework` into your Xcode project.
