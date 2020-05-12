@@ -41,7 +41,17 @@ class CherryPickTask: RepositoryTask, TaskRequirable {
     }
     
     private func checkCouldNotApplyError() -> Bool {
-        return output?.starts(with: "error: could not apply") ?? false
+        guard let output = self.output else {
+            return false
+        }
+        
+        // Git 2.21.*
+        if output.starts(with: "error: could not apply") {
+            return true
+        }
+        
+        // Git 2.24.*
+        return GitOutputParser(output: output).checkForConflict()
     }
 }
 

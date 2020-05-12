@@ -47,17 +47,6 @@ class MergeTask: RepositoryTask, TaskRequirable {
     }
     
     private func checkForConflict() -> Bool {
-        guard let output = self.output else {
-            return false
-        }
-        
-        // This is not a good solution for checking a conflict like this. However, any other solution has not been found.
-        let pattern = "(CONFLICT \\(.+\\):)"
-        guard let regex = try? NSRegularExpression(pattern: pattern) else {
-            return true
-        }
-        
-        let results = regex.matches(in: output, range: NSRange(output.startIndex..., in: output))
-        return results.count > 0
+        return GitOutputParser(output: output).checkForConflict()
     }
 }
