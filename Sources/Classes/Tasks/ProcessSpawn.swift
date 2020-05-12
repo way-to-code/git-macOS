@@ -195,7 +195,10 @@ final class ProcessSpawn {
             return nil
         }
         
-        threadPayload = Payload(outputPipe: &outputPipe, output: output, pid: pid, isCancelled: false)
+        outputPipe.withUnsafeMutableBufferPointer { pipe in
+            threadPayload = Payload(outputPipe: pipe.baseAddress!, output: output, pid: pid, isCancelled: false)
+        }
+        
         pthread_create(&tid, nil, callback, &threadPayload)
         
         if let tid = tid {
