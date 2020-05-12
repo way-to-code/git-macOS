@@ -41,8 +41,7 @@ class RemoteURLTask: RepositoryTask, TaskRequirable {
     required init(owner: GitRepository, remoteName: String) {
         self.remoteName = remoteName
         
-        super.init(owner: owner)
-        workingPath = repository.localPath
+        super.init(owner: owner, options: [])
         
         add(RemoteURLOptions.called(name: remoteName).toArguments())
     }

@@ -89,6 +89,10 @@ public enum GitError: Error {
     
     /// Occurs when the cherry pick operation fails
     case cherryPickHasBeenFallen(message: String)
+    
+    // MARK: - Cherry
+    /// Occurs when cherry operation fails
+    case cherryHasBeenFallen(message: String)
 }
 
 public enum RepositoryError: Error {
@@ -151,6 +155,7 @@ extension GitError: GitCommonError {
         case .mergeUnableToAbort(let message): return message
         case .cherryPickCouldNotApplyChange(let message): return message
         case .cherryPickHasBeenFallen(let message): return message
+        case .cherryHasBeenFallen(let message): return message
         }
     }
 }

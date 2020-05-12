@@ -22,13 +22,6 @@ class StashTask: RepositoryTask, TaskRequirable {
         return "stash"
     }
     
-    required init(owner: GitRepository, options: ArgumentConvertible) {
-        super.init(owner: owner)
-        workingPath = repository.localPath
-        
-        add(options.toArguments())
-    }
-    
     func handle(output: String) {
     }
     

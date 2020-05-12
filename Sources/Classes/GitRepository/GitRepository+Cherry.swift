@@ -1,5 +1,5 @@
 //
-//  ResetTask.swift
+//  GitRepository.swift
 //  Git-macOS
 //
 //  Copyright (c) Max A. Akhmatov
@@ -15,25 +15,15 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-import Foundation
-
-class ResetTask: RepositoryTask, TaskRequirable {
+public extension GitRepository {
     
-    // MARK: - TaskRequirable
-    var name: String {
-        return "reset"
-    }
-    
-    func handle(output: String) {
-    }
-    
-    func handle(errorOutput: String) {
-    }
-    
-    func finish(terminationStatus: Int32) throws {
-        if terminationStatus != 0 {
-            throw GitRepository.FileError.unableToReset(message: output ?? "Undefined error")
-        }
-
+    func cherry(options: GitCherryOptions) throws -> GitCherryResult {
+        try ensureNoActiveOperations()
+        try validateLocalPath()
+        
+        let task = CherryTask(owner: self, options: options)
+        try task.run()
+        
+        return task.result
     }
 }

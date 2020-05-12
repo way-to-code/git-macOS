@@ -26,10 +26,8 @@ class RemoteListTask: RepositoryTask, TaskRequirable {
     /// The list of remote names obtained by the operation
     private(set) var remoteNames = [String]()
     
-    override init(owner: GitRepository) {
-        super.init(owner: owner)
-        
-        workingPath = repository.localPath
+    required init(owner: GitRepository) {
+        super.init(owner: owner, options: [])
     }
     
     func handle(output: String) {

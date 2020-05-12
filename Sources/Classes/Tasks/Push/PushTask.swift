@@ -24,13 +24,6 @@ class PushTask: RepositoryTask, TaskRequirable {
         return "push"
     }
     
-    required init(owner: GitRepository, options: ArgumentConvertible) {
-        super.init(owner: owner)
-        
-        workingPath = repository.localPath
-        add(options.toArguments())
-    }
-    
     func handle(output: String) {
         repository.delegate?.repository(repository, didProgressPush: output)
     }

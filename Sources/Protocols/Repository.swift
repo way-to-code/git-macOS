@@ -253,6 +253,9 @@ public protocol Repository: class {
     /// - Parameter options: The options used for the cherry pick
     func cherryPick(options: GitCherryPickOptions) throws
     
+    /// Performs the git cherry operation with the given options
+    func cherry(options: GitCherryOptions) throws -> GitCherryResult
+    
     /// Applies a stash with the specified options to the working copy.
     ///
     /// If no stash options are provided, by default the first stash is applied if possible

@@ -25,9 +25,8 @@ class ReferencesTask: RepositoryTask, TaskRequirable {
     
     private(set) var references = [RepositoryReference]()
     
-    override init(owner: GitRepository) {
-        super.init(owner: owner)
-        workingPath = repository.localPath
+    required init(owner: GitRepository) {
+        super.init(owner: owner, options: [])
         
         let writer = GitFormatEncoder()
         writer.path = "refname"

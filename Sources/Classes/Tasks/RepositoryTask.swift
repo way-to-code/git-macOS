@@ -55,8 +55,8 @@ class RepositoryTask {
     fileprivate weak var __self: TaskRequirable!
     
     /// MARK: - Public
-    init(owner: GitRepository) {
-        guard self is TaskRequirable else {
+    init(owner: GitRepository, options: ArgumentConvertible) {
+         guard self is TaskRequirable else {
             fatalError("Task must conform to \(String(describing: TaskRequirable.self)) protocol, but it doesn't")
         }
         
@@ -64,6 +64,9 @@ class RepositoryTask {
         repository.activeTask = self
         
         __self = self as? TaskRequirable
+        
+        workingPath = repository.localPath
+        add(options.toArguments())
     }
     
     func add(_ arguments: [String]) {

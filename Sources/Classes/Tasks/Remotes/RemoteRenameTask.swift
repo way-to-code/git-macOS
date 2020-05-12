@@ -24,8 +24,7 @@ class RemoteRenameTask: RepositoryTask, TaskRequirable {
     }
 
     required init(owner: GitRepository, remote: GitRemote, name: String) {
-        super.init(owner: owner)
-        workingPath = repository.localPath
+        super.init(owner: owner, options: [])
         
         add(["rename", (remote.name), name])
     }

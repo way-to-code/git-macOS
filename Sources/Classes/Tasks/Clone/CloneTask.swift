@@ -23,9 +23,7 @@ class CloneTask: RepositoryTask, TaskRequirable {
                   from remoteURL: String,
                   owner: GitRepository,
                   options: GitCloneOptions) {
-        super.init(owner: owner)
-        
-        workingPath = repository.localPath
+        super.init(owner: owner, options: [])
         
         add([remoteURL, localPath])
         add(options.toArguments())

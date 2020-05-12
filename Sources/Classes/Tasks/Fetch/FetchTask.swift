@@ -19,13 +19,6 @@ import Foundation
 
 class FetchTask: RepositoryTask, TaskRequirable {
     
-    required init(owner: GitRepository, options: ArgumentConvertible) {
-        super.init(owner: owner)
-        
-        workingPath = repository.localPath
-        add(options.toArguments())
-    }
-    
     var name: String { return "fetch" }
     
     func handle(output: String) {

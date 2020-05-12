@@ -24,8 +24,7 @@ class RemoteURLChangeTask: RepositoryTask, TaskRequirable {
     }
     
     required init(owner: GitRepository, remote: GitRemote, url: URL) {
-        super.init(owner: owner)
-        workingPath = repository.localPath
+        super.init(owner: owner, options: [])
         
         add(["set-url", (remote.name), url.absoluteString])
     }

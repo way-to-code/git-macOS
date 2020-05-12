@@ -24,9 +24,8 @@ class LogTask: RepositoryTask, TaskRequirable {
     
     private(set) var records = GitLogRecordList([])
     
-    required init(owner: GitRepository, options: ArgumentConvertible) {
-        super.init(owner: owner)
-        workingPath = repository.localPath
+    required override init(owner: GitRepository, options: ArgumentConvertible) {
+        super.init(owner: owner, options: [])
         
         let writer = GitFormatEncoder()
         writer.percentEscapingStrategy = .wrapWithQuotes

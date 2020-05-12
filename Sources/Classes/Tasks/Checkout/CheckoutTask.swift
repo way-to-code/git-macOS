@@ -23,18 +23,8 @@ class CheckoutTask: RepositoryTask, TaskRequirable {
         return "checkout"
     }
     
-    required init(reference: RepositoryReference, owner: GitRepository) {
-        super.init(owner: owner)
-        workingPath = repository.localPath
-        
-        add([reference.name])
-    }
-    
-    required init(owner: GitRepository, options: ArgumentConvertible) {
-        super.init(owner: owner)
-        workingPath = repository.localPath
-        
-        add(options.toArguments())
+    convenience init(reference: RepositoryReference, owner: GitRepository) {
+        self.init(owner: owner, options: [reference.name])
     }
     
     func handle(output: String) {
