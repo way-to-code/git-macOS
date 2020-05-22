@@ -26,6 +26,7 @@ public class GitCheckoutOptions: ArgumentConvertible {
     
     public init(files: [String]) {
         self.files = files
+        self.checkoutAllFiles = false
     }
     
     /// The list of file names to checkout.
