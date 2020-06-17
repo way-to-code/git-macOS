@@ -60,6 +60,9 @@ public class GitFetchOptions: ArgumentConvertible {
     /// This flag forces progress status even if the standard error stream is not directed to a terminal.
     var progress = true
     
+    /// Indicates whether to use --force option for the git or not
+    public var force = false
+    
     /// By using this option you may specify that remotes you want to fetch, By default all remotes are fetched
     public var remotes = RemoteOptions.all
     
@@ -71,6 +74,10 @@ public class GitFetchOptions: ArgumentConvertible {
         
         if progress {
             arguments.append("--progress")
+        }
+        
+        if force {
+            arguments.append("--force")
         }
         
         // add remote options

@@ -45,7 +45,7 @@ public class GitLogCompareOptions {
     ///
     /// Default value for this property means that when at least one reference is a remote one, repository will be fetched before the comparison is made.
     /// When both references participating in the comparison are local, the value of this property is ignored, meaning no fetch will be done at all.
-    public var fetchStrategy: FetchStrategy = .fetchRemotesBeforeComparison
+    public var fetchStrategy: FetchStrategy = .fetchRemotesBeforeComparison(force: false)
 }
 
 // MARK: - GitLogCompareOptions
@@ -65,8 +65,8 @@ public extension GitLogCompareOptions {
     enum FetchStrategy {
         
         /// When at least one reference is a remote one, perform repository fetch. When both references participated in comparison are local, this is ignored
-        case fetchRemotesBeforeComparison
-        
+        case fetchRemotesBeforeComparison(force: Bool)
+                
         /// Do not perform the fetch operation before the comparison, even at least one reference participating in the comparison is a remote one
         case ignore
     }

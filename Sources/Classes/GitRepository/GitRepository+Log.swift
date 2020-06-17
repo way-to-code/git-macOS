@@ -71,8 +71,23 @@ public extension GitRepository {
             }
         }
         
-        if shouldFetch && options.fetchStrategy == .fetchRemotesBeforeComparison {
-            try fetchRemotes()
+        if shouldFetch {
+            switch options.fetchStrategy {
+            case .fetchRemotesBeforeComparison(false):
+                let fetchOptions = GitFetchOptions.default
+                fetchOptions.force = false
+                
+                try fetchRemotes(options: fetchOptions)
+                
+            case .fetchRemotesBeforeComparison(true):
+                let fetchOptions = GitFetchOptions.default
+                fetchOptions.force = true
+                
+                try fetchRemotes(options: fetchOptions)
+                
+            default:
+                break
+            }
         }
         
         if lhsReferenceName == nil || rhsReferenceName == nil {
