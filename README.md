@@ -73,6 +73,32 @@ github "way-to-code/git-macOS" ~> 1.5.1
 
 You can install Git.framework manually. Clone the project locally, build and integrate to your project as a framework
 
+### Swift Package dependency
+
+When you want to use Git.framework as a dependency in other package, you may follow the given example:
+
+```swift
+let package = Package(
+    name: "MyPackage",
+    
+    products: [
+        .library(name: "myProduct", targets: ["myTarget"]),
+    ],
+    
+    dependencies: [
+        .package(name: "Git",
+                 url: "https://github.com/way-to-code/git-macOS.git",
+                 .upToNextMajor(from: "1.0.0")),
+    ],
+    
+    targets: [
+        .target(name: "myTarget", dependencies: [
+            .product(name: "Git", package: "Git")
+        ]),
+    ]
+)
+```
+
 ## Basics
 
 Learn the basics of how to use `Git.framework` in the [Wiki page](https://github.com/way-to-code/git-macOS/wiki/Basics)
