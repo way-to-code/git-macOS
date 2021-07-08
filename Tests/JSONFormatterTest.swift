@@ -16,6 +16,7 @@
 //  limitations under the License.ß∫
 
 import XCTest
+@testable import Git
 
 fileprivate struct DecoderTestEntity: Decodable {
     var content: String

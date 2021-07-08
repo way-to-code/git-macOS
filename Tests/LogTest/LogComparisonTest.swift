@@ -16,6 +16,7 @@
 //  limitations under the License.
 
 import XCTest
+@testable import Git
 
 class LogComparisonTest: XCTestCase, RepositoryTest {
 

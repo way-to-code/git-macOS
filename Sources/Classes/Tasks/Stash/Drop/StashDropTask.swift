@@ -15,7 +15,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-import Cocoa
+import Foundation
 
 class StashDropTask: RepositoryTask, TaskRequirable {
     var name: String {

@@ -16,6 +16,7 @@
 //  limitations under the License.
 
 import Foundation
+@testable import Git
 
 class TestFileStorage: FileStorage {
 

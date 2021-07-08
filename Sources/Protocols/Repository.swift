@@ -18,7 +18,7 @@
 import Foundation
 
 /// Common delegate for handling repository events
-public protocol RepositoryDelegate: class {
+public protocol RepositoryDelegate: AnyObject {
     /// Occurs when a clone operation receives a progress
     ///
     /// - Parameters:
@@ -91,7 +91,7 @@ public extension RepositoryDelegate {
 }
 
 /// Describes a single repository object
-public protocol Repository: class {
+public protocol Repository: AnyObject {
     /// Stores the remote URL to the repository
     var remoteURL: URL? { get }
     
