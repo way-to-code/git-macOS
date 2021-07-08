@@ -17,7 +17,7 @@
 
 import Foundation
 
-protocol TaskRequirable: class {
+protocol TaskRequirable: AnyObject {
     
     /// A command name in repository
     var name: String { get }

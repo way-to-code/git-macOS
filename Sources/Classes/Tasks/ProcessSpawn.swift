@@ -108,7 +108,7 @@ final class ProcessSpawn {
         posix_spawn_file_actions_addclose(&childFDActions, outputPipe[1])
         
         let argv: [UnsafeMutablePointer<CChar>?] = args.map{ $0.withCString(strdup) }
-        var envp: [UnsafeMutablePointer<CChar>?] = envs.map{ $0.withCString(strdup) }
+        let envp: [UnsafeMutablePointer<CChar>?] = envs.map{ $0.withCString(strdup) }
         defer { for case let arg? in argv { free(arg) } }
         defer { for case let env? in envp { free(env) } }
         

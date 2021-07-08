@@ -26,7 +26,7 @@ public enum FileStorageError: Error {
     case unableToWriteFile(atPath: String)
 }
 
-public protocol Accessible: class {
+public protocol Accessible: AnyObject {
     
     /// A path of an accessible object
     var path: String { get }
@@ -42,7 +42,7 @@ public protocol Accessible: class {
 }
 
 /// A file storage provides a basic operation to work with files (like reading & saving)
-public protocol FileStorage: class {
+public protocol FileStorage: AnyObject {
     
     /// Reads a content of an object
     func read(contentOf file: Accessible) throws -> Data
