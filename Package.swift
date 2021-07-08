@@ -1,15 +1,15 @@
-// swift-tools-version:5.1
+// swift-tools-version:5.2
 
 import PackageDescription
 
 let package = Package(
     name: "Git",
+    platforms: [.macOS(.v10_12)],
     products: [
-        .library(name: "Git", targets: ["Git-macOS"]),
-        ],
+        .library(name: "Git", targets: ["Git"]),
+    ],
     dependencies: [],
     targets: [
-        .target(name: "Git-macOS", dependencies: [], path: "Sources"),
-        .testTarget(name: "GitTests", dependencies: ["Git-macOS"], path: "Tests")
+        .target(name: "Git", dependencies: [], path: "Sources")
     ]
 )
