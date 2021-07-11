@@ -758,7 +758,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="499" height="148"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="2Wb-kS-Cwp">
+                                        <textView editable="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="2Wb-kS-Cwp">
                                             <rect key="frame" x="0.0" y="0.0" width="499" height="148"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -781,7 +781,7 @@
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0Mi-Hg-NIK" userLabel="progressLabel">
                                 <rect key="frame" x="46" y="217" width="54" height="14"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Cloning..." id="QLc-JP-t53">
-                                    <font key="font" metaFont="system" size="11"/>
+                                    <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
