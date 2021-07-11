@@ -353,7 +353,7 @@
 			repositoryURL = "https://github.com/way-to-code/git-macOS.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.11.1;
+				minimumVersion = 1.12.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
