@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Git",
+        "repositoryURL": "https://github.com/way-to-code/git-macOS.git",
+        "state": {
+          "branch": null,
+          "revision": "ffb7aaa713a63b3e2c7ec69764d905881a2afdd6",
+          "version": "1.11.1"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
