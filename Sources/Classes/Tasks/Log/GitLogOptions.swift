@@ -25,6 +25,9 @@ public class GitLogOptions: ArgumentConvertible {
         return GitLogOptions()
     }
     
+    public init() {
+    }
+    
     /// A number of commits to load. Default value is not specified that means there is not limit.
     public var limit: UInt?
     

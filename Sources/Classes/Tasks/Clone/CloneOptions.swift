@@ -126,11 +126,11 @@ public class GitCloneOptions {
     }
     
     /// Operate quietly. Progress is not reported to the standard error stream.
-    var quiet = true
+    public var quiet = true
     
     /// Progress status is reported on the standard error stream by default when it is attached to a terminal, unless -q is specified.
     /// This flag forces progress status even if the standard error stream is not directed to a terminal.
-    var progress = true
+    public var progress = true
     
     /// By using this option you may specify that branches you want to clone, By default all branches are cloned
     public var branches = BranchOptions.all
