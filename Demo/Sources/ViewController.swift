@@ -69,6 +69,10 @@ class ViewController: NSViewController {
                                                                  true).first {
             localPathTextField.stringValue = desktopPath
         }
+        
+        if #available(OSX 10.14, *) {
+            logTextView.usesAdaptiveColorMappingForDarkAppearance = true
+        }
     }
     
     private func clone() {
