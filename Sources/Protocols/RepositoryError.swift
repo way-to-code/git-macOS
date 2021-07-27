@@ -41,6 +41,10 @@ public enum GitError: Error {
     /// Occurs when the commit operation finishes with an error
     case commitError(message: String)
     
+    // MAKR: - Init
+    /// Occurs when the init operation finishes with an error
+    case initError(message: String)
+    
     // MARK: - Stash
     /// Occurs when a new stash creation is fallen
     case stashError(message: String)
@@ -93,6 +97,13 @@ public enum GitError: Error {
     // MARK: - Cherry
     /// Occurs when cherry operation fails
     case cherryHasBeenFallen(message: String)
+    
+    // MARK: - Branch
+    /// Occurs after a new branch name was not validated by git
+    case invalidBranchName(name: String, message: String)
+    
+    /// Occurs when a new branch can not be greated
+    case canNotCreateBranch(name: String, message: String)
 }
 
 public enum RepositoryError: Error {
@@ -109,6 +120,12 @@ public enum RepositoryError: Error {
     
     /// Occurs when trying to perform an operation on a repository, but a local path no longer exists in the system
     case repositoryLocalPathNotExists
+    
+    /// Occurs when a new repository can not be initialized because the path does not exist
+    case repositoryCreatePathNotExists
+    
+    /// Occurs when a new repository can not be initialized becase the path is invalid
+    case repositoryCreateInvalidPath
     
     /// Occurs when the clone operation can not be started because the specified path is not an empty folder
     case cloneErrorDirectoryIsNotEmpty(atPath: String)
@@ -130,6 +147,9 @@ public enum RepositoryError: Error {
     
     /// Occurs when merge abort operation can not be started, because the merge is not in progress
     case thereIsNoMergeToAbort
+    
+    /// Unexpected branch error occured
+    case branchNotFound(name: String)
 }
 
 // MARK: - GitError + GitCommonError
@@ -156,6 +176,9 @@ extension GitError: GitCommonError {
         case .cherryPickCouldNotApplyChange(let message): return message
         case .cherryPickHasBeenFallen(let message): return message
         case .cherryHasBeenFallen(let message): return message
+        case .invalidBranchName(_, let message): return message
+        case .canNotCreateBranch(_, let message): return message
+        case .initError(let message): return message
         }
     }
 }

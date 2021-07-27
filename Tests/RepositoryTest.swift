@@ -40,6 +40,18 @@ extension RepositoryTest {
         return GitRepository(at: bundleURL.path)
     }
     
+    func createEmptyRepositoryWithCommit() throws -> GitRepository {
+        let path = try FileManager.createTemporaryDirectory()
+        let repository = try GitRepository.createRepository(atPath: path, options: .default)
+        
+        let filePath = "\(path)/tmp.file"
+        try "".write(toFile: filePath, atomically: true, encoding: .utf8)
+        try repository.add(files: [filePath])
+        
+        try repository.commit(options: .init(message: "Initial commit", files: .all))
+        return repository
+    }
+    
     fileprivate func filePath(to fileName: String) -> String {
         guard let dataPath = Bundle(for: Self.self as! AnyClass).path(forResource: fileName, ofType: "") else {
             XCTFail("Unable to load resource \(fileName)"); return ""

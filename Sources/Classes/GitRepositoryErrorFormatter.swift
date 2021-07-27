@@ -77,6 +77,15 @@ class GitRepositoryErrorFormatter {
                     
         case .mergeFinishedWithConflicts:
             return "[GIT.framework] RE0250: Merge operation has been finished, but conflicts have been detected."
+        
+        case .branchNotFound(let branchName):
+            return "[GIT.framework] RE0350: Branch with the given name \(branchName) has not been found."
+            
+        case .repositoryCreateInvalidPath:
+            return "[GIT.framework] RE1000: Can not initialize a new repository at the given path. Path is invalid."
+            
+        case .repositoryCreatePathNotExists:
+            return "[GIT.framework] RE1010: Can not initialize a new repository at the given path. The given path does not exist."
         }
     }
 }

@@ -92,6 +92,7 @@ public extension RepositoryDelegate {
 
 /// Describes a single repository object
 public protocol Repository: AnyObject {
+    
     /// Stores the remote URL to the repository
     var remoteURL: URL? { get }
     
@@ -173,6 +174,16 @@ public protocol Repository: AnyObject {
     /// - Parameter options: The operation options. Use this if you want to customize the behaviour of the clone operation
     /// - Throws: An exception in case something went wrong
     func cloneAtTemporaryPath(options: GitCloneOptions) throws
+    
+    /// Creates a new **local** branch in the repository.
+    ///
+    /// Before a new branch is created, a branch name is validated by git. If a branch can not be created, an exception is raised.
+    /// Note that this method will create a new branch, but won't switch working copy to this branch. Use checkout() method in order to switch working copy.
+    /// - Parameters:
+    ///   - branchName: A name of a new branch to create
+    ///   - options: A set of options to be used for the branch creation. Please see GitBranchOptions for more details
+    @discardableResult
+    func createBranch(branchName: String, options: GitBranchOptions) throws -> RepositoryReference
     
     /// Fetches log records for this repository and the returns the list of fetched records
     ///
