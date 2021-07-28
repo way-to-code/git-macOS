@@ -59,6 +59,10 @@ public class GitPushOptions: ArgumentConvertible {
     /// By using this option you may specify those branches you want to push. By default all branches are pushed
     public var branches = BranchOptions.all
     
+    /// When set to true every branch that is up to date or successfully pushed will be upstream (tracking) reference.
+    /// The default value for this option is false
+    public var upstream: Bool = false
+    
     /// A list of custom string parameters to be passed for the git push operation.
     ///
     /// This is equivalent to `--push-option` in git
@@ -74,6 +78,10 @@ public class GitPushOptions: ArgumentConvertible {
         // Add custom parameters if any
         for option in parameters where option.count > 0 {
             arguments.append("--push-option=\(option)")
+        }
+        
+        if upstream {
+            arguments.append("--set-upstream")
         }
         
         return arguments
