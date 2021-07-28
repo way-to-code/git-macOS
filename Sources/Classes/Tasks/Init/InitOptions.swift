@@ -43,7 +43,7 @@ extension GitInitOptions: ArgumentConvertible {
         var arguments = [String]()
         
         if let branchName = initialBranchName, branchName.count > 0 {
-            arguments.append("--initial-branch=\"\(branchName)\"")
+            arguments.append("--initial-branch=\(branchName)")
         }
         
         if bare {
