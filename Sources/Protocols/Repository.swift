@@ -215,6 +215,12 @@ public protocol Repository: AnyObject {
     /// - Throws: An exception in case any error occured
     func listRemotes() throws -> GitRemoteList
     
+    /// Adds a new remote to the repository
+    /// - Parameters:
+    ///   - name: A name of a remote to be added
+    ///   - url: Remote URL
+    @discardableResult func addRemote(name: String, url: URL) throws -> RepositoryRemote
+    
     /// Lists status of files in repository
     func listStatus(options: GitStatusOptions) throws -> GitFileStatusList
     

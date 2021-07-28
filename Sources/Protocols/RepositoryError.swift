@@ -74,6 +74,9 @@ public enum GitError: Error {
     /// Occurs when the list remotes operation finishes with an error
     case remoteUnableToList(message: String)
     
+    /// Occurs when the remote can not be added
+    case remoteUnableToAdd(message: String)
+    
     /// Occurs when the rename remote operation finishes with an error
     case remoteUnableToRename(message: String)
     
@@ -169,6 +172,7 @@ extension GitError: GitCommonError {
         case .pushError(let message): return message
         case .pullError(let message): return message
         case .remoteUnableToList(let message): return message
+        case .remoteUnableToAdd(let message): return message
         case .remoteUnableToRename(let message): return message
         case .remoteUnableToChangeURL(let message): return message
         case .mergeHasBeenFallen(let message): return message
