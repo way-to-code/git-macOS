@@ -34,10 +34,10 @@ public extension GitRepository {
         
         // and then obtain an additional information
         for remoteName in listRemotesTask.remoteNames {
-            let urlTask = RemoteURLTask(owner: self, remoteName: remoteName)
+            let urlTask = RemoteUrlTask(owner: self, remoteName: remoteName)
             try urlTask.run()
             
-            guard let url = urlTask.remoteURLs.first else { continue }
+            guard let url = urlTask.remoteUrls.first else { continue }
             let remote = GitRemote(name: remoteName, url: url, repository: self)
             remotes.append(remote)
         }
@@ -76,7 +76,7 @@ public extension GitRepository {
         // local path must be valid
         try validateLocalPath()
         
-        let task = RemoteURLChangeTask(owner: self, remote: remote, url: newURL)
+        let task = RemoteUrlChangeTask(owner: self, remote: remote, url: newURL)
         try task.run()
     }
 }

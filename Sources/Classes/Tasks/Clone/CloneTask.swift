@@ -19,13 +19,13 @@ import Foundation
 
 class CloneTask: RepositoryTask, TaskRequirable {
     
-    required init(to localPath: String,
-                  from remoteURL: String,
+    required init(toLocalPath localPath: String,
+                  fromRemotePath remotePath: String,
                   owner: GitRepository,
                   options: GitCloneOptions) {
         super.init(owner: owner, options: [])
         
-        add([remoteURL, localPath])
+        add([remotePath, localPath])
         add(options.toArguments())
     }
 

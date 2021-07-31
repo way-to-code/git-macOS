@@ -23,7 +23,7 @@ public class GitRepository: Repository {
     public weak var delegate: RepositoryDelegate?
     
     private(set) public var localPath: String?
-    private(set) public var remoteURL: URL?
+    private(set) public var remoteUrl: URL?
     private(set) public var credentialsProvider: CredentialsProvider
     private var isTemporaryPath = false
     
@@ -36,15 +36,15 @@ public class GitRepository: Repository {
         RepositoryTask.executablePath = path
     }
     
-    required public init(from remoteURL: URL,
+    required public init(fromUrl remoteUrl: URL,
                          using credentialsProvider: CredentialsProvider = GitCredentialsProvider.anonymousProvider) {
-        self.remoteURL = remoteURL
+        self.remoteUrl = remoteUrl
         self.credentialsProvider = credentialsProvider
     }
     
-    required public init?(at localPath: String,
+    required public init?(atPath path: String,
                           using credentialsProvider: CredentialsProvider = GitCredentialsProvider.anonymousProvider) {
-        self.localPath = localPath
+        self.localPath = path
         self.credentialsProvider = credentialsProvider
         
         do {
@@ -100,31 +100,31 @@ public class GitRepository: Repository {
         try task.run()
     }
 
-    public func clone(at localPath: String, options: GitCloneOptions = GitCloneOptions.default) throws {
+    public func clone(atPath path: String, options: GitCloneOptions = GitCloneOptions.default) throws {
         // check a repository is not cloned yet
         try ensureNotClonedAlready()
         // check for an active operation
         try ensureNoActiveOperations()
         // check a valid path for cloning
-        try ensureDirectoryIsEmpty(at: localPath)
+        try ensureDirectoryIsEmpty(atPath: path)
         
-        guard let remoteURL = remoteURL else {
+        guard let remoteUrl = remoteUrl else {
             // fallback, due to no remote path
             throw RepositoryError.repositoryNotInitialized
         }
         
         // add credentials to string using the provider
-        let url = try credentialsProvider.urlByAddingCredentials(to: remoteURL)
+        let url = try credentialsProvider.urlByAddingCredentials(to: remoteUrl)
         
         // run a task
-        let task = CloneTask(to: localPath,
-                             from: url.absoluteString,
+        let task = CloneTask(toLocalPath: path,
+                             fromRemotePath: url.absoluteString,
                              owner: self,
                              options: options)
         try task.run()
         
         // store local cloned path of the repo
-        self.localPath = localPath
+        self.localPath = path
     }
     
     public func cloneAtTemporaryPath(options: GitCloneOptions = GitCloneOptions.default) throws {
@@ -135,7 +135,7 @@ public class GitRepository: Repository {
         isTemporaryPath = true
         
         do {
-            try clone(at: temporaryPath, options: options)
+            try clone(atPath: temporaryPath, options: options)
         } catch {
             // in case the clone fallen, clean up
             cleanupTemporaryPath()
@@ -317,7 +317,7 @@ extension GitRepository {
         }
     }
     
-    func ensureDirectoryIsEmpty(at localPath: String) throws {
+    func ensureDirectoryIsEmpty(atPath localPath: String) throws {
         var isDirectory = ObjCBool(true)
         _ = FileManager.default.fileExists(atPath: localPath, isDirectory: &isDirectory)
         

@@ -25,9 +25,9 @@ public extension GitRepository {
     ///   - options: A set of options for git init command.
     ///
     /// The specified path must exist, otherwise an exception is raized
-    static func createRepository(atPath path: String,
-                                 options: GitInitOptions = .default,
-                                 credentials: CredentialsProvider = GitCredentialsProvider.anonymousProvider) throws -> GitRepository {
+    static func create(atPath path: String,
+                       options: GitInitOptions = .default,
+                       credentials: CredentialsProvider = GitCredentialsProvider.anonymousProvider) throws -> GitRepository {
         var isDirectory = ObjCBool(true)
         let pathExists = FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory)
 
@@ -39,7 +39,7 @@ public extension GitRepository {
             throw RepositoryError.repositoryCreateInvalidPath
         }
         
-        guard let repository = GitRepository(at: path, using: credentials) else {
+        guard let repository = GitRepository(atPath: path, using: credentials) else {
             throw RepositoryError.repositoryCreateInvalidPath
         }
 

@@ -28,14 +28,14 @@ fileprivate enum RemoteURLOptions: ArgumentConvertible {
     }
 }
 
-class RemoteURLTask: RepositoryTask, TaskRequirable {
+class RemoteUrlTask: RepositoryTask, TaskRequirable {
 
     var name: String {
         return "remote"
     }
     
     /// The list of remote names obtained by the operation
-    private(set) var remoteURLs = [URL]()
+    private(set) var remoteUrls = [URL]()
     private(set) var remoteName: String
     
     required init(owner: GitRepository, remoteName: String) {
@@ -62,12 +62,12 @@ class RemoteURLTask: RepositoryTask, TaskRequirable {
         // parse URLs
         let remotes = self.output?.trimmingCharacters(in: .whitespacesAndNewlines).split(separator: "\n")
         
-        for remoteURL in remotes ?? [] {
-            guard let url = URL(string: String(remoteURL)) else {
+        for remoteUrl in remotes ?? [] {
+            guard let url = URL(string: String(remoteUrl)) else {
                 throw GitError.remoteUnableToList(message: "Can not obtain an URL for remote \(self.remoteName)")
             }
             
-            remoteURLs.append(url)
+            remoteUrls.append(url)
         }
     }
 }

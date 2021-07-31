@@ -23,7 +23,7 @@ extension FileManager {
     ///
     /// - parameter path: Path where a new directory should be created
     /// - parameter removeIfExists: If directory with the same path exists it will be removed before creation of a new directory
-    static func createDirectory(at path: String, removeIfExists: Bool) throws {
+    static func createDirectory(atPath path: String, removeIfExists: Bool) throws {
         if removeIfExists {
             // check if directory at the provided path already exists and remove it if nessesary
             removeDirectory(at: path)
@@ -42,7 +42,7 @@ extension FileManager {
         let fileName  = NSUUID().uuidString
         let fullPath  = directory + fileName
         
-        try createDirectory(at: fullPath, removeIfExists: true)
+        try createDirectory(atPath: fullPath, removeIfExists: true)
         return fullPath
     }
     

@@ -93,8 +93,8 @@ public extension RepositoryDelegate {
 /// Describes a single repository object
 public protocol Repository: AnyObject {
     
-    /// Stores the remote URL to the repository
-    var remoteURL: URL? { get }
+    /// Stores the remote url to the repository
+    var remoteUrl: URL? { get }
     
     /// A local path of a repository after it was cloned
     var localPath: String? { get }
@@ -107,16 +107,16 @@ public protocol Repository: AnyObject {
     /// Initializes a repository with the specified URL
     ///
     /// - Parameters:
-    ///   - remoteURL: A remote repository URL
+    ///   - remoteUrl: A remote repository URL
     ///   - credentialsProvider: A provider for credentials
-    init(from remoteURL: URL, using credentialsProvider: CredentialsProvider)
+    init(fromUrl remoteUrl: URL, using credentialsProvider: CredentialsProvider)
     
     /// Tries to initializes a repository with the specified local path
     ///
     /// - Parameters:
-    ///   - localPath: A local path to the repository
+    ///   - path: A local path to the repository
     ///   - credentialsProvider: A provider for credentials
-    init?(at localPath: String, using credentialsProvider: CredentialsProvider)
+    init?(atPath path: String, using credentialsProvider: CredentialsProvider)
     
     /// Add file(s) contents to the index
     /// - Parameters:
@@ -155,11 +155,11 @@ public protocol Repository: AnyObject {
     /// Creates a working copy of a remote repository locally. Repository must be initialized with a remote URL.
     ///
     /// - Parameters:
-    ///   - localPath: A path on the local machine where to clone the contents of the remote repository.
+    ///   - path: A path on the local machine where to clone the contents of the remote repository.
     /// If the specified path doesn't exist in the system yet, it will be created. However, if it exists, it must be an empty directory
     ///   - options: The operation options. Use this if you want to customize the behaviour of the clone operation
     /// - Throws: An exception if a repository can not be copied
-    func clone(at localPath: String, options: GitCloneOptions) throws
+    func clone(atPath path: String, options: GitCloneOptions) throws
     
     /// Creates a working copy of a remote repository locally at temporary path.
     ///

@@ -56,7 +56,7 @@ $ brew install carthage
 To integrate Git.framework into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "way-to-code/git-macOS" ~> 1.13.0
+github "way-to-code/git-macOS" ~> 1.14.1
 ```
 
 Run `carthage update` to build the framework and drag the built `Git.framework` into your Xcode project.
@@ -110,12 +110,12 @@ Learn the basics of how to use `Git.framework` in the [Wiki page](https://github
 To clone a remote repository you need to create an object **GitRepository**
 
 ```swift
-let repository = GitRepository(from: URL(string: "https://github.com/github/hub.git"))
+let repository = GitRepository(fromUrl: URL(string: "https://github.com/github/hub.git"))
 ```
 Next, just call the clone method
 
 ```swift
-try? repository.clone(at: "/Users/youruser/hub")
+try? repository.clone(atPath: "/Users/youruser/hub")
 ```
 
 ### Providing credentials

@@ -18,12 +18,12 @@
 		561497B1211DA1CB00EF4574 /* RepositoryRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561497B0211DA1CB00EF4574 /* RepositoryRemote.swift */; };
 		561497B3211DAC7300EF4574 /* GitRemoteList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561497B2211DAC7300EF4574 /* GitRemoteList.swift */; };
 		561497B6211DAE3300EF4574 /* RemoteListTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561497B5211DAE3300EF4574 /* RemoteListTask.swift */; };
-		561497B8211DB3FB00EF4574 /* RemoteURLTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561497B7211DB3FB00EF4574 /* RemoteURLTask.swift */; };
+		561497B8211DB3FB00EF4574 /* RemoteUrlTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561497B7211DB3FB00EF4574 /* RemoteUrlTask.swift */; };
 		5629A6E2233E17760071DED3 /* ProcessSpawn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5629A6E1233E17760071DED3 /* ProcessSpawn.swift */; };
 		5629A6E3233E17760071DED3 /* ProcessSpawn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5629A6E1233E17760071DED3 /* ProcessSpawn.swift */; };
 		56466BA2211DBBE9001EF6C3 /* GitRemoteList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561497B2211DAC7300EF4574 /* GitRemoteList.swift */; };
 		56466BA3211DBBF5001EF6C3 /* RemoteListTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561497B5211DAE3300EF4574 /* RemoteListTask.swift */; };
-		56466BA4211DBBF5001EF6C3 /* RemoteURLTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561497B7211DB3FB00EF4574 /* RemoteURLTask.swift */; };
+		56466BA4211DBBF5001EF6C3 /* RemoteUrlTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561497B7211DB3FB00EF4574 /* RemoteUrlTask.swift */; };
 		56466BA5211DBC1D001EF6C3 /* RepositoryRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561497B0211DA1CB00EF4574 /* RepositoryRemote.swift */; };
 		56466BA6211DBC2B001EF6C3 /* GitRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561497AE211DA19C00EF4574 /* GitRemote.swift */; };
 		56466BA8211DBFDD001EF6C3 /* RemoteRenameTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56466BA7211DBFDD001EF6C3 /* RemoteRenameTask.swift */; };
@@ -36,8 +36,8 @@
 		5673ED7D2126DD7500083229 /* GitPushOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673ED7B2126DD7500083229 /* GitPushOptions.swift */; };
 		5673ED7F2126DF2500083229 /* PushTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673ED7E2126DF2500083229 /* PushTask.swift */; };
 		5673ED802126DF2500083229 /* PushTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673ED7E2126DF2500083229 /* PushTask.swift */; };
-		56839F4A212ACFB200E161E9 /* RemoteURLChangeTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56839F49212ACFB200E161E9 /* RemoteURLChangeTask.swift */; };
-		56839F4B212ACFB200E161E9 /* RemoteURLChangeTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56839F49212ACFB200E161E9 /* RemoteURLChangeTask.swift */; };
+		56839F4A212ACFB200E161E9 /* RemoteUrlChangeTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56839F49212ACFB200E161E9 /* RemoteUrlChangeTask.swift */; };
+		56839F4B212ACFB200E161E9 /* RemoteUrlChangeTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56839F49212ACFB200E161E9 /* RemoteUrlChangeTask.swift */; };
 		568E1B2723F6ADEB00E67274 /* ResetTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568E1B2623F6ADEB00E67274 /* ResetTask.swift */; };
 		568E1B2923F6AE3B00E67274 /* GitResetOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568E1B2823F6AE3B00E67274 /* GitResetOptions.swift */; };
 		568E1B2A23F6AE3B00E67274 /* GitResetOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568E1B2823F6AE3B00E67274 /* GitResetOptions.swift */; };
@@ -238,14 +238,14 @@
 		561497B0211DA1CB00EF4574 /* RepositoryRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryRemote.swift; sourceTree = "<group>"; };
 		561497B2211DAC7300EF4574 /* GitRemoteList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitRemoteList.swift; sourceTree = "<group>"; };
 		561497B5211DAE3300EF4574 /* RemoteListTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteListTask.swift; sourceTree = "<group>"; };
-		561497B7211DB3FB00EF4574 /* RemoteURLTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteURLTask.swift; sourceTree = "<group>"; };
+		561497B7211DB3FB00EF4574 /* RemoteUrlTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteUrlTask.swift; sourceTree = "<group>"; };
 		5629A6E1233E17760071DED3 /* ProcessSpawn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessSpawn.swift; sourceTree = "<group>"; };
 		56466BA7211DBFDD001EF6C3 /* RemoteRenameTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteRenameTask.swift; sourceTree = "<group>"; };
 		5673ED742126C7A300083229 /* CommitOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitOptions.swift; sourceTree = "<group>"; };
 		5673ED772126CB5200083229 /* CommitTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitTask.swift; sourceTree = "<group>"; };
 		5673ED7B2126DD7500083229 /* GitPushOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitPushOptions.swift; sourceTree = "<group>"; };
 		5673ED7E2126DF2500083229 /* PushTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushTask.swift; sourceTree = "<group>"; };
-		56839F49212ACFB200E161E9 /* RemoteURLChangeTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteURLChangeTask.swift; sourceTree = "<group>"; };
+		56839F49212ACFB200E161E9 /* RemoteUrlChangeTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteUrlChangeTask.swift; sourceTree = "<group>"; };
 		568E1B2623F6ADEB00E67274 /* ResetTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetTask.swift; sourceTree = "<group>"; };
 		568E1B2823F6AE3B00E67274 /* GitResetOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitResetOptions.swift; sourceTree = "<group>"; };
 		56D5FBD92400256400875B8C /* GitStatusOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitStatusOptions.swift; sourceTree = "<group>"; };
@@ -395,8 +395,8 @@
 				7BA20DE626B1EDDE005EA305 /* RemoteAddTask.swift */,
 				561497B5211DAE3300EF4574 /* RemoteListTask.swift */,
 				56466BA7211DBFDD001EF6C3 /* RemoteRenameTask.swift */,
-				56839F49212ACFB200E161E9 /* RemoteURLChangeTask.swift */,
-				561497B7211DB3FB00EF4574 /* RemoteURLTask.swift */,
+				56839F49212ACFB200E161E9 /* RemoteUrlChangeTask.swift */,
+				561497B7211DB3FB00EF4574 /* RemoteUrlTask.swift */,
 			);
 			path = Remotes;
 			sourceTree = "<group>";
@@ -1013,7 +1013,7 @@
 				561497AF211DA19C00EF4574 /* GitRemote.swift in Sources */,
 				8407984F21B12636008F72F5 /* StashDropTask.swift in Sources */,
 				7BF42955256854010064DDB2 /* BranchTask.swift in Sources */,
-				56839F4A212ACFB200E161E9 /* RemoteURLChangeTask.swift in Sources */,
+				56839F4A212ACFB200E161E9 /* RemoteUrlChangeTask.swift in Sources */,
 				8407661C219E0BED00872938 /* StashListTask.swift in Sources */,
 				84B122D620C8B82000DCAAAA /* RepositoryTask.swift in Sources */,
 				84B83761211B78B00031AD29 /* GitFetchOptions.swift in Sources */,
@@ -1029,7 +1029,7 @@
 				845D244220C3845400130D6E /* CredentialsProvider.swift in Sources */,
 				84DB399C2172159600EC5D97 /* GitLogRecordList.swift in Sources */,
 				84BD16C020D2FFC00038F377 /* FileStorage.swift in Sources */,
-				561497B8211DB3FB00EF4574 /* RemoteURLTask.swift in Sources */,
+				561497B8211DB3FB00EF4574 /* RemoteUrlTask.swift in Sources */,
 				84BD16BC20D2FB640038F377 /* File.swift in Sources */,
 				560B1A8C23FFECF000E110DE /* GitRepository+Files.swift in Sources */,
 				84B83767211B7F1A0031AD29 /* FetchTask.swift in Sources */,
@@ -1068,7 +1068,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				56466BA4211DBBF5001EF6C3 /* RemoteURLTask.swift in Sources */,
+				56466BA4211DBBF5001EF6C3 /* RemoteUrlTask.swift in Sources */,
 				7BB2A79B23F1445200C27EAA /* GitRepository+Merge.swift in Sources */,
 				560B1A8D23FFECF000E110DE /* GitRepository+Files.swift in Sources */,
 				5673ED802126DF2500083229 /* PushTask.swift in Sources */,
@@ -1115,7 +1115,7 @@
 				84076620219E0CB200872938 /* GitStashRecord.swift in Sources */,
 				560B1A8723FFE90D00E110DE /* AddTask.swift in Sources */,
 				7BC384C42453082C00511F0B /* GitCherryOptions.swift in Sources */,
-				56839F4B212ACFB200E161E9 /* RemoteURLChangeTask.swift in Sources */,
+				56839F4B212ACFB200E161E9 /* RemoteUrlChangeTask.swift in Sources */,
 				5673ED7D2126DD7500083229 /* GitPushOptions.swift in Sources */,
 				7B41888926B5698600145F1E /* GitReferenceName.swift in Sources */,
 				8406B5D92171FBFB00E381FD /* LogTask.swift in Sources */,

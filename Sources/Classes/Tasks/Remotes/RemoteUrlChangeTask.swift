@@ -1,5 +1,5 @@
 //
-//  RemoteURLChangeTask.swift
+//  RemoteUrlChangeTask.swift
 //  Git-macOS
 //
 //  Copyright (c) 2018 Max A. Akhmatov
@@ -17,7 +17,7 @@
 
 import Foundation
 
-class RemoteURLChangeTask: RepositoryTask, TaskRequirable {
+class RemoteUrlChangeTask: RepositoryTask, TaskRequirable {
     
     var name: String {
         return "remote"
