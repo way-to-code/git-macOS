@@ -17,80 +17,6 @@
 
 import Foundation
 
-/// Common delegate for handling repository events
-public protocol RepositoryDelegate: AnyObject {
-    /// Occurs when a clone operation receives a progress
-    ///
-    /// - Parameters:
-    ///   - repository: A repository reponsible for an event
-    ///   - progress: Output string receved from repository
-    func repository(_ repository: Repository, didProgressClone progress: String)
-    
-    /// Occurs when a commit operation receives a progress
-    ///
-    /// - Parameters:
-    ///   - repository: A repository reponsible for an event
-    ///   - progress: Output string receved from repository
-    func repository(_ repository: Repository, didProgressCommit progress: String)
-    
-    /// Occurs when a push operation receives a progress
-    ///
-    /// - Parameters:
-    ///   - repository: A repository reponsible for an event
-    ///   - progress: Output string receved from repository
-    func repository(_ repository: Repository, didProgressPush progress: String)
-    
-    /// Occurs when a pull operation receives a progress
-    ///
-    /// - Parameters:
-    ///   - repository: A repository reponsible for an event
-    ///   - progress: Output string receved from repository
-    func repository(_ repository: Repository, didProgressPull progress: String)
-    
-    /// Occurs when a fetch operation receives a progress
-    ///
-    /// - Parameters:
-    ///   - repository: A repository reponsible for an event
-    func repository(_ repository: Repository, didProgressFetch progress: String)
-    
-    /// Occurs when a task is being started
-    ///
-    /// - Parameters:
-    ///   - repository: A repository reponsible for an event
-    ///   - arguments: The list of arguments for the starting command
-    func repository(_ repository: Repository, willStartTaskWithArguments arguments: [String])
-    
-    /// Occurs when the merge operation finishes
-    /// - Parameters:
-    ///   - repository: A repository responsible for an event
-    ///   - output: A raw output provided by the merge command
-    func repository(_ repository: Repository, didFinishMerge output: String?)
-}
-
-public extension RepositoryDelegate {
-    func repository(_ repository: Repository, didProgressCommit progress: String) {
-    }
-    
-    func repository(_ repository: Repository, didProgressClone progress: String) {
-    }
-    
-    func repository(_ repository: Repository, didProgressFetch progress: String) {
-    }
-    
-    func repository(_ repository: Repository, didProgressPush progress: String) {
-    }
-    
-    func repository(_ repository: Repository, didProgressPull progress: String) {
-    }
-    
-    func repository(_ repository: Repository, willStartTaskWithArguments arguments: [String]) {
-    }
-    
-    func repository(_ repository: Repository, didFinishMerge output: String?) {
-    }
-}
-
-/// Describes a single repository object
 public protocol Repository: AnyObject {
     
     /// Stores the remote url to the repository
@@ -109,14 +35,14 @@ public protocol Repository: AnyObject {
     /// - Parameters:
     ///   - remoteUrl: A remote repository URL
     ///   - credentialsProvider: A provider for credentials
-    init(fromUrl remoteUrl: URL, using credentialsProvider: CredentialsProvider)
+    init(fromUrl remoteUrl: URL, using credentials: CredentialsProvider)
     
     /// Tries to initializes a repository with the specified local path
     ///
     /// - Parameters:
     ///   - path: A local path to the repository
     ///   - credentialsProvider: A provider for credentials
-    init?(atPath path: String, using credentialsProvider: CredentialsProvider)
+    init(atPath path: String, using credentialsProvider: CredentialsProvider) throws
     
     /// Add file(s) contents to the index
     /// - Parameters:

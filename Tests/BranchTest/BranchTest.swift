@@ -21,7 +21,7 @@ import XCTest
 class BranchTest: XCTestCase, RepositoryTest {
     
     var repositoryBundleName: String {
-        return "BranchRepository.bundle"
+        return ""
     }
     
     private var repository: GitRepository!
@@ -32,7 +32,7 @@ class BranchTest: XCTestCase, RepositoryTest {
     
     override func tearDownWithError() throws {
         if let path = repository?.localPath {
-            FileManager.removeDirectory(at: path)
+            FileManager.removeDirectory(atPath: path)
         }
     }
     

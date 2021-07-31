@@ -29,7 +29,7 @@ protocol RepositoryTest {
 extension RepositoryTest {
     
     func createRepository() -> GitRepository? {
-        let bundleURL = URL(fileURLWithPath: filePath(to: repositoryBundleName))
+        let bundleURL = URL(fileURLWithPath: path(toFile: repositoryBundleName))
         
         // As xcode can not work with hidden files rename git to .git
         let gitURL = bundleURL.appendingPathComponent("git")
@@ -37,12 +37,12 @@ extension RepositoryTest {
         
         try? FileManager.default.moveItem(at: gitURL, to: dotGitURL)
         
-        return GitRepository(at: bundleURL.path)
+        return try? GitRepository(atPath: bundleURL.path)
     }
     
     func createEmptyRepositoryWithCommit() throws -> GitRepository {
         let path = try FileManager.createTemporaryDirectory()
-        let repository = try GitRepository.createRepository(atPath: path, options: .default)
+        let repository = try GitRepository.create(atPath: path, options: .default)
         
         let filePath = "\(path)/tmp.file"
         try "".write(toFile: filePath, atomically: true, encoding: .utf8)
@@ -52,7 +52,7 @@ extension RepositoryTest {
         return repository
     }
     
-    fileprivate func filePath(to fileName: String) -> String {
+    fileprivate func path(toFile fileName: String) -> String {
         guard let dataPath = Bundle(for: Self.self as! AnyClass).path(forResource: fileName, ofType: "") else {
             XCTFail("Unable to load resource \(fileName)"); return ""
         }

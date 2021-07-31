@@ -29,7 +29,7 @@ class StashTest: FileTest {
         
         try? FileManager.default.moveItem(at: gitURL, to: dotGitURL)
         
-        return GitRepository(at: bundleURL.path)
+        return try? GitRepository(atPath: bundleURL.path)
     }
     
     func test1ListingStash() {

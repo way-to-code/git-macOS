@@ -28,20 +28,18 @@ public extension GitRepository {
     static func create(atPath path: String,
                        options: GitInitOptions = .default,
                        credentials: CredentialsProvider = GitCredentialsProvider.anonymousProvider) throws -> GitRepository {
-        var isDirectory = ObjCBool(true)
-        let pathExists = FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory)
-
-        guard pathExists else {
+        switch FileManager.checkFile(at: URL(fileURLWithPath: path)) {
+        case .exists(isDirectory: true):
+            break
+            
+        case .exists(isDirectory: false):
+            throw RepositoryError.repositoryCreateInvalidPath
+            
+        case .notExists:
             throw RepositoryError.repositoryCreatePathNotExists
         }
         
-        guard isDirectory.boolValue else {
-            throw RepositoryError.repositoryCreateInvalidPath
-        }
-        
-        guard let repository = GitRepository(atPath: path, using: credentials) else {
-            throw RepositoryError.repositoryCreateInvalidPath
-        }
+        let repository = GitRepository(atEmptyPath: path, using: credentials)
 
         // Validate a branch name if it was provided
         if let branchName = options.initialBranchName {

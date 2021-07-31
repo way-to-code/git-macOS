@@ -57,6 +57,9 @@ class GitRepositoryErrorFormatter {
         case .repositoryLocalPathNotExists:
             return "[GIT.framework] RE0040: Local path for the repository is no longer valid."
             
+        case .repositoryInvalidGitDirectory(let atPath):
+            return "[GIT.framework] RE0041: Not a git repository at path: \(atPath). .git directory does not exist"
+            
         case .cloneErrorDirectoryIsNotEmpty(let atPath):
             return "[GIT.framework] RE0050: Unable to clone a repository at '\(atPath)'. Path is not empty."
             

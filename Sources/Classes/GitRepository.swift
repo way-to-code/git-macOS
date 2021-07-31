@@ -37,22 +37,22 @@ public class GitRepository: Repository {
     }
     
     required public init(fromUrl remoteUrl: URL,
-                         using credentialsProvider: CredentialsProvider = GitCredentialsProvider.anonymousProvider) {
+                         using credentials: CredentialsProvider = GitCredentialsProvider.anonymousProvider) {
         self.remoteUrl = remoteUrl
-        self.credentialsProvider = credentialsProvider
+        self.credentialsProvider = credentials
     }
     
-    required public init?(atPath path: String,
-                          using credentialsProvider: CredentialsProvider = GitCredentialsProvider.anonymousProvider) {
+    required public init(atPath path: String,
+                          using credentials: CredentialsProvider = GitCredentialsProvider.anonymousProvider) throws {
         self.localPath = path
-        self.credentialsProvider = credentialsProvider
+        self.credentialsProvider = credentials
         
-        do {
-            try validateLocalPath()
-        } catch {
-            // unable to create a repository
-            return nil
-        }
+        try validateLocalPath()
+    }
+    
+    required internal init(atEmptyPath path: String, using credentials: CredentialsProvider) {
+        self.localPath = path
+        self.credentialsProvider = credentials
     }
     
     deinit {
@@ -147,7 +147,7 @@ public class GitRepository: Repository {
         guard let path = localPath else {
             return
         }
-        FileManager.removeDirectory(at: path)
+        FileManager.removeDirectory(atPath: path)
     }
     
     public func fetchRemotes(options: GitFetchOptions = GitFetchOptions.default) throws {
@@ -311,6 +311,7 @@ extension GitRepository {
 
 // MARK: - Internal
 extension GitRepository {
+    
     func ensureNoActiveOperations() throws {
         guard activeTask == nil else {
             throw RepositoryError.activeOperationInProgress
@@ -342,8 +343,30 @@ extension GitRepository {
             throw RepositoryError.repositoryNotInitialized
         }
         
-        guard FileManager.default.fileExists(atPath: localPath) else {
+        let url = URL(fileURLWithPath: localPath)
+        
+        // #1. Check the local path exists and is valid
+        switch FileManager.checkFile(at: url) {
+        case .notExists:
             throw RepositoryError.repositoryLocalPathNotExists
+            
+        case .exists(let isDirectory):
+            guard isDirectory else {
+                throw RepositoryError.repositoryLocalPathNotExists
+            }
+        }
+
+        let gitUrl = url.appendingPathComponent(".git")
+
+        // #2. Check whether .git folder exists
+        switch FileManager.checkFile(at: gitUrl) {
+        case .notExists:
+            throw RepositoryError.repositoryInvalidGitDirectory(atPath: gitUrl.relativePath)
+            
+        case .exists(let isDirectory):
+            guard isDirectory else {
+                throw RepositoryError.repositoryInvalidGitDirectory(atPath: gitUrl.relativePath)
+            }
         }
     }
     

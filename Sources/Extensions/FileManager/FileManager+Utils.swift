@@ -17,6 +17,29 @@
 
 import Foundation
 
+enum FileStatusOnDisk {
+    
+    case exists(isDirectory: Bool)
+    
+    case notExists
+}
+
+extension FileStatusOnDisk: Equatable {
+}
+
+func ==(lhs: FileStatusOnDisk, rhs: FileStatusOnDisk) -> Bool {
+    switch (lhs, rhs) {
+    case (.exists(let isDirectoryLhs), .exists(let isDirectoryRhs)):
+        return isDirectoryLhs == isDirectoryRhs
+
+    case (.notExists, .notExists):
+        return true
+
+    default:
+        return false
+    }
+}
+
 extension FileManager {
     
     /// Creates a directory on the local machine
@@ -26,7 +49,7 @@ extension FileManager {
     static func createDirectory(atPath path: String, removeIfExists: Bool) throws {
         if removeIfExists {
             // check if directory at the provided path already exists and remove it if nessesary
-            removeDirectory(at: path)
+            removeDirectory(atPath: path)
         }
         
         try FileManager.default.createDirectory(atPath: path,
@@ -47,7 +70,7 @@ extension FileManager {
     }
     
     /// Removes the directory at the provided path
-    static func removeDirectory(at path: String) {
+    static func removeDirectory(atPath path: String) {
         let fileManager = FileManager.default
         
         // check existence
@@ -57,8 +80,20 @@ extension FileManager {
         }
     }
     
+    /// Checks a file status at the specified url
+    static func checkFile(at url: URL) -> FileStatusOnDisk {
+        var isDirectory = ObjCBool(true)
+        let isFileExists = FileManager.default.fileExists(atPath: url.relativePath, isDirectory: &isDirectory)
+        
+        if isFileExists {
+            return .exists(isDirectory: isDirectory.boolValue)
+        } else {
+            return .notExists
+        }
+    }
+    
     /// Writes a content to a file at the specified path
-    static func writeFile(to path: String, content: String, overwrite: Bool = true) {
+    static func writeFile(toPath path: String, content: String, overwrite: Bool = true) {
         do { try content.write(toFile: path, atomically: true, encoding: .utf8) }  catch _ as NSError {}
     }
 }

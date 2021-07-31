@@ -124,6 +124,9 @@ public enum RepositoryError: Error {
     /// Occurs when trying to perform an operation on a repository, but a local path no longer exists in the system
     case repositoryLocalPathNotExists
     
+    /// Occurs when git repository can not be initialized, because the specified folder does not contain a git repsitory
+    case repositoryInvalidGitDirectory(atPath: String)
+    
     /// Occurs when a new repository can not be initialized because the path does not exist
     case repositoryCreatePathNotExists
     

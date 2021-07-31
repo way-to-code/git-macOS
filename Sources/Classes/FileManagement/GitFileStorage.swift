@@ -56,7 +56,7 @@ public class GitFileStorage: FileStorage {
             throw FileStorageError.unableToWriteFile(atPath: filePath)
         }
         
-        FileManager.writeFile(to: filePath, content: content)
+        FileManager.writeFile(toPath: filePath, content: content)
     }
 }
 
