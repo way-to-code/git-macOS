@@ -85,7 +85,7 @@ class ViewController: NSViewController {
         // ℹ️ #4
         // Initiate a new instane of repository with a remote URL
         // If you want to track the progress, assign a delegate object.
-        repository = GitRepository(from: remoteUrl)
+        repository = GitRepository(fromUrl: remoteUrl)
         repository?.delegate = self
         
         showActivity(true)
@@ -107,7 +107,7 @@ class ViewController: NSViewController {
                 cloneOptions.quiet = false
                 cloneOptions.progress = true
                 
-                try repository?.clone(at: localPath, options: cloneOptions)
+                try repository?.clone(atPath: localPath, options: cloneOptions)
                 
                 // ℹ️ #7
                 // An example how to use other methods
@@ -158,8 +158,8 @@ class ViewController: NSViewController {
     private func showReferences(_ references: GitReferenceList) {
         logTextView.textStorage?.beginEditing()
         appendLog("\nReferences in repository:\n")
-        for reference in references.references {
-            appendLog(reference.name + "\n")
+        for reference in references {
+            appendLog(reference.name.fullName + "\n")
         }
         logTextView.textStorage?.endEditing()
         logTextView.scrollToEndOfDocument(nil)
