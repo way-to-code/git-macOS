@@ -171,4 +171,25 @@ class GitReferenceListTest: XCTestCase {
             XCTAssert(ref.name.remoteName == testCase.remoteName, "case: \(testCase.path)")
         }
     }
+    
+    func testReferenceNameCompare() {
+        var left: GitReferenceName
+        var right: GitReferenceName
+        
+        left = GitReferenceName(path: "refs")
+        right = GitReferenceName(path: "refs")
+        XCTAssert(left == right)
+        
+        left = GitReferenceName(path: "refs")
+        right = GitReferenceName(path: "")
+        XCTAssert(left == right)
+        
+        left = GitReferenceName(path: "refs/heads/feature/name")
+        right = GitReferenceName(path: "refs/heads/feature/name")
+        XCTAssert(left == right)
+        
+        left = GitReferenceName(path: "refs/remotes/origin")
+        right = GitReferenceName(path: "refs/remotes/custom")
+        XCTAssert(left != right)
+    }
 }

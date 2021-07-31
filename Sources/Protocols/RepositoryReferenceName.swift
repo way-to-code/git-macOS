@@ -77,3 +77,12 @@ public protocol RepositoryReferenceName {
     /// - `refs/remotes/origin/feature/git` → `git`
     var lastName: String { get }
 }
+
+// MARK: - Comparison
+public func == (lhs: RepositoryReferenceName, rhs: RepositoryReferenceName) -> Bool {
+    return lhs.fullName == rhs.fullName
+}
+
+public func != (lhs: RepositoryReferenceName, rhs: RepositoryReferenceName) -> Bool {
+    return !(lhs == rhs)
+}
