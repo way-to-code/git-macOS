@@ -32,22 +32,22 @@ public class GitReferenceList {
     
     /// Only local branches from this list or an empty array
     public var localBranches: [RepositoryReference] {
-        return objects(startingFrom: GitReference.RefPath.heads)
+        return objects(startingFrom: GitReference.RefPath.Heads)
     }
     
     /// Only remote branches from this list or an empty array
     public var remoteBranches: [RepositoryReference] {
-        return objects(startingFrom: GitReference.RefPath.remotes)
+        return objects(startingFrom: GitReference.RefPath.Remotes)
     }
     
     /// The master branch (if present)
     public var masterBranch: RepositoryReference? {
-        return objects(startingFrom: GitReference.RefPath.master).first
+        return objects(startingFrom: GitReference.RefPath.Master).first
     }
     
     /// Only tags from this list or an empty array
     public var tags: [RepositoryReference] {
-        return objects(startingFrom: GitReference.RefPath.tags)
+        return objects(startingFrom: GitReference.RefPath.Tags)
     }
     
     // MARK: - Private

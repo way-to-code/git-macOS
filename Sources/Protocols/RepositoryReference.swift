@@ -32,17 +32,8 @@ public protocol RepositoryReference {
     /// A reference relative path in a repository
     var path: String { get }
     
-    /// The full name of a reference without path in repository.
-    ///
-    /// If a reference name contains additonal path components, a value of this property will also contain these paths.
-    /// For example, if a reference is called `feature/some_name`, the returned value for this property will be `feature/some_name`
-    var name: String { get }
-    
-    /// The last path component of a reference name
-    ///
-    /// If a reference name contains additional path components, this property won't contain these paths
-    /// For example, if a reference is called `feature/some_name`, the returned value will be `some_name`
-    var shortName: String { get }
+    /// A name of a reference
+    var name: RepositoryReferenceName { get }
     
     /// A creator of this reference
     var author: String { get }

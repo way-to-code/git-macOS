@@ -60,66 +60,115 @@ class GitReferenceListTest: XCTestCase {
         XCTAssert(list.localBranches.count == 1)
     }
     
+    struct RefNameTestCase {
+        
+        var path: String
+        
+        var fullName: String
+        var lastName: String
+        var localName: String
+        var shortName: String
+        var remoteName: String
+    }
+    
     func testReferenceName() {
-        let names = [
-            // Remotes
-            "\(GitReference.RefPath.remotes)/origin/branch_name",
-            "\(GitReference.RefPath.remotes)/origin/branch_name/",
-            "\(GitReference.RefPath.remotes)/origin/feature/branch_name",
-            "\(GitReference.RefPath.remotes)/origin/feature/branch_name/",
-            "\(GitReference.RefPath.remotes)/origin/path1/path2/branch_name",
+        let testCases: [RefNameTestCase] = [
+            .init(path: "refs",
+                  fullName: "",
+                  lastName: "",
+                  localName: "",
+                  shortName: "",
+                  remoteName: ""),
             
-            // Heads
-            "\(GitReference.RefPath.heads)/branch_name",
-            "\(GitReference.RefPath.heads)/branch_name/",
-            "\(GitReference.RefPath.heads)/feature/branch_name",
-            "\(GitReference.RefPath.heads)/feature/branch_name/",
-            "\(GitReference.RefPath.heads)/path1/path2/branch_name",
+            .init(path: "refs/",
+                  fullName: "",
+                  lastName: "",
+                  localName: "",
+                  shortName: "",
+                  remoteName: ""),
             
-            // Tags
-            "\(GitReference.RefPath.tags)/branch_name",
-            "\(GitReference.RefPath.tags)/branch_name/",
-            "\(GitReference.RefPath.tags)/feature/branch_name",
-            "\(GitReference.RefPath.tags)/feature/branch_name/",
+            .init(path: "/refs",
+                  fullName: "",
+                  lastName: "",
+                  localName: "",
+                  shortName: "",
+                  remoteName: ""),
             
-            // Master
-            "master",
+            .init(path: "master",
+                  fullName: "master",
+                  lastName: "master",
+                  localName: "master",
+                  shortName: "master",
+                  remoteName: ""),
+            
+            .init(path: "refs/remotes",
+                  fullName: "remotes",
+                  lastName: "remotes",
+                  localName: "remotes",
+                  shortName: "remotes",
+                  remoteName: ""),
+            
+            .init(path: "/refs/remotes/",
+                  fullName: "remotes",
+                  lastName: "remotes",
+                  localName: "remotes",
+                  shortName: "remotes",
+                  remoteName: ""),
+            
+            .init(path: "refs/heads/master",
+                  fullName: "heads/master",
+                  lastName: "master",
+                  localName: "master",
+                  shortName: "master",
+                  remoteName: ""),
+            
+            .init(path: "refs/heads/feature/name",
+                  fullName: "heads/feature/name",
+                  lastName: "name",
+                  localName: "feature/name",
+                  shortName: "feature/name",
+                  remoteName: ""),
+            
+            .init(path: "refs/remotes/origin",
+                  fullName: "remotes/origin",
+                  lastName: "origin",
+                  localName: "origin",
+                  shortName: "origin",
+                  remoteName: "origin"),
+            
+            .init(path: "refs/remotes/origin/branch_name",
+                  fullName: "remotes/origin/branch_name",
+                  lastName: "branch_name",
+                  localName: "branch_name",
+                  shortName: "origin/branch_name",
+                  remoteName: "origin"),
+            
+            .init(path: "refs/remotes/origin/branch_name/",
+                  fullName: "remotes/origin/branch_name",
+                  lastName: "branch_name",
+                  localName: "branch_name",
+                  shortName: "origin/branch_name",
+                  remoteName: "origin"),
+            
+            .init(path: "refs/remotes/origin/feature/branch_name",
+                  fullName: "remotes/origin/feature/branch_name",
+                  lastName: "branch_name",
+                  localName: "feature/branch_name",
+                  shortName: "origin/feature/branch_name",
+                  remoteName: "origin"),
         ]
         
-        let refs = createReferences(with: names)
-        
-        XCTAssert(refs[0].name == "branch_name")
-        XCTAssert(refs[0].shortName == "branch_name")
-        XCTAssert(refs[1].name == "branch_name")
-        XCTAssert(refs[1].shortName == "branch_name")
-        XCTAssert(refs[2].name == "feature/branch_name")
-        XCTAssert(refs[2].shortName == "branch_name")
-        XCTAssert(refs[3].name == "feature/branch_name")
-        XCTAssert(refs[3].shortName == "branch_name")
-        XCTAssert(refs[4].name == "path1/path2/branch_name")
-        XCTAssert(refs[4].shortName == "branch_name")
-        
-        XCTAssert(refs[5].name == "branch_name")
-        XCTAssert(refs[5].shortName == "branch_name")
-        XCTAssert(refs[6].name == "branch_name")
-        XCTAssert(refs[6].shortName == "branch_name")
-        XCTAssert(refs[7].name == "feature/branch_name")
-        XCTAssert(refs[7].shortName == "branch_name")
-        XCTAssert(refs[8].name == "feature/branch_name")
-        XCTAssert(refs[8].shortName == "branch_name")
-        XCTAssert(refs[9].name == "path1/path2/branch_name")
-        XCTAssert(refs[9].shortName == "branch_name")
-        
-        XCTAssert(refs[10].name == "branch_name")
-        XCTAssert(refs[10].shortName == "branch_name")
-        XCTAssert(refs[11].name == "branch_name")
-        XCTAssert(refs[11].shortName == "branch_name")
-        XCTAssert(refs[12].name == "feature/branch_name")
-        XCTAssert(refs[12].shortName == "branch_name")
-        XCTAssert(refs[13].name == "feature/branch_name")
-        XCTAssert(refs[13].shortName == "branch_name")
-        
-        XCTAssert(refs[refs.count - 1].name == "master")
-        XCTAssert(refs[refs.count - 1].shortName == "master")
+        for testCase in testCases {
+            guard let ref = createReferences(with: [testCase.path]).first else {
+                XCTFail("Unable to create a reference. Case: \(testCase.path)")
+                return
+            }
+            
+            XCTAssert(ref.name.fullName == testCase.fullName, "case: \(testCase.path)")
+            XCTAssert(ref.name.lastName == testCase.lastName, "case: \(testCase.path)")
+            XCTAssert(ref.name.shortName == testCase.shortName, "case: \(testCase.path)")
+            XCTAssert(ref.name.localName == testCase.localName, "case: \(testCase.path)")
+            XCTAssert(ref.name.remoteName == testCase.remoteName, "case: \(testCase.path)")
+        }
     }
 }

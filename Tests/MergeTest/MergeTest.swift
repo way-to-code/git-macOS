@@ -70,7 +70,7 @@ class MergeTest: XCTestCase, RepositoryTest {
     }
     
     private func reference(named: String, in repository: GitRepository) throws -> RepositoryReference {
-        return try repository.listReferences().references.first(where: {$0.name == named})!
+        return try repository.listReferences().references.first(where: {$0.name.localName == named})!
     }
 }
 

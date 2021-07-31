@@ -27,35 +27,9 @@ class GitReference: RepositoryReference, Codable {
     var date: Date
     var message: String?
     
-    lazy var name: String = {
-        if [RefPath.heads, RefPath.remotes, RefPath.tags, RefPath.stash].contains(path) {
-            // Drop only "refs"
-            return dropPathComponent(RefPath.refs, from: path)
-        }
-        
-        if path.starts(with: RefPath.heads) {
-            return dropPathComponent(RefPath.heads, from: path)
-        } else if path.starts(with: RefPath.remotes) {
-            // In case of remotes, the remote subpath must be also removed
-            return dropFirstPathComponent(from: dropPathComponent(RefPath.remotes, from: path))
-        } else if path.starts(with: RefPath.tags) {
-            return dropPathComponent(RefPath.tags, from: path)
-        } else if path.starts(with: RefPath.stash) {
-            return dropPathComponent(RefPath.stash, from: path)
-        }
-        
-        return shortName
-    }()
-    
-    lazy var shortName: String = {
-        let components = path.components(separatedBy: RefPath.separator)
-        
-        guard let lastComponent = components.last, lastComponent.count > 0 else {
-            return components.count > 1 ? components[components.count - 2] : path
-        }
-        
-        return lastComponent
-    }()
+    var name: RepositoryReferenceName {
+        return GitReferenceName(path: path)
+    }
     
     var path: String
 }
@@ -64,27 +38,24 @@ class GitReference: RepositoryReference, Codable {
 extension GitReference {
     
     /// Defines contant paths of a reference (the part after $GIT_DIR/)
-    struct RefPath {
-        static let heads = "refs/heads"
-        static let remotes = "refs/remotes"
-        static let tags = "refs/tags"
-        static let stash = "refs/stash"
-        static let master = "refs/heads/master"
+    enum RefPath: String, CaseIterable {
+        case heads = "refs/heads"
+        case pull = "refs/pull"
+        case remotes = "refs/remotes"
+        case stash = "refs/stash"
+        case tags = "refs/tags"
+
+        static let Heads = RefPath.heads.rawValue
+        static let Pull = RefPath.pull.rawValue
+        static let Remotes = RefPath.remotes.rawValue
+        static let Stash = RefPath.stash.rawValue
+        static let Tags = RefPath.tags.rawValue
         
-        static let refs = "refs"
+        static let Master = "refs/heads/master"
+        static let Refs = "refs"
         
-        static let separator = "/"
-        static let separatorCharacterSet = CharacterSet(charactersIn: RefPath.separator)
-    }
-    
-    fileprivate func dropFirstPathComponent(from path: String) -> String {
-        return path.components(separatedBy: RefPath.separator).dropFirst().joined(separator: RefPath.separator)
-    }
-    
-    fileprivate func dropPathComponent(_ component: String, from path: String) -> String {
-        let index = path.index(path.startIndex, offsetBy: component.count)
-        return String(path[index...]).trimmingCharacters(in: RefPath.separatorCharacterSet)
+        static let Separator = "/"
+        static let SeparatorCharacterSet = CharacterSet(charactersIn: RefPath.Separator)
     }
 }
-
 

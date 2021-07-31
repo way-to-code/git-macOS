@@ -100,8 +100,8 @@ public extension GitLogCompareOptions {
             throw Exception.unableToRetrieveCurrentReference
         }
         
-        let options = GitLogCompareOptions(lhsReference: .init(referenceName: reference.name, direction: .remote(remote: remote)),
-                                           rhsReference: .init(referenceName: reference.name, direction: .local))
+        let options = GitLogCompareOptions(lhsReference: .init(referenceName: reference.name.localName, direction: .remote(remote: remote)),
+                                           rhsReference: .init(referenceName: reference.name.localName, direction: .local))
         options.fetchStrategy = .ignore
         return options
     }
@@ -112,8 +112,8 @@ public extension GitLogCompareOptions {
             throw Exception.unableToRetrieveCurrentReference
         }
         
-        return GitLogCompareOptions(lhsReference: .init(referenceName: reference.name, direction: .local),
-                                    rhsReference: .init(referenceName: reference.name, direction: .remote(remote: remote)))
+        return GitLogCompareOptions(lhsReference: .init(referenceName: reference.name.localName, direction: .local),
+                                    rhsReference: .init(referenceName: reference.name.localName, direction: .remote(remote: remote)))
     }
 }
 

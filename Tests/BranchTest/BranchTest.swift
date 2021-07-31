@@ -48,7 +48,7 @@ class BranchTest: XCTestCase, RepositoryTest {
             let referencesAfter = try repository.listReferences()
             
             XCTAssert(referencesBefore.localBranches.count != referencesAfter.localBranches.count)
-            XCTAssert(referencesAfter.localBranches.contains(where: {$0.name == "branchTest"}))
+            XCTAssert(referencesAfter.localBranches.contains(where: {$0.name.localName == "branchTest"}))
             
             // #2. Check starting point
             let options = GitBranchOptions()
@@ -75,7 +75,7 @@ class BranchTest: XCTestCase, RepositoryTest {
             // Get the current branch name
             var references = try repository.listReferences()
             if let activeReference = references.currentReference {
-                XCTAssert(activeReference.name != "branchTest")
+                XCTAssert(activeReference.name.localName != "branchTest")
             }
             
             // #4. Checkout to a new branch
@@ -84,7 +84,7 @@ class BranchTest: XCTestCase, RepositoryTest {
             // Ensure that the new branch is the active one
             references = try repository.listReferences()
             if let activeReference = references.currentReference {
-                XCTAssert(activeReference.name == "branchTest")
+                XCTAssert(activeReference.name.localName == "branchTest")
             }
         } catch {
             XCTFail("Unable to test branch due to the following error: \(error)")

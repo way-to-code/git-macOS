@@ -39,7 +39,7 @@ public extension GitRepository {
         
         // Get a reference to the branch
         let references = try listReferences()
-        guard let reference = references.localBranches.first(where: {$0.name == branchName}) else {
+        guard let reference = references.localBranches.first(where: {$0.name.localName == branchName}) else {
             throw RepositoryError.branchNotFound(name: branchName)
         }
         

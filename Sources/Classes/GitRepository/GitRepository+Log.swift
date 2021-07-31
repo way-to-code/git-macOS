@@ -97,7 +97,7 @@ public extension GitRepository {
             }
             
             if lhsReferenceName == nil {
-                lhsReferenceName = activeReference.name
+                lhsReferenceName = activeReference.name.localName
             }
             
             if rhsReferenceName == nil, let remote = try listRemotes().remotes.first {

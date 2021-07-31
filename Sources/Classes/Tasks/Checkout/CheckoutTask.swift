@@ -24,7 +24,7 @@ class CheckoutTask: RepositoryTask, TaskRequirable {
     }
     
     convenience init(reference: RepositoryReference, owner: GitRepository) {
-        self.init(owner: owner, options: [reference.name])
+        self.init(owner: owner, options: [reference.name.localName])
     }
     
     func handle(output: String) {
