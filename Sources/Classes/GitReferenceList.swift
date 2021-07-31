@@ -1,5 +1,5 @@
 //
-//  GitReference.swift
+//  GitReferenceList.swift
 //  Git-macOS
 //
 //  Copyright (c) 2018 Max A. Akhmatov
@@ -61,4 +61,32 @@ extension GitReferenceList {
         return references.filter({$0.path.starts(with: path)})
     }
     
+}
+
+// MARK: - IndexSequence
+extension GitReferenceList: IndexSequence {
+
+    subscript(index: Int) -> Any? {
+        get {
+            return references.count > index ? references[index] : nil
+        }
+    }
+}
+
+// MARK: - Sequence
+extension GitReferenceList: Sequence {
+    
+    var count: Int {
+        return references.count
+    }
+    
+    subscript(index: Int) -> RepositoryReference? {
+        get {
+            return references.count > index ? references[index] : nil
+        }
+    }
+    
+    public func makeIterator() -> IndexIterator<RepositoryReference> {
+        return IndexIterator<RepositoryReference>(collection: self)
+    }
 }
