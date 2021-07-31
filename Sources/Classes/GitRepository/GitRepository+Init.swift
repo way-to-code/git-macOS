@@ -27,7 +27,7 @@ public extension GitRepository {
     /// The specified path must exist, otherwise an exception is raized
     static func create(atPath path: String,
                        options: GitInitOptions = .default,
-                       credentials: CredentialsProvider = GitCredentialsProvider.anonymousProvider) throws -> GitRepository {
+                       using credentials: CredentialsProvider = GitCredentialsProvider.anonymousProvider) throws -> GitRepository {
         switch FileManager.checkFile(at: URL(fileURLWithPath: path)) {
         case .exists(isDirectory: true):
             break
