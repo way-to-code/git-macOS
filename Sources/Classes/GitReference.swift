@@ -28,6 +28,11 @@ class GitReference: RepositoryReference, Codable {
     var message: String?
     
     lazy var name: String = {
+        if [RefPath.heads, RefPath.remotes, RefPath.tags, RefPath.stash].contains(path) {
+            // Drop only "refs"
+            return dropPathComponent(RefPath.refs, from: path)
+        }
+        
         if path.starts(with: RefPath.heads) {
             return dropPathComponent(RefPath.heads, from: path)
         } else if path.starts(with: RefPath.remotes) {
@@ -66,6 +71,8 @@ extension GitReference {
         static let stash = "refs/stash"
         static let master = "refs/heads/master"
         
+        static let refs = "refs"
+        
         static let separator = "/"
         static let separatorCharacterSet = CharacterSet(charactersIn: RefPath.separator)
     }
@@ -75,7 +82,7 @@ extension GitReference {
     }
     
     fileprivate func dropPathComponent(_ component: String, from path: String) -> String {
-        let index = path.index(path.startIndex, offsetBy: component.count + 1)
+        let index = path.index(path.startIndex, offsetBy: component.count)
         return String(path[index...]).trimmingCharacters(in: RefPath.separatorCharacterSet)
     }
 }
