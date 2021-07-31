@@ -34,3 +34,31 @@ public class GitRemoteList {
         }
     }
 }
+
+// MARK: - IndexSequence
+extension GitRemoteList: IndexSequence {
+
+    subscript(index: Int) -> Any? {
+        get {
+            return remotes.count > index ? remotes[index] : nil
+        }
+    }
+}
+
+// MARK: - Sequence
+extension GitRemoteList: Sequence {
+    
+    var count: Int {
+        return remotes.count
+    }
+    
+    subscript(index: Int) -> RepositoryRemote? {
+        get {
+            return remotes.count > index ? remotes[index] : nil
+        }
+    }
+    
+    public func makeIterator() -> IndexIterator<RepositoryRemote> {
+        return IndexIterator<RepositoryRemote>(collection: self)
+    }
+}
