@@ -88,7 +88,7 @@ let package = Package(
     dependencies: [
         .package(name: "Git",
                  url: "https://github.com/way-to-code/git-macOS.git",
-                 .upToNextMajor(from: "1.0.0")),
+                 .upToNextMajor(from: "2.0.0")),
     ],
     
     targets: [
@@ -101,7 +101,9 @@ let package = Package(
 
 ## Basics
 
-Learn the basics of how to use `Git.framework` in the [Wiki page](https://github.com/way-to-code/git-macOS/wiki/Basics)
+Read more about `Git.framework` in the [Wiki page](https://github.com/way-to-code/git-macOS/wiki):
+- [Basics](https://github.com/way-to-code/git-macOS/wiki/Basics)
+- [Samples](https://github.com/way-to-code/git-macOS/wiki/Samples)
 
 ## Quick examples
 
