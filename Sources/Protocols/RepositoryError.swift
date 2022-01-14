@@ -40,6 +40,10 @@ public enum GitError: Error {
     // MARK: - Commit
     /// Occurs when the commit operation finishes with an error
     case commitError(message: String)
+
+    // MARK: - Tag
+    /// Occurs when the tag operation finishes with an error
+    case tagError(message: String)
     
     // MAKR: - Init
     /// Occurs when the init operation finishes with an error
@@ -167,6 +171,7 @@ extension GitError: GitCommonError {
         case .checkoutError(let message): return message
         case .cloneError(let message): return message
         case .commitError(let message): return message
+        case .tagError(let message): return message
         case .stashError(let message): return message
         case .stashApplyError(let message): return message
         case .stashApplyConflict(let message): return message

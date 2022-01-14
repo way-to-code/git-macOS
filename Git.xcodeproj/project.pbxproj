@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3FB69FC12790CFD4002AD767 /* TagTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB69FC02790CFD4002AD767 /* TagTask.swift */; };
+		3FB69FC32790CFE4002AD767 /* GitTagOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB69FC22790CFE4002AD767 /* GitTagOptions.swift */; };
 		560B1A8623FFE90D00E110DE /* AddTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560B1A8523FFE90D00E110DE /* AddTask.swift */; };
 		560B1A8723FFE90D00E110DE /* AddTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560B1A8523FFE90D00E110DE /* AddTask.swift */; };
 		560B1A8923FFE93200E110DE /* GitAddOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560B1A8823FFE93200E110DE /* GitAddOptions.swift */; };
@@ -233,6 +235,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3FB69FC02790CFD4002AD767 /* TagTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTask.swift; sourceTree = "<group>"; };
+		3FB69FC22790CFE4002AD767 /* GitTagOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitTagOptions.swift; sourceTree = "<group>"; };
 		560B1A8523FFE90D00E110DE /* AddTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTask.swift; sourceTree = "<group>"; };
 		560B1A8823FFE93200E110DE /* GitAddOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitAddOptions.swift; sourceTree = "<group>"; };
 		560B1A8B23FFECF000E110DE /* GitRepository+Files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GitRepository+Files.swift"; sourceTree = "<group>"; };
@@ -377,6 +381,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3FB69FBF2790CFBE002AD767 /* Tag */ = {
+			isa = PBXGroup;
+			children = (
+				3FB69FC22790CFE4002AD767 /* GitTagOptions.swift */,
+				3FB69FC02790CFD4002AD767 /* TagTask.swift */,
+			);
+			path = Tag;
+			sourceTree = "<group>";
+		};
 		560B1A8423FFE8EC00E110DE /* Add */ = {
 			isa = PBXGroup;
 			children = (
@@ -813,6 +826,7 @@
 				568E1B2523F6ADC600E67274 /* Reset */,
 				84076619219E0BC600872938 /* Stash */,
 				7BB2A7B023F1966700C27EAA /* Status */,
+				3FB69FBF2790CFBE002AD767 /* Tag */,
 			);
 			path = Tasks;
 			sourceTree = "<group>";
@@ -1059,6 +1073,7 @@
 				840D89AC20E18802002E09F4 /* GitRepositoryErrorFormatter.swift in Sources */,
 				7BB2A7B223F1969A00C27EAA /* StatusTask.swift in Sources */,
 				7B41888B26B582DE00145F1E /* RepositoryDelegate.swift in Sources */,
+				3FB69FC12790CFD4002AD767 /* TagTask.swift in Sources */,
 				7B110F9123B153F700DBD3CA /* GitLogRecord.swift in Sources */,
 				84B122B420C886FD00DCAAAA /* GitRepository.swift in Sources */,
 				7BC384BC245301BD00511F0B /* CherryTask.swift in Sources */,
@@ -1072,6 +1087,7 @@
 				7B10B59526B08438000FA67D /* InitTask.swift in Sources */,
 				7BACCD8124485CDE000ECC06 /* RepositoryError.swift in Sources */,
 				7BB63383246AFF3500E0DDE9 /* GitOutputParser.swift in Sources */,
+				3FB69FC32790CFE4002AD767 /* GitTagOptions.swift in Sources */,
 				7B33BF60243E24560037C818 /* CherryPickTask.swift in Sources */,
 				7BACCD88244868CE000ECC06 /* CleanOptions.swift in Sources */,
 				7BACCD852448687B000ECC06 /* CleanTask.swift in Sources */,
