@@ -59,8 +59,20 @@ class TagTest: XCTestCase, RepositoryTest {
     }
 
     func testDeleteTagNotFound() throws {
-        try repository.tag(options: .delete(Self.tag))
-        XCTExpectFailure("Expected to fail since tag is not first created")
+        XCTAssertThrowsError(try repository.tag(options: .delete(Self.tag)), "Expected to fail since tag is not first created") { error in
+            guard let gitError = error as? GitError else {
+                XCTFail("Unexpected Error type.")
+                return
+            }
+
+            switch gitError {
+            case .tagError(let message):
+                XCTAssert(message.contains("not found"), "Unexpected error message")
+                break
+            default:
+                XCTFail("Unexpected Error case.")
+            }
+        }
     }
 
     func testDelete() throws {
