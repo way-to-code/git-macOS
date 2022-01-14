@@ -21,13 +21,19 @@ public enum GitTagOptions: ArgumentConvertible {
     case annotate(_ tag: String, _ message: String)
     case delete(_ tag: String)
     case lightWeight(_ tag: String)
+    case list(_ pattern: String?)
 
     func toArguments() -> [String] {
         switch self {
-        case let .annotate(tag, message): return ["-a \(tag)", "-m \(message)"]
-
-        case .delete(let tag): return ["-d \(tag)"]
+        case let .annotate(tag, message): return ["-a", "\(tag)", "-m", "\(message)"]
+        case .delete(let tag): return ["-d", "\(tag)"]
         case .lightWeight(let tag): return ["\(tag)"]
+        case .list(let search):
+            guard let search = search else {
+                return ["-l"]
+            }
+
+            return ["-l", "\(search)"]
         }
     }
 }

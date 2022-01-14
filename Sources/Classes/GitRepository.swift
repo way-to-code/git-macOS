@@ -100,17 +100,6 @@ public class GitRepository: Repository {
         try task.run()
     }
 
-    public func tag(options: GitTagOptions) throws {
-        // check for an active operation
-        try ensureNoActiveOperations()
-
-        // local path must be valid
-        try validateLocalPath()
-
-        let task = TagTask(owner: self, options: options)
-        try task.run()
-    }
-
     public func clone(atPath path: String, options: GitCloneOptions = GitCloneOptions.default) throws {
         // check a repository is not cloned yet
         try ensureNotClonedAlready()

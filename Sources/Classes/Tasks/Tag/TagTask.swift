@@ -19,6 +19,7 @@ import Foundation
 
 class TagTask: RepositoryTask, TaskRequirable {
     var name: String { "tag" }
+    var tags = GitTagRecordList([])
 
     func handle(output: String) {}
 
@@ -27,6 +28,13 @@ class TagTask: RepositoryTask, TaskRequirable {
     func finish(terminationStatus: Int32) throws {
         guard terminationStatus == 0 else {
             throw GitError.tagError(message: output ?? "Unknown error")
+        }
+
+        if let output = output {
+            tags = GitTagRecordList(
+                output.trimmingCharacters(in: .newlines)
+                    .components(separatedBy: "\n")
+                    .map(GitTagRecord.init(tag:)))
         }
     }
 }
