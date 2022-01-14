@@ -45,6 +45,14 @@ class TagTest: XCTestCase, RepositoryTest {
         try repository.tag(options: .lightWeight(Self.tag))
     }
 
+    func testLightWeightWithCommit() throws {
+        let hash = try repository.listLogRecords().records.first!.hash
+        try repository.tag(options: .lightWeight(Self.tag, hash))
+
+        let tag = String.parseRef(try repository.listLogRecords().records.first!.refNames)["tag"]
+        XCTAssert(tag == Self.tag, "Expected \(String(describing: tag)) and \(Self.tag) to be the same")
+    }
+
     func testList() throws {
         try repository.tag(options: .lightWeight(Self.tag))
         try repository.tag(options: .lightWeight(Self.tag2))
@@ -78,5 +86,25 @@ class TagTest: XCTestCase, RepositoryTest {
     func testDelete() throws {
         try repository.tag(options: .lightWeight(Self.tag))
         try repository.tag(options: .delete(Self.tag))
+    }
+}
+
+private extension String {
+    static func parseRef(_ ref: String) -> Dictionary<String, String> {
+        ref.replacingOccurrences(of: " ", with: "")
+            .components(separatedBy: ",")
+            .filter( { $0.contains(":") } )
+            .map { $0.components(separatedBy: ":") }
+            .filter { $0.count == 2 }
+            .map { pair in Dictionary(uniqueKeysWithValues: [(pair[0], pair[1])]) }
+            .reduce([:]) {
+                var combined = $0
+
+                for (k, v) in $1 {
+                    combined[k] = v
+                }
+
+                return combined
+            }
     }
 }

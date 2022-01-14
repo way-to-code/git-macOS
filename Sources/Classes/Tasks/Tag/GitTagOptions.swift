@@ -18,22 +18,24 @@
 import Foundation
 
 public enum GitTagOptions: ArgumentConvertible {
-    case annotate(_ tag: String, _ message: String)
+    case annotate(_ tag: String, _ message: String, _ commit: String? = nil)
     case delete(_ tag: String)
-    case lightWeight(_ tag: String)
+    case lightWeight(_ tag: String, _ commit: String? = nil)
     case list(_ pattern: String?)
 
     func toArguments() -> [String] {
         switch self {
-        case let .annotate(tag, message): return ["-a", "\(tag)", "-m", "\(message)"]
-        case .delete(let tag): return ["-d", "\(tag)"]
-        case .lightWeight(let tag): return ["\(tag)"]
-        case .list(let search):
-            guard let search = search else {
-                return ["-l"]
-            }
+        case let .annotate(tag, message, commit):
+            return ["-a", tag, "-m", message, commit].compactMap { $0 }
 
-            return ["-l", "\(search)"]
+        case .delete(let tag):
+            return ["-d", tag]
+
+        case let .lightWeight(tag, commit):
+            return [tag, commit].compactMap { $0 }
+
+        case .list(let pattern):
+            return ["-l", pattern].compactMap { $0 }
         }
     }
 }
