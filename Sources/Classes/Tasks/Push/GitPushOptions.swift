@@ -45,6 +45,14 @@ public class GitPushOptions: ArgumentConvertible {
         /// ````
         /// Where *origin* is a **remote**, and *master* is a **name** of a branch
         case single(name: String, remote: RepositoryRemote)
+
+        /// All refs under refs/tags are pushed, in addition to refspecs explicitly listed on the command line.
+        ///
+        /// This equals to a raw git command:
+        /// ```
+        /// git push --tags
+        /// ```
+        case tags
         
         func toArguments() -> [String] {
             switch self {
@@ -52,6 +60,8 @@ public class GitPushOptions: ArgumentConvertible {
                 return ["--all"]
             case .single(let name, let remote):
                 return [remote.name, name]
+            case .tags:
+                return ["--tags"]
             }
         }
     }
