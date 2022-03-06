@@ -62,8 +62,7 @@ class TagTest: XCTestCase, RepositoryTest {
         XCTAssert(tagList.records.contains(where: { $0.tag == Self.tag }), "Expected tag list to contain \(Self.tag), but does not")
         XCTAssert(tagList.records.contains(where: { $0.tag == Self.tag2 }), "Expected tag list to contain \(Self.tag2), but does not")
 
-        let options = GitTagListOptions(pattern: Self.tag)
-        let tagListWithPattern = try repository.listTags(options: options)
+        let tagListWithPattern = try repository.listTags(options: .pattern(Self.tag))
         XCTAssert(tagListWithPattern.records.contains(where: { $0.tag == Self.tag }), "Expected tag list to contain \(Self.tag), but does not")
         XCTAssertFalse(tagListWithPattern.records.contains(where: { $0.tag == Self.tag2 }), "Tag list unexpectedly contains \(Self.tag2)")
     }

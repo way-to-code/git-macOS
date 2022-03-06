@@ -21,6 +21,11 @@ import Foundation
 public struct GitTagListOptions: ArgumentConvertible {
     public static var `default` = GitTagListOptions()
     
+    /// Creates options with the pattern match
+    public static func pattern(_ pattern: String) -> GitTagListOptions {
+        .init(pattern: pattern)
+    }
+    
     // MARK: - Init
     public init(pattern: String? = nil) {
         self.pattern = pattern
