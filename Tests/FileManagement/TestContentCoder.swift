@@ -16,7 +16,7 @@
 //  limitations under the License.
 
 import Foundation
-@testable import Git
+import Git
 
 struct TestContentData: Codable {
     var name: String

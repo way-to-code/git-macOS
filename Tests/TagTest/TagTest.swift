@@ -16,7 +16,7 @@
 //  limitations under the License.
 
 import XCTest
-@testable import Git
+import Git
 
 class TagTest: XCTestCase, RepositoryTest {
     private static let tag = "test-tag"
