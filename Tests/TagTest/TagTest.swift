@@ -46,10 +46,11 @@ class TagTest: XCTestCase, RepositoryTest {
     }
 
     func testLightWeightWithCommit() throws {
-        let hash = try repository.listLogRecords().records.first!.hash
-        try repository.tag(options: .lightWeight(tag: Self.tag, commitHash: hash))
+        var record = try XCTUnwrap(try repository.listLogRecords().records.first)
+        try repository.tag(options: .lightWeight(tag: Self.tag, commitHash: record.hash))
 
-        let tag = String.parseRef(try repository.listLogRecords().records.first!.refNames)["tag"]
+        record = try XCTUnwrap(try repository.listLogRecords().records.first)
+        let tag = String.parseRef(record.refNames)["tag"]
         XCTAssert(tag == Self.tag, "Expected \(String(describing: tag)) and \(Self.tag) to be the same")
     }
 
