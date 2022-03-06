@@ -29,14 +29,14 @@ public extension GitRepository {
         try task.run()
     }
 
-    func listTags(pattern: String? = nil) throws -> GitTagRecordList {
+    func listTags(options: GitTagListOptions = .default) throws -> GitTagRecordList {
         // check for an active operation
         try ensureNoActiveOperations()
 
         // local path must be valid
         try validateLocalPath()
 
-        let task = TagTask(owner: self, options: GitTagOptions.list(pattern: pattern))
+        let task = TagTask(owner: self, options: options)
         try task.run()
 
         return task.tags

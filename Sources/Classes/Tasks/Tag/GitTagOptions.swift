@@ -30,9 +30,6 @@ public enum GitTagOptions: ArgumentConvertible {
     /// Creates a lightweight tag that points directly at the given commit hash (if provided).
     case lightWeight(tag: String, commitHash: String? = nil)
     
-    /// List tags. With optional pattern matching
-    case list(pattern: String?)
-
     func toArguments() -> [String] {
         switch self {
         case let .annotate(tag, message, commit):
@@ -43,9 +40,6 @@ public enum GitTagOptions: ArgumentConvertible {
 
         case let .lightWeight(tag, commit):
             return [tag, commit].compactMap { $0 }
-
-        case .list(let pattern):
-            return ["-l", pattern].compactMap { $0 }
         }
     }
 }
