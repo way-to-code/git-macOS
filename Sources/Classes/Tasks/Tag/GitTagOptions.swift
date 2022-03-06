@@ -17,10 +17,20 @@
 
 import Foundation
 
+/// A set of options that are used for the tagging operation
 public enum GitTagOptions: ArgumentConvertible {
+    /// Makes an unsigned, annotated tag object with the given name and message.
+    /// Optionally, you can specify the exact commit hash from that a tag should be created.
+    /// If no commit hash is provided, a tag will be created from HEAD by the default.
     case annotate(tag: String, message: String, commitHash: String? = nil)
+    
+    /// Deletes the existing tag with the given name
     case delete(tag: String)
+    
+    /// Creates a lightweight tag that points directly at the given commit hash (if provided).
     case lightWeight(tag: String, commitHash: String? = nil)
+    
+    /// List tags. With optional pattern matching
     case list(pattern: String?)
 
     func toArguments() -> [String] {

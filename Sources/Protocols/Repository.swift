@@ -136,6 +136,14 @@ public protocol Repository: AnyObject {
     /// - Throws: An exception in case any error occured
     func listReferences() throws -> GitReferenceList
     
+    /// Fetches a list of tags from repository
+    /// - Parameter pattern: List only the tags that match the pattern(s).
+    /// - Returns: ``GitTagRecordList`` - a list of tags
+    ///
+    /// Use this method when you want to retrieve tag names from repository.
+    /// If you want to get more details about all references including branches and tags, use ``listReferences()`` method which will return the detailed information about each reference instead of simple tag name.
+    func listTags(pattern: String?) throws -> GitTagRecordList
+    
     /// Lists all remotes in this repository and returns a list object
     ///
     /// - Throws: An exception in case any error occured

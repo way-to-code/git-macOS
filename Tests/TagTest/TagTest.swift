@@ -57,11 +57,11 @@ class TagTest: XCTestCase, RepositoryTest {
         try repository.tag(options: .lightWeight(tag: Self.tag))
         try repository.tag(options: .lightWeight(tag: Self.tag2))
 
-        let tagList = try repository.tagList()
+        let tagList = try repository.listTags()
         XCTAssert(tagList.records.contains(where: { $0.tag == Self.tag }), "Expected tag list to contain \(Self.tag), but does not")
         XCTAssert(tagList.records.contains(where: { $0.tag == Self.tag2 }), "Expected tag list to contain \(Self.tag2), but does not")
 
-        let tagListWithPattern = try repository.tagList(pattern: Self.tag)
+        let tagListWithPattern = try repository.listTags(pattern: Self.tag)
         XCTAssert(tagListWithPattern.records.contains(where: { $0.tag == Self.tag }), "Expected tag list to contain \(Self.tag), but does not")
         XCTAssertFalse(tagListWithPattern.records.contains(where: { $0.tag == Self.tag2 }), "Tag list unexpectedly contains \(Self.tag2)")
     }

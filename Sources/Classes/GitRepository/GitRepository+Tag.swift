@@ -29,7 +29,7 @@ public extension GitRepository {
         try task.run()
     }
 
-    func tagList(pattern: String? = nil) throws -> GitTagRecordList {
+    func listTags(pattern: String? = nil) throws -> GitTagRecordList {
         // check for an active operation
         try ensureNoActiveOperations()
 
