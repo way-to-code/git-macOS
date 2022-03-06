@@ -18,10 +18,10 @@
 import Foundation
 
 public enum GitTagOptions: ArgumentConvertible {
-    case annotate(_ tag: String, _ message: String, _ commit: String? = nil)
-    case delete(_ tag: String)
-    case lightWeight(_ tag: String, _ commit: String? = nil)
-    case list(_ pattern: String?)
+    case annotate(tag: String, message: String, commitHash: String? = nil)
+    case delete(tag: String)
+    case lightWeight(tag: String, commitHash: String? = nil)
+    case list(pattern: String?)
 
     func toArguments() -> [String] {
         switch self {

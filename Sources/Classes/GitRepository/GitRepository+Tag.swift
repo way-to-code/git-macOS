@@ -36,7 +36,7 @@ public extension GitRepository {
         // local path must be valid
         try validateLocalPath()
 
-        let task = TagTask(owner: self, options: GitTagOptions.list(pattern))
+        let task = TagTask(owner: self, options: GitTagOptions.list(pattern: pattern))
         try task.run()
 
         return task.tags

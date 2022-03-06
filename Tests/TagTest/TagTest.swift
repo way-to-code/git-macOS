@@ -38,24 +38,24 @@ class TagTest: XCTestCase, RepositoryTest {
     }
 
     func testAnnotate() throws {
-        try repository.tag(options: .annotate(Self.tag, Self.message))
+        try repository.tag(options: .annotate(tag: Self.tag, message: Self.message))
     }
 
     func testLightWeight() throws {
-        try repository.tag(options: .lightWeight(Self.tag))
+        try repository.tag(options: .lightWeight(tag: Self.tag))
     }
 
     func testLightWeightWithCommit() throws {
         let hash = try repository.listLogRecords().records.first!.hash
-        try repository.tag(options: .lightWeight(Self.tag, hash))
+        try repository.tag(options: .lightWeight(tag: Self.tag, commitHash: hash))
 
         let tag = String.parseRef(try repository.listLogRecords().records.first!.refNames)["tag"]
         XCTAssert(tag == Self.tag, "Expected \(String(describing: tag)) and \(Self.tag) to be the same")
     }
 
     func testList() throws {
-        try repository.tag(options: .lightWeight(Self.tag))
-        try repository.tag(options: .lightWeight(Self.tag2))
+        try repository.tag(options: .lightWeight(tag: Self.tag))
+        try repository.tag(options: .lightWeight(tag: Self.tag2))
 
         let tagList = try repository.tagList()
         XCTAssert(tagList.records.contains(where: { $0.tag == Self.tag }), "Expected tag list to contain \(Self.tag), but does not")
@@ -67,7 +67,7 @@ class TagTest: XCTestCase, RepositoryTest {
     }
 
     func testDeleteTagNotFound() throws {
-        XCTAssertThrowsError(try repository.tag(options: .delete(Self.tag)), "Expected to fail since tag is not first created") { error in
+        XCTAssertThrowsError(try repository.tag(options: .delete(tag: Self.tag)), "Expected to fail since tag is not first created") { error in
             guard let gitError = error as? GitError else {
                 XCTFail("Unexpected Error type.")
                 return
@@ -84,8 +84,8 @@ class TagTest: XCTestCase, RepositoryTest {
     }
 
     func testDelete() throws {
-        try repository.tag(options: .lightWeight(Self.tag))
-        try repository.tag(options: .delete(Self.tag))
+        try repository.tag(options: .lightWeight(tag: Self.tag))
+        try repository.tag(options: .delete(tag: Self.tag))
     }
 }
 
