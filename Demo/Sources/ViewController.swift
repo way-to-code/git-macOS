@@ -95,7 +95,7 @@ class ViewController: NSViewController {
         // When an operation is in progress, the calling thread will be blocked until the operation is finished.
         DispatchQueue.global(qos: .background).async { [unowned self] in
             defer {
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [unowned self] in
                     showActivity(false)
                 }
             }
@@ -112,7 +112,7 @@ class ViewController: NSViewController {
                 // ℹ️ #7
                 // An example how to use other methods
                 if let references = try repository?.listReferences() {
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.async { [unowned self] in
                         showReferences(references)
                     }
                 }
@@ -123,7 +123,7 @@ class ViewController: NSViewController {
                 logOptions.limit = 5
                 
                 if let records = try repository?.listLogRecords(options: logOptions) {
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.async { [unowned self] in
                         showLogRecords(records)
                     }
                 }
