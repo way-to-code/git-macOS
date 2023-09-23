@@ -30,7 +30,7 @@ Git is a high-level swift framework based on the command line Git utility in mac
 
 ## Requirements
 
-- macOS 10.12+
+- macOS 10.13+
 - Xcode 10+
 - Swift 4.2+
 - Git for Mac 2.15+
@@ -56,7 +56,7 @@ $ brew install carthage
 To integrate Git.framework into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "way-to-code/git-macOS" ~> 2.1.0
+github "way-to-code/git-macOS" ~> 3.0.0
 ```
 
 Run `carthage update` to build the framework and drag the built `Git.framework` into your Xcode project.
@@ -73,6 +73,12 @@ github "way-to-code/git-macOS" ~> 1.5.1
 
 You can install Git.framework manually. Clone the project locally, build and integrate to your project as a framework
 
+### XCFramework
+
+You may download XCFramework from the latests [release page](https://github.com/way-to-code/git-macOS/releases) and integrate it into your project.
+
+Note that XCFramework support is available [since version 3.0.0](https://github.com/way-to-code/git-macOS/releases/tag/3.0.0).
+
 ### Swift Package dependency
 
 When you want to use Git.framework as a dependency in other package, you may follow the given example:
@@ -88,7 +94,7 @@ let package = Package(
     dependencies: [
         .package(name: "Git",
                  url: "https://github.com/way-to-code/git-macOS.git",
-                 .upToNextMajor(from: "2.1.0")),
+                 .upToNextMajor(from: "3.0.0")),
     ],
     
     targets: [
