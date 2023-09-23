@@ -69,3 +69,8 @@ fastlane/test_output
 
 ## Swift package manager
 .swiftpm/
+
+# Project specific
+#
+# This folder contains build output for XCFramework file
+XCFramework/*.xcframework

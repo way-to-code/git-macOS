@@ -6,6 +6,20 @@
 	objectVersion = 54;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		7B2165CD2ABF170400D57B24 /* Git-XCFramework */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 7B2165CE2ABF170400D57B24 /* Build configuration list for PBXAggregateTarget "Git-XCFramework" */;
+			buildPhases = (
+				7B2165D12ABF174C00D57B24 /* [Script] Build static library */,
+			);
+			dependencies = (
+			);
+			name = "Git-XCFramework";
+			productName = "Git-XCFramework";
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		3FB69FC12790CFD4002AD767 /* TagTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB69FC02790CFD4002AD767 /* TagTask.swift */; };
 		3FB69FC32790CFE4002AD767 /* GitTagOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB69FC22790CFE4002AD767 /* GitTagOptions.swift */; };
@@ -280,6 +294,8 @@
 		7B10B59426B0842C000FA67D /* InitTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitTask.swift; sourceTree = "<group>"; };
 		7B10B59726B08557000FA67D /* InitOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitOptions.swift; sourceTree = "<group>"; };
 		7B110F9023B153F600DBD3CA /* GitLogRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitLogRecord.swift; sourceTree = "<group>"; };
+		7B2165CC2ABF16AA00D57B24 /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Scripts; sourceTree = "<group>"; };
+		7B2165D32ABF1F7200D57B24 /* XCFramework */ = {isa = PBXFileReference; lastKnownFileType = folder; path = XCFramework; sourceTree = "<group>"; };
 		7B239D6723E48D020025D052 /* GitLogCompareOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitLogCompareOptions.swift; sourceTree = "<group>"; };
 		7B239D6B23E4A1F20025D052 /* GitRepository+Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GitRepository+Log.swift"; sourceTree = "<group>"; };
 		7B239D6E23E4A8A30025D052 /* LogComparisonRepository.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = LogComparisonRepository.bundle; sourceTree = "<group>"; };
@@ -709,6 +725,8 @@
 		8440CC1C20B20B8700228218 = {
 			isa = PBXGroup;
 			children = (
+				7B2165CC2ABF16AA00D57B24 /* Scripts */,
+				7B2165D32ABF1F7200D57B24 /* XCFramework */,
 				84A72CFA20CCA96800011545 /* README.md */,
 				8440CC5220B20EE600228218 /* Package.swift */,
 				7BDF573B2ABF0E0C007ECEFA /* Config */,
@@ -983,6 +1001,9 @@
 				LastSwiftUpdateCheck = 0930;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
+					7B2165CD2ABF170400D57B24 = {
+						CreatedOnToolsVersion = 15.0;
+					};
 					8440CC4420B20CC900228218 = {
 						CreatedOnToolsVersion = 9.3;
 						LastSwiftMigration = 1020;
@@ -1007,6 +1028,7 @@
 			projectRoot = "";
 			targets = (
 				8440CC4420B20CC900228218 /* Git-macOS */,
+				7B2165CD2ABF170400D57B24 /* Git-XCFramework */,
 				84B122B820C8875600DCAAAA /* GitTests */,
 			);
 		};
@@ -1031,6 +1053,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7B2165D12ABF174C00D57B24 /* [Script] Build static library */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[Script] Build static library";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = ". \"${SRCROOT}/Scripts/build_xcframework.sh\" \"${SRCROOT}/Git.xcodeproj\" \"Git-macOS\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8440CC4020B20CC900228218 /* Sources */ = {
@@ -1281,6 +1325,26 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		7B2165CF2ABF170400D57B24 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7BDF573C2ABF0E4B007ECEFA /* shared.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				PRODUCT_NAME = Git;
+			};
+			name = Debug;
+		};
+		7B2165D02ABF170400D57B24 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7BDF573C2ABF0E4B007ECEFA /* shared.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				PRODUCT_NAME = Git;
+			};
+			name = Release;
+		};
 		8440CC2120B20B8700228218 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7BDF573C2ABF0E4B007ECEFA /* shared.xcconfig */;
@@ -1425,6 +1489,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACH_O_TYPE = staticlib;
 				MARKETING_VERSION = 3.0.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -1505,6 +1570,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACH_O_TYPE = staticlib;
 				MARKETING_VERSION = 3.0.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
@@ -1656,6 +1722,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		7B2165CE2ABF170400D57B24 /* Build configuration list for PBXAggregateTarget "Git-XCFramework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7B2165CF2ABF170400D57B24 /* Debug */,
+				7B2165D02ABF170400D57B24 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		8440CC2020B20B8700228218 /* Build configuration list for PBXProject "Git" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
