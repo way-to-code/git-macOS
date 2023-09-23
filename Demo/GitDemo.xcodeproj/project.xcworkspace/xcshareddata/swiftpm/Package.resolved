@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/way-to-code/git-macOS.git",
       "state" : {
-        "revision" : "df72ba4322d5b20a2e56c86ec0bada27c1b60b74",
-        "version" : "2.1.0"
+        "revision" : "a0252944cd068d15d483d53733d18c27097dcbd9",
+        "version" : "3.0.0"
       }
     }
   ],
