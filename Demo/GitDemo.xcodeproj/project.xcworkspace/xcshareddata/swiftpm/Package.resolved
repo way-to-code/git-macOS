@@ -1,16 +1,14 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "Git",
-        "repositoryURL": "https://github.com/way-to-code/git-macOS.git",
-        "state": {
-          "branch": null,
-          "revision": "df72ba4322d5b20a2e56c86ec0bada27c1b60b74",
-          "version": "2.1.0"
-        }
+  "pins" : [
+    {
+      "identity" : "git-macos",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/way-to-code/git-macOS.git",
+      "state" : {
+        "revision" : "df72ba4322d5b20a2e56c86ec0bada27c1b60b74",
+        "version" : "2.1.0"
       }
-    ]
-  },
-  "version": 1
+    }
+  ],
+  "version" : 2
 }
