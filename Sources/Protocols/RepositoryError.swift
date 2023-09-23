@@ -15,6 +15,8 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+import Foundation
+
 /// Generic git error declaration
 public protocol GitCommonError: Error {
     
@@ -162,6 +164,13 @@ public enum RepositoryError: Error {
     case branchNotFound(name: String)
 }
 
+// MARK: - GitError + LocalizedError
+extension GitError: LocalizedError {
+    public var errorDescription: String? {
+        GitRepositoryErrorFormatter.message(gitError: self)
+    }
+}
+
 // MARK: - GitError + GitCommonError
 extension GitError: GitCommonError {
     
@@ -192,5 +201,12 @@ extension GitError: GitCommonError {
         case .canNotCreateBranch(_, let message): return message
         case .initError(let message): return message
         }
+    }
+}
+
+// MARK: - RepositoryError + LocalizedError
+extension RepositoryError: LocalizedError {
+    public var errorDescription: String? {
+        GitRepositoryErrorFormatter.message(from: self)
     }
 }

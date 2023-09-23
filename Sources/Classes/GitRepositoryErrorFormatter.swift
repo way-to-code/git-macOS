@@ -17,20 +17,6 @@
 
 import Foundation
 
-extension RepositoryError: LocalizedError {
-    
-    public var errorDescription: String? {
-        return GitRepositoryErrorFormatter.message(from: self)
-    }
-}
-
-extension GitError: LocalizedError {
-    
-    public var errorDescription: String? {
-        return GitRepositoryErrorFormatter.message(gitError: self)
-    }
-}
-
 class GitRepositoryErrorFormatter {
     
     class func message(gitError error: GitError) -> String {
