@@ -85,6 +85,7 @@ final class ProcessSpawn {
     }
     
     private var threadPayload: Payload!
+    private var threadPayloadRef: UnsafeMutablePointer<Payload>!
     private let workingPath: String?
     
     /// Pipes: 0 - for reading, 1: - for writing
@@ -119,6 +120,12 @@ final class ProcessSpawn {
         processId = pid
         readStream()
         terminationStatus = waitSpawn(pid: pid)
+    }
+    
+    deinit {
+        if let threadPayloadRef {
+            threadPayloadRef.deallocate()
+        }
     }
     
     func cancel() {
@@ -199,7 +206,10 @@ final class ProcessSpawn {
             threadPayload = Payload(outputPipe: pipe.baseAddress!, output: output, pid: pid, isCancelled: false)
         }
         
-        pthread_create(&tid, nil, callback, &threadPayload)
+        threadPayloadRef = UnsafeMutablePointer<Payload>.allocate(capacity: 1)
+        threadPayloadRef.pointee = threadPayload
+        
+        pthread_create(&tid, nil, callback, threadPayloadRef)
         
         if let tid = tid {
             // Wait for the thread to be executed
