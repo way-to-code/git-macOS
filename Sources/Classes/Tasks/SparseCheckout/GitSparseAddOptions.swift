@@ -29,12 +29,10 @@ public struct GitSparseAddOptions: ArgumentConvertible {
     func toArguments() -> [String] {
         guard !filePaths.isEmpty else { return [] }
         
-        var arguments = ["add"]
+        var arguments = ["add", "--"]
         
         for path in filePaths {
-            arguments.append(path.replacingOccurrences(
-                of: " ",
-                with: "\\ "))
+            arguments.append(path)
         }
         
         return arguments

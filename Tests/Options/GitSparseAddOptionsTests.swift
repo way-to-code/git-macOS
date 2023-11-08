@@ -31,31 +31,31 @@ final class GitSparseAddOptionsTest: XCTestCase {
         var sut = makeSUT()
         
         sut.options.filePaths = ["fileName1"]
-        sut.assertOptions(equal: "add fileName1")
+        sut.assertOptions(equal: "add -- fileName1")
     }
     
     func test_toArguments_containsTwoFilesArgument() {
         var sut = makeSUT()
         
         sut.options.filePaths = ["fileName1", "fileName2"]
-        sut.assertOptions(equal: "add fileName1 fileName2")
+        sut.assertOptions(equal: "add -- fileName1 fileName2")
     }
     
     func test_toArguments_escapesSpacesInFileNames() {
         var sut = makeSUT()
         
         sut.options.filePaths = ["file name with spaces"]
-        sut.assertOptions(equal: "add file\\ name\\ with\\ spaces")
+        sut.assertOptions(equal: "add -- file name with spaces")
         
         sut.options.filePaths = ["level 1/level 2"]
-        sut.assertOptions(equal: "add level\\ 1/level\\ 2")
+        sut.assertOptions(equal: "add -- level 1/level 2")
     }
     
     func test_toArguments_handlesFileNamesWithDashes() {
         var sut = makeSUT()
         
         sut.options.filePaths = ["level1/level2/level3"]
-        sut.assertOptions(equal: "add level1/level2/level3")
+        sut.assertOptions(equal: "add -- level1/level2/level3")
     }
 }
 
