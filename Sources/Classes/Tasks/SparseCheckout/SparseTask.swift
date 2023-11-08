@@ -31,7 +31,7 @@ final class SparseTask: RepositoryTask, TaskRequirable {
     
     func finish(terminationStatus: Int32) throws {
         if terminationStatus != 0 {
-            throw GitRepository.FileError.unableToReset(message: output ?? "Undefined error")
+            throw GitRepository.SparseCheckoutError.unableToPerformOperation(message: output ?? "Undefined error")
         }
     }
 }
