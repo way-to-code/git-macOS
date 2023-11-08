@@ -19,7 +19,6 @@ import Foundation
 
 /// A set of options used by the git clone operation
 public class GitCloneOptions {
-    
     /// Returns the default options for the clone operation
     public static var `default`: GitCloneOptions {
         return GitCloneOptions()
@@ -27,7 +26,63 @@ public class GitCloneOptions {
     
     public init() {}
     
-    public enum CheckoutOptions {
+    /// Operate quietly. Progress is not reported to the standard error stream.
+    public var quiet = true
+    
+    /// Progress status is reported on the standard error stream by default when it is attached to a terminal, unless -q is specified.
+    /// This flag forces progress status even if the standard error stream is not directed to a terminal.
+    public var progress = true
+    
+    /// By using this option you may specify that branches you want to clone, By default all branches are cloned
+    public var branches = BranchOptions.all
+    
+    /// A shallow clone options specifying how a clone options must behave with downloading commit history.
+    /// By default all commit history is downloaded
+    public var depth = DepthOptions.unlimited
+    
+    /// Checkout strategy that should be applied just after the clone operation is finished.
+    /// If you do not specified this option, checkout of HEAD is performed
+    public var checkout = CheckoutOptions.checkout
+    
+    /// Sparse checkout strategy. This option can be used to limit the grow of working copy if needed
+    public var sparse = SparseOptions.noSparse
+    
+    /// Indicates whether to fetch tags with a clone operation or not
+    public var tags = TagsOptions.fetch
+    
+    func toArguments() -> [String] {
+        var arguments = [String]()
+        
+        if quiet {
+            arguments.append("--quiet")
+        }
+        
+        if progress {
+            arguments.append("--progress")
+        }
+        
+        // add depth options
+        arguments.append(contentsOf: depth.toArguments())
+        
+        // add checkout options
+        arguments.append(contentsOf: checkout.toArguments())
+        
+        // add branch options
+        arguments.append(contentsOf: branches.toArguments())
+        
+        // add tags options
+        arguments.append(contentsOf: tags.toArguments())
+        
+        // add sparse checkout
+        arguments.append(contentsOf: sparse.toArguments())
+        
+        return arguments
+    }
+}
+
+// MARK: - CheckoutOptions
+public extension GitCloneOptions {
+    enum CheckoutOptions {
         /// Checkout of HEAD is performed after the clone is complete. This is default option
         case checkout
         
@@ -43,8 +98,11 @@ public class GitCloneOptions {
             }
         }
     }
-    
-    public enum DepthOptions {
+}
+
+// MARK: - DepthOptions
+public extension GitCloneOptions {
+    enum DepthOptions {
         /// A HEAD revision is downloaded only. This may be helpfull when you want to reduce a repository downloading time
         case head
 
@@ -75,8 +133,11 @@ public class GitCloneOptions {
             }
         }
     }
+}
 
-    public enum BranchOptions {
+// MARK: - BranchOptions
+public extension GitCloneOptions {
+    enum BranchOptions {
         /// All branches will be cloned
         case all
         
@@ -89,7 +150,7 @@ public class GitCloneOptions {
         /// Clone only the history leading to the tip of a single branch.
         /// You can also specify a name of a branch you want to clone.
         case single(named: String)
-
+        
         func toArguments() -> [String] {
             switch self {
             case .all:
@@ -106,8 +167,11 @@ public class GitCloneOptions {
             }
         }
     }
-    
-    public enum TagsOptions {
+}
+
+// MARK: - TagsOptions
+public extension GitCloneOptions {
+    enum TagsOptions {
         /// Tags are fetched during a clone operation
         case fetch
         
@@ -124,53 +188,25 @@ public class GitCloneOptions {
             }
         }
     }
-    
-    /// Operate quietly. Progress is not reported to the standard error stream.
-    public var quiet = true
-    
-    /// Progress status is reported on the standard error stream by default when it is attached to a terminal, unless -q is specified.
-    /// This flag forces progress status even if the standard error stream is not directed to a terminal.
-    public var progress = true
-    
-    /// By using this option you may specify that branches you want to clone, By default all branches are cloned
-    public var branches = BranchOptions.all
-    
-    /// A shallow clone options specifying how a clone options must behave with downloading commit history.
-    /// By default all commit history is downloaded
-    public var depth = DepthOptions.unlimited
-    
-    /// Checkout strategy that should be applied just after the clone operation is finished.
-    /// If you do not specified this option, checkout of HEAD is performed
-    public var checkout = CheckoutOptions.checkout
-    
-    /// Indicates whether to fetch tags with a clone operation or not
-    public var tags = TagsOptions.fetch
-    
-    func toArguments() -> [String] {
-        var arguments = [String]()
-        
-        if quiet {
-            arguments.append("--quiet")
-        }
-        
-        if progress {
-            arguments.append("--progress")
-        }
-        
-        // add depth options
-        arguments.append(contentsOf: depth.toArguments())
-        
-        // add checkout options
-        arguments.append(contentsOf: checkout.toArguments())
-        
-        // add branch options
-        arguments.append(contentsOf: branches.toArguments())
-        
-        // add tags options
-        arguments.append(contentsOf: tags.toArguments())
-        
-        return arguments
-    }
 }
 
-
+// MARK: - SparseOptions
+public extension GitCloneOptions {
+    enum SparseOptions {
+        /// A sparse checkout with only files in the top level directory initially being present.
+        case sparse
+        
+        /// No sparse checkout will be available for the working copy
+        case noSparse
+        
+        func toArguments() -> [String] {
+            switch self {
+            case .sparse:
+                return ["--sparse"]
+                
+            case .noSparse:
+                return []
+            }
+        }
+    }
+}
