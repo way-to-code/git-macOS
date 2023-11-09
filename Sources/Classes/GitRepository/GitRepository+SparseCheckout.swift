@@ -44,3 +44,12 @@ extension GitRepository.SparseCheckoutError: LocalizedError {
         }
     }
 }
+
+extension GitRepository.SparseCheckoutError: GitCommonError {
+    public var rawMessage: String {
+        switch self {
+        case .unableToPerformOperation(let message):
+            return message
+        }
+    }
+}
