@@ -107,6 +107,29 @@ final class GitCloneOptionsTest: XCTestCase {
         sut.options.progress = false
         sut.assertOptions(doNotContain: "--progress")
     }
+    
+    func test_toArguments_properlyConvertsFilterOptions() {
+        let sut = makeSUT()
+        
+        sut.options.filter = .noFilter
+        sut.assertOptions(doNotContain: "filter")
+        
+        sut.options.filter = .omitAllBlobs
+        sut.assertOptions(contain: "--filter=blob:none")
+        
+        sut.options.filter = .omitBlobsLargerThanSize(1024)
+        sut.assertOptions(contain: "--filter=blob:limit=1024")
+        
+        sut.options.filter = .custom("combine:tree:3+blob:none")
+        sut.assertOptions(contain: "--filter=combine:tree:3+blob:none")
+    }
+    
+    func test_toArguments_escapesCustomFilterOptions() {
+        let sut = makeSUT()
+        
+        sut.options.filter = .custom("~!@#$^&*()[]{}\\;\",<>?'` \n")
+        sut.assertOptions(contain: "--filter=%7E%21%40%23%24%5E%26%2A%28%29%5B%5D%7B%7D%5C%3B%22%2C%3C%3E%3F%27%60%20%0A")
+    }
 }
 
 // MARK: - SUT

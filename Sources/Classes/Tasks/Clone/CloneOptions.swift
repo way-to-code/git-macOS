@@ -50,6 +50,9 @@ public class GitCloneOptions {
     /// Indicates whether to fetch tags with a clone operation or not
     public var tags = TagsOptions.fetch
     
+    /// Sets the filtering options for the clone operation
+    public var filter = FilterOptions.noFilter
+    
     func toArguments() -> [String] {
         var arguments = [String]()
         
@@ -75,6 +78,9 @@ public class GitCloneOptions {
         
         // add sparse checkout
         arguments.append(contentsOf: sparse.toArguments())
+        
+        // add filter options
+        arguments.append(contentsOf: filter.toArguments())
         
         return arguments
     }
@@ -206,6 +212,43 @@ public extension GitCloneOptions {
                 
             case .noSparse:
                 return []
+            }
+        }
+    }
+}
+
+// MARK: - FilterOptions
+public extension GitCloneOptions {
+    enum FilterOptions {
+        /// No filtering options
+        case noFilter
+        
+        /// Omits all blobs
+        case omitAllBlobs
+        
+        /// Omits all blobs larger than the given size in bytes
+        case omitBlobsLargerThanSize(Int)
+        
+        /// Custom filter spec (e.q. --filter=\<custom-filter-spec\>).
+        /// Special characters ~!@#$^&*()[]{}\\;\",<>?'\` are escaped (plus spaces and newlines)
+        case custom(String)
+        
+        func toArguments() -> [String] {
+            switch self {
+            case .noFilter:
+                return []
+            case .omitAllBlobs:
+                return ["--filter=blob:none"]
+            case let .omitBlobsLargerThanSize(size):
+                return ["--filter=blob:limit=\(size)"]
+            case let .custom(filterSpec):
+                let escapingCharacters = CharacterSet(
+                    charactersIn: "~!@#$^&*()[]{}\\;\",<>?'` \n").inverted
+                
+                let escapedSpec = filterSpec.addingPercentEncoding(
+                    withAllowedCharacters: escapingCharacters) ?? filterSpec
+                
+                return ["--filter=\(escapedSpec)"]
             }
         }
     }
