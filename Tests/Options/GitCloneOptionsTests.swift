@@ -24,117 +24,117 @@ final class GitCloneOptionsTest: XCTestCase {
         let sut = makeSUT()
         
         sut.options.checkout = .checkout
-        sut.assertOptions(doNotContain: "checkout")
+        sut.assertArguments(doNotContain: "checkout")
         
         sut.options.checkout = .noCheckout
-        sut.assertOptions(contain: "--no-checkout")
+        sut.assertArguments(contain: "--no-checkout")
     }
     
     func test_toArguments_properlyConvertsDepthOptions() {
         let sut = makeSUT()
         
         sut.options.depth = .head
-        sut.assertOptions(contain: "--depth 1")
+        sut.assertArguments(contain: "--depth 1")
         
         sut.options.depth = .limited(numberOfRevisions: 1)
-        sut.assertOptions(contain: "--depth 1")
+        sut.assertArguments(contain: "--depth 1")
         
         sut.options.depth = .limited(numberOfRevisions: 12)
-        sut.assertOptions(contain: "--depth 12")
+        sut.assertArguments(contain: "--depth 12")
         
         sut.options.depth = .limited(numberOfRevisions: 123)
-        sut.assertOptions(contain: "--depth 123")
+        sut.assertArguments(contain: "--depth 123")
         
         sut.options.depth = .limited(numberOfRevisions: 0)
-        sut.assertOptions(doNotContain: "depth")
+        sut.assertArguments(doNotContain: "depth")
         
         sut.options.depth = .unlimited
-        sut.assertOptions(doNotContain: "depth")
+        sut.assertArguments(doNotContain: "depth")
     }
     
     func test_toArguments_properlyConvertsBranchOptions() {
         let sut = makeSUT()
         
         sut.options.branches = .head
-        sut.assertOptions(contain: "--single-branch")
-        sut.assertOptions(doNotContain: "--branch")
+        sut.assertArguments(contain: "--single-branch")
+        sut.assertArguments(doNotContain: "--branch")
         
         sut.options.branches = .all
-        sut.assertOptions(contain: "--no-single-branch")
-        sut.assertOptions(doNotContain: "--branch")
+        sut.assertArguments(contain: "--no-single-branch")
+        sut.assertArguments(doNotContain: "--branch")
 
         sut.options.branches = .single(named: "specificBranchName")
-        sut.assertOptions(contain: "--single-branch")
-        sut.assertOptions(contain: "--branch specificBranchName")
+        sut.assertArguments(contain: "--single-branch")
+        sut.assertArguments(contain: "--branch specificBranchName")
     }
     
     func test_toArguments_properlyConvertsTagsOptions() {
         let sut = makeSUT()
         
         sut.options.tags = .fetch
-        sut.assertOptions(doNotContain: "tags")
+        sut.assertArguments(doNotContain: "tags")
         
         sut.options.tags = .noTags
-        sut.assertOptions(contain: "--no-tags")
+        sut.assertArguments(contain: "--no-tags")
     }
     
     func test_toArguments_properlyConvertsSparseOptions() {
         let sut = makeSUT()
         
         sut.options.sparse = .sparse
-        sut.assertOptions(contain: "--sparse")
+        sut.assertArguments(contain: "--sparse")
         
         sut.options.sparse = .noSparse
-        sut.assertOptions(doNotContain: "sparse")
+        sut.assertArguments(doNotContain: "sparse")
     }
     
     func test_toArguments_properlyConvertsQuietOptions() {
         let sut = makeSUT()
         
         sut.options.quiet = true
-        sut.assertOptions(contain: "--quiet")
+        sut.assertArguments(contain: "--quiet")
         
         sut.options.quiet = false
-        sut.assertOptions(doNotContain: "--quiet")
+        sut.assertArguments(doNotContain: "--quiet")
     }
     
     func test_toArguments_properlyConvertsProgressOptions() {
         let sut = makeSUT()
         
         sut.options.progress = true
-        sut.assertOptions(contain: "--progress")
+        sut.assertArguments(contain: "--progress")
         
         sut.options.progress = false
-        sut.assertOptions(doNotContain: "--progress")
+        sut.assertArguments(doNotContain: "--progress")
     }
     
     func test_toArguments_properlyConvertsFilterOptions() {
         let sut = makeSUT()
         
         sut.options.filter = .noFilter
-        sut.assertOptions(doNotContain: "filter")
+        sut.assertArguments(doNotContain: "filter")
         
         sut.options.filter = .omitAllBlobs
-        sut.assertOptions(contain: "--filter=blob:none")
+        sut.assertArguments(contain: "--filter=blob:none")
         
         sut.options.filter = .omitBlobsLargerThanSize(1024)
-        sut.assertOptions(contain: "--filter=blob:limit=1024")
+        sut.assertArguments(contain: "--filter=blob:limit=1024")
         
         sut.options.filter = .custom("combine:tree:3+blob:none")
-        sut.assertOptions(contain: "--filter=combine:tree:3+blob:none")
+        sut.assertArguments(contain: "--filter=combine:tree:3+blob:none")
     }
     
     func test_toArguments_escapesCustomFilterOptions() {
         let sut = makeSUT()
         
         sut.options.filter = .custom("~!@#$^&*()[]{}\\;\",<>?'` \n")
-        sut.assertOptions(contain: "--filter=%7E%21%40%23%24%5E%26%2A%28%29%5B%5D%7B%7D%5C%3B%22%2C%3C%3E%3F%27%60%20%0A")
+        sut.assertArguments(contain: "--filter=%7E%21%40%23%24%5E%26%2A%28%29%5B%5D%7B%7D%5C%3B%22%2C%3C%3E%3F%27%60%20%0A")
     }
 }
 
 // MARK: - SUT
 fileprivate extension GitCloneOptionsTest {
-    struct SUT {
+    struct SUT: ArgumentConvertible {
         var options: GitCloneOptions
         
         func toArguments() -> [String] {
@@ -147,36 +147,5 @@ fileprivate extension GitCloneOptionsTest {
         
         return SUT(
             options: options)
-    }
-}
-
-// MARK: - Asserts
-fileprivate extension GitCloneOptionsTest.SUT {
-    func assertOptions(
-        contain expectedValue: String,
-        file: StaticString = #filePath,
-        line: UInt = #line
-    ) {
-        let resultedValue = toArguments().joined(separator: " ")
-        
-        if !resultedValue.contains(expectedValue) {
-            XCTFail(
-                "The resulted options expected to contain `\(expectedValue)`. Received `\(resultedValue)`",
-                file: file, line: line)
-        }
-    }
-    
-    func assertOptions(
-        doNotContain expectedValue: String,
-        file: StaticString = #filePath,
-        line: UInt = #line
-    ) {
-        let resultedValue = toArguments().joined(separator: " ")
-        
-        if resultedValue.contains(expectedValue) {
-            XCTFail(
-                "The resulted options expected NOT to contain `\(expectedValue)`. Received `\(resultedValue)`",
-                file: file, line: line)
-        }
     }
 }

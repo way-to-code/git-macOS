@@ -19,7 +19,6 @@ import Foundation
 
 /// A set of options used by the git log operation
 public class GitLogOptions: ArgumentConvertible {
-    
     /// Returns the default options for the log operation
     public static var `default`: GitLogOptions {
         return GitLogOptions()
@@ -44,6 +43,9 @@ public class GitLogOptions: ArgumentConvertible {
     ///
     /// When specified it is equivalent to the following command: git log `<remote_name>/<reference_name>`
     public var reference: Reference?
+    
+    /// Do not fetch commits with more than one parent
+    public var noMerges: Bool = false
     
     internal struct ReferenceComparator: ArgumentConvertible {
         var lhsReferenceName: String
@@ -75,6 +77,10 @@ public class GitLogOptions: ArgumentConvertible {
             arguments.append("--author=\"\(author)\"")
         }
         
+        if noMerges {
+            arguments.append("--no-merges")
+        }
+        
         if let reference = reference {
             arguments.append(contentsOf: reference.toArguments())
         } else if let comparator = compareReference {
@@ -87,9 +93,7 @@ public class GitLogOptions: ArgumentConvertible {
 
 // MARK: - Reference
 public extension GitLogOptions {
-    
     struct Reference: ArgumentConvertible {
-
         // MARK: - Init
         public init(name: String) {
             self.name = name
@@ -121,4 +125,3 @@ public extension GitLogOptions {
         }
     }
 }
-

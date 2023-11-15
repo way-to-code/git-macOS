@@ -146,6 +146,8 @@
 		7BC384C724530A7000511F0B /* GitRepository+Cherry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC384C524530A7000511F0B /* GitRepository+Cherry.swift */; };
 		7BC384C924530BD700511F0B /* GitCherryResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC384C824530BD700511F0B /* GitCherryResult.swift */; };
 		7BC384CA24530BD700511F0B /* GitCherryResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC384C824530BD700511F0B /* GitCherryResult.swift */; };
+		7BC679202B052BE90014288A /* GitLogOptionsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC6791F2B052BE90014288A /* GitLogOptionsTest.swift */; };
+		7BC679222B052DBD0014288A /* ArgumentConvertible+XCTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC679212B052DBD0014288A /* ArgumentConvertible+XCTest.swift */; };
 		7BD0B59C2AFBF54200D3B718 /* GitRepositoryErrorFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840D89AB20E18802002E09F4 /* GitRepositoryErrorFormatter.swift */; };
 		7BD0B59F2AFBF55C00D3B718 /* GitCloneOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD0B59E2AFBF55C00D3B718 /* GitCloneOptionsTests.swift */; };
 		7BD0B5A22AFC033400D3B718 /* GitSparseAddOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD0B5A12AFC033400D3B718 /* GitSparseAddOptions.swift */; };
@@ -340,6 +342,8 @@
 		7BC384C22453082C00511F0B /* GitCherryOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitCherryOptions.swift; sourceTree = "<group>"; };
 		7BC384C524530A7000511F0B /* GitRepository+Cherry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GitRepository+Cherry.swift"; sourceTree = "<group>"; };
 		7BC384C824530BD700511F0B /* GitCherryResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitCherryResult.swift; sourceTree = "<group>"; };
+		7BC6791F2B052BE90014288A /* GitLogOptionsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitLogOptionsTest.swift; sourceTree = "<group>"; };
+		7BC679212B052DBD0014288A /* ArgumentConvertible+XCTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArgumentConvertible+XCTest.swift"; sourceTree = "<group>"; };
 		7BD0B59E2AFBF55C00D3B718 /* GitCloneOptionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitCloneOptionsTests.swift; sourceTree = "<group>"; };
 		7BD0B5A12AFC033400D3B718 /* GitSparseAddOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitSparseAddOptions.swift; sourceTree = "<group>"; };
 		7BD0B5A42AFC06F700D3B718 /* GitSparseAddOptionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitSparseAddOptionsTests.swift; sourceTree = "<group>"; };
@@ -606,7 +610,9 @@
 		7BD0B59D2AFBF55C00D3B718 /* Options */ = {
 			isa = PBXGroup;
 			children = (
+				7BC679212B052DBD0014288A /* ArgumentConvertible+XCTest.swift */,
 				7BD0B59E2AFBF55C00D3B718 /* GitCloneOptionsTests.swift */,
+				7BC6791F2B052BE90014288A /* GitLogOptionsTest.swift */,
 				7BD0B5A42AFC06F700D3B718 /* GitSparseAddOptionsTests.swift */,
 			);
 			path = Options;
@@ -1293,6 +1299,7 @@
 				84B122DB20C9C19100DCAAAA /* RepositoryTask.swift in Sources */,
 				7BACCD862448687B000ECC06 /* CleanTask.swift in Sources */,
 				7B239D7323E4AB700025D052 /* LogComparisonTest.swift in Sources */,
+				7BC679222B052DBD0014288A /* ArgumentConvertible+XCTest.swift in Sources */,
 				3FB69FD52791DB12002AD767 /* RepositoryTagRecord.swift in Sources */,
 				7B239D6923E48D020025D052 /* GitLogCompareOptions.swift in Sources */,
 				7B10B58C26AFD344000FA67D /* BranchTest.swift in Sources */,
@@ -1332,6 +1339,7 @@
 				84B83768211B7F1A0031AD29 /* FetchTask.swift in Sources */,
 				7B41888F26B5913D00145F1E /* InitTest.swift in Sources */,
 				84B122C720C8883D00DCAAAA /* Repository.swift in Sources */,
+				7BC679202B052BE90014288A /* GitLogOptionsTest.swift in Sources */,
 				84E331E021A33A4500E4D620 /* StashApplyTask.swift in Sources */,
 				84BD16C720D3150F0038F377 /* FileCoder.swift in Sources */,
 				5629A6E3233E17760071DED3 /* ProcessSpawn.swift in Sources */,
