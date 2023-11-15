@@ -64,7 +64,7 @@ final class GitSparseSetOptionsTest: XCTestCase {
         
         sut.options.filePaths = ["path"]
         sut.options.noCone = true
-        sut.assertArguments(equalTo: "set -- path --no-cone")
+        sut.assertArguments(equalTo: "set --no-cone -- path")
     }
     
     func test_toArguments_doesNotContainNoConeWhenNoFiles() {

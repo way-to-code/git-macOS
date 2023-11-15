@@ -34,14 +34,16 @@ public struct GitSparseSetOptions: ArgumentConvertible {
     func toArguments() -> [String] {
         guard !filePaths.isEmpty else { return [] }
         
-        var arguments = ["set", "--"]
-        
-        for path in filePaths {
-            arguments.append(path)
-        }
+        var arguments = ["set"]
         
         if noCone {
             arguments.append("--no-cone")
+        }
+        
+        arguments.append("--")
+        
+        for path in filePaths {
+            arguments.append(path)
         }
         
         return arguments
