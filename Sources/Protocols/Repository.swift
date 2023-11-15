@@ -240,6 +240,18 @@ public protocol Repository: AnyObject {
     /// - Parameter files: The list of files relative to the repository root to be added to the sparse pool
     func sparseCheckoutAdd(files: [String]) throws
     
+    /// Set the given file paths to the sparse checkout pool.
+    /// The repository must be in the sparse state before performing this operation
+    ///
+    /// - Parameter files: The list of files relative to the repository root to be set to the sparse pool
+    func sparseCheckoutSet(files: [String]) throws
+    
+    /// Set the sparse pool with the given options
+    /// The repository must be in the sparse state before performing this operation
+    ///
+    /// - Parameter options: The options for the set operation
+    func sparseCheckoutSet(options: GitSparseSetOptions) throws
+    
     /// Cancels an active repository operation. In case no active operation is started, nothing happens
     func cancel()
 }

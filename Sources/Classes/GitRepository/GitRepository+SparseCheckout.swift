@@ -27,6 +27,19 @@ public extension GitRepository {
         let task = SparseTask(owner: self, options: options)
         try task.run()
     }
+    
+    func sparseCheckoutSet(files: [String]) throws {
+        try sparseCheckoutSet(
+            options: GitSparseSetOptions(filePaths: files))
+    }
+    
+    func sparseCheckoutSet(options: GitSparseSetOptions) throws {
+        try ensureNoActiveOperations()
+        try validateLocalPath()
+        
+        let task = SparseTask(owner: self, options: options)
+        try task.run()
+    }
 }
 
 public extension GitRepository {
