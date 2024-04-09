@@ -89,6 +89,7 @@
 		7B239D6F23E4A8A30025D052 /* LogComparisonRepository.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7B239D6E23E4A8A30025D052 /* LogComparisonRepository.bundle */; };
 		7B239D7123E4A8D30025D052 /* RepositoryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B239D7023E4A8D30025D052 /* RepositoryTest.swift */; };
 		7B239D7323E4AB700025D052 /* LogComparisonTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B239D7223E4AB700025D052 /* LogComparisonTest.swift */; };
+		7B2C06232BC5986E007970B3 /* GitCherryPickOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2C06222BC5986E007970B3 /* GitCherryPickOptionsTests.swift */; };
 		7B33BF5D243E201E0037C818 /* CherryPickOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B33BF5C243E201E0037C818 /* CherryPickOptions.swift */; };
 		7B33BF5E243E201E0037C818 /* CherryPickOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B33BF5C243E201E0037C818 /* CherryPickOptions.swift */; };
 		7B33BF60243E24560037C818 /* CherryPickTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B33BF5F243E24560037C818 /* CherryPickTask.swift */; };
@@ -315,6 +316,7 @@
 		7B239D6E23E4A8A30025D052 /* LogComparisonRepository.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = LogComparisonRepository.bundle; sourceTree = "<group>"; };
 		7B239D7023E4A8D30025D052 /* RepositoryTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryTest.swift; sourceTree = "<group>"; };
 		7B239D7223E4AB700025D052 /* LogComparisonTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogComparisonTest.swift; sourceTree = "<group>"; };
+		7B2C06222BC5986E007970B3 /* GitCherryPickOptionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitCherryPickOptionsTests.swift; sourceTree = "<group>"; };
 		7B33BF5C243E201E0037C818 /* CherryPickOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CherryPickOptions.swift; sourceTree = "<group>"; };
 		7B33BF5F243E24560037C818 /* CherryPickTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CherryPickTask.swift; sourceTree = "<group>"; };
 		7B3EC4DE23F1A22000FCCE3B /* IndexIterator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexIterator.swift; sourceTree = "<group>"; };
@@ -616,6 +618,7 @@
 			isa = PBXGroup;
 			children = (
 				7BC679212B052DBD0014288A /* ArgumentConvertible+XCTest.swift */,
+				7B2C06222BC5986E007970B3 /* GitCherryPickOptionsTests.swift */,
 				7BD0B59E2AFBF55C00D3B718 /* GitCloneOptionsTests.swift */,
 				7BC6791F2B052BE90014288A /* GitLogOptionsTest.swift */,
 				7BD0B5A42AFC06F700D3B718 /* GitSparseAddOptionsTests.swift */,
@@ -1300,6 +1303,7 @@
 				560B1A8723FFE90D00E110DE /* AddTask.swift in Sources */,
 				7BC384C42453082C00511F0B /* GitCherryOptions.swift in Sources */,
 				56839F4B212ACFB200E161E9 /* RemoteUrlChangeTask.swift in Sources */,
+				7B2C06232BC5986E007970B3 /* GitCherryPickOptionsTests.swift in Sources */,
 				5673ED7D2126DD7500083229 /* GitPushOptions.swift in Sources */,
 				7B41888926B5698600145F1E /* GitReferenceName.swift in Sources */,
 				8406B5D92171FBFB00E381FD /* LogTask.swift in Sources */,
