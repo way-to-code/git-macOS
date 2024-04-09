@@ -122,4 +122,23 @@ class LogTest: XCTestCase, RepositoryTest {
         // ensure there are proper number of records
         XCTAssert(log4.records.count == 0)
     }
+    
+    func test_listLogRecords_returnsParentHashes() {
+        guard let repository = createRepository() else {
+            XCTFail("Unable to initialize repository for tests")
+            return
+        }
+
+        guard let log = try? repository.listLogRecords() else {
+            XCTFail("Unable to load records from repository")
+            return
+        }
+        
+        guard log.records.count == 2 else {
+            return
+        }
+        
+        XCTAssertEqual(log.records[0].parentHashes, "648bc2c3b21ce4b5f1ec916d5d7b950d0e7ba5d1")
+        XCTAssertEqual(log.records[1].parentHashes, "")
+    }
 }

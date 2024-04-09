@@ -35,6 +35,9 @@ public class GitLogRecord: RepositoryLogRecord, Codable {
     /// A commit subject
     private(set) public var subject: String
     
+    /// Full parent hashes. If there are no parent commits, returns an empty string
+    private(set) public var parentHashes: String
+    
     /// A commit body
     private(set) public var body: String
     

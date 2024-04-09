@@ -35,6 +35,7 @@ class StashListTask: RepositoryTask, TaskRequirable {
         writer.authorEmail = "%ae"
         writer.subject = "%s"
         writer.body = "%b"
+        writer.parentHashes = "%P"
         
         // strict ISO 8601 format
         writer.commiterDate = "%cI"

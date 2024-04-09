@@ -34,6 +34,7 @@ class LogTask: RepositoryTask, TaskRequirable {
         writer.authorName = "%an"
         writer.authorEmail = "%ae"
         writer.subject = "%s"
+        writer.parentHashes = "%P"
         
         // raw body (unwrapped subject and body)
         // in case using just %b, all newlines will be cut off from the resulting body

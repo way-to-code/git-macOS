@@ -32,6 +32,12 @@ public protocol RepositoryLogRecord {
     /// An email of an author
     var authorEmail: String { get }
     
+    /// Full parent hashes. 
+    ///
+    /// If there are no parent commits, returns an empty string.
+    /// Each parent is separated by a space
+    var parentHashes: String { get }
+    
     /// A commit subject
     var subject: String { get }
     

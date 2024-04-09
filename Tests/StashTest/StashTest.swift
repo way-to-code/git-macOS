@@ -44,7 +44,7 @@ class StashTest: FileTest {
         }
         
         // ensure there are proper number of records
-        XCTAssert(stash.records.count == 2)
+        XCTAssertEqual(stash.records.count, 2)
     }
     
     func test2StashIndex() {
@@ -84,7 +84,7 @@ class StashTest: FileTest {
         }
         
         // ensure a new stash records have been added
-        XCTAssert(stash.records.count == 4)
+        XCTAssertEqual(stash.records.count, 4)
         
         // verify message is applied correctly
         if stash.records.count > 1 {
@@ -156,7 +156,7 @@ class StashTest: FileTest {
         }
         
         // ensure stash records are decreased
-        XCTAssert(stashes.records.count == numberOfStashes1 - 1)
+        XCTAssertEqual(stashes.records.count, numberOfStashes1 - 1)
         
         // #2 - dropping a stash by a record
         guard let record = stashes.records.last else {
