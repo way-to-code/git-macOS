@@ -94,7 +94,7 @@ let package = Package(
     dependencies: [
         .package(name: "Git",
                  url: "https://github.com/way-to-code/git-macOS.git",
-                 .upToNextMajor(from: "3.2.0")),
+                 .upToNextMajor(from: "3.3.0")),
     ],
     
     targets: [
