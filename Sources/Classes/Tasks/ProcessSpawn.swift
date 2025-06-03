@@ -76,7 +76,7 @@ final class ProcessSpawn {
     
     /// Payload information to be passed to a posix thread
     private struct Payload {
-        let outputPipe: UnsafeMutablePointer<Int32>
+        let pipe: Pipe
         let output: OutputClosure?
         let pid: pid_t
         
@@ -98,11 +98,11 @@ final class ProcessSpawn {
         }
         
         init(
-            outputPipe: UnsafeMutablePointer<Int32>,
+            pipe: Pipe,
             output: OutputClosure?,
             pid: pid_t
         ) {
-            self.outputPipe = outputPipe
+            self.pipe = pipe
             self.output = output
             self.pid = pid
         }
@@ -112,8 +112,7 @@ final class ProcessSpawn {
     private var threadPayloadRef: UnsafeMutablePointer<Payload>!
     private let workingPath: String?
     
-    /// Pipes: 0 - for reading, 1: - for writing
-    private var outputPipe: [Int32] = [-1, -1]
+    private let pipe: Pipe
     
     public init(
         args: [String],
@@ -123,19 +122,13 @@ final class ProcessSpawn {
     ) throws {
         (self.args, self.output, self.workingPath) = (args, output, workingPath)
         
-        if pipe(&outputPipe) < 0 {
-            if let message = strerror(errno) {
-                throw SpawnError.canNotOpenPipe(text: String(cString: message), code: errno)
-            } else {
-                throw SpawnError.canNotOpenPipe(text: "Undefined error", code: errno)
-            }
-        }
-        
+        pipe = try Pipe()
+
         posix_spawn_file_actions_init(&childFDActions)
-        posix_spawn_file_actions_adddup2(&childFDActions, outputPipe[1], 1)
-        posix_spawn_file_actions_adddup2(&childFDActions, outputPipe[1], 2)
-        posix_spawn_file_actions_addclose(&childFDActions, outputPipe[0])
-        posix_spawn_file_actions_addclose(&childFDActions, outputPipe[1])
+        posix_spawn_file_actions_adddup2(&childFDActions, pipe.getPipe(.write), STDOUT_FILENO)
+        posix_spawn_file_actions_adddup2(&childFDActions, pipe.getPipe(.write), STDERR_FILENO)
+        posix_spawn_file_actions_addclose(&childFDActions, pipe.getPipe(.read))
+        posix_spawn_file_actions_addclose(&childFDActions, pipe.getPipe(.write))
         
         let argv: [UnsafeMutablePointer<CChar>?] = args.map { $0.withCString(strdup) }
         let envp: [UnsafeMutablePointer<CChar>?] = envs.map { $0.withCString(strdup) }
@@ -156,6 +149,7 @@ final class ProcessSpawn {
     
     deinit {
         if let threadPayloadRef {
+            threadPayloadRef.deinitialize(count: 1)
             threadPayloadRef.deallocate()
         }
         
@@ -224,15 +218,15 @@ final class ProcessSpawn {
     func readStream() {
         func callback(x: UnsafeMutableRawPointer) -> UnsafeMutableRawPointer? {
             let payload = x.assumingMemoryBound(to: Payload.self).pointee
-            let outputPipe = payload.outputPipe
-            close(outputPipe[1])
+            let pipe = payload.pipe
+            pipe.closePipe(.write)
             
             let bufferSize: size_t = ProcessSpawn.bufferSize
             let dynamicBuffer = UnsafeMutablePointer<UInt8>.allocate(capacity: bufferSize)
             defer { dynamicBuffer.deallocate() }
             
             while !payload.isCancelled {
-                let readBytes = read(outputPipe[0], dynamicBuffer, bufferSize)
+                let readBytes = read(pipe.getPipe(.read), dynamicBuffer, bufferSize)
                 guard readBytes > 0 else { break }
                 
                 let array = Array(UnsafeBufferPointer(start: dynamicBuffer, count: readBytes))
@@ -243,14 +237,11 @@ final class ProcessSpawn {
                 }
             }
             
-            close(outputPipe[0])
+            pipe.closePipe(.read)
             return nil
         }
         
-        outputPipe.withUnsafeMutableBufferPointer { pipe in
-            threadPayload = Payload(outputPipe: pipe.baseAddress!, output: output, pid: pid)
-        }
-        
+        threadPayload = Payload(pipe: pipe, output: output, pid: pid)
         threadPayloadRef = UnsafeMutablePointer<Payload>.allocate(capacity: 1)
         threadPayloadRef.pointee = threadPayload
         
@@ -259,6 +250,67 @@ final class ProcessSpawn {
         if let tid = tid {
             // Wait for the thread to be executed
             pthread_join(tid, nil)
+        }
+    }
+}
+
+// MARK: - Pipe
+fileprivate final class Pipe {
+    enum PipeType {
+        case read
+        case write
+    }
+    
+    /// Pipes: 0 - for reading, 1: - for writing
+    private var outputPipe: [Int32]
+    private let lock: NSLock
+    
+    init() throws {
+        lock = NSLock()
+        outputPipe = [-1, -1]
+        
+        if pipe(&outputPipe) < 0 {
+            if let message = strerror(errno) {
+                throw SpawnError.canNotOpenPipe(text: String(cString: message), code: errno)
+            } else {
+                throw SpawnError.canNotOpenPipe(text: "Undefined error", code: errno)
+            }
+        }
+    }
+    
+    deinit {
+        closePipe(.read)
+        closePipe(.write)
+    }
+    
+    func getPipe(_ type: PipeType) -> Int32 {
+        lock.lock()
+        defer { lock.unlock() }
+        
+        switch type {
+        case .read:
+            return outputPipe[0]
+        case .write:
+            return outputPipe[1]
+        }
+    }
+    
+    func closePipe(_ type: PipeType) {
+        lock.lock()
+        defer { lock.unlock() }
+        
+        switch type {
+        case .read:
+            if outputPipe[0] != -1 {
+                close(outputPipe[0])
+                outputPipe[0] = -1
+            }
+            
+        case .write:
+            if outputPipe[1] != -1 {
+                close(outputPipe[1])
+                outputPipe[1] = -1
+            }
         }
     }
 }
