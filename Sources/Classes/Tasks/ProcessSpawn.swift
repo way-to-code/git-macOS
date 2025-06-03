@@ -22,6 +22,8 @@ import Glibc
 public enum SpawnError: Error {
     case canNotOpenPipe(text: String, code: Int32)
     case canNotCreatePosixSpawn
+    case noChildProcess(text: String, code: Int32)
+    case childProcessFailure(text: String, code: Int32)
 }
 
 extension SpawnError: LocalizedError {
@@ -31,6 +33,11 @@ extension SpawnError: LocalizedError {
             return "Can not create a new pipe for reading. Error says: '\(message)'. Error code \(code)"
         case .canNotCreatePosixSpawn:
             return "Unable to posix_spawn. Aborted"
+        case let .noChildProcess(message, code):
+            return "waitpid() failed. No child process found. \(message). Error code \(code)"
+        case let .childProcessFailure(message, code):
+            return "waitpid() failed. Error says: '\(message)'. Error code \(code)"
+
         }
     }
 }
@@ -111,7 +118,7 @@ final class ProcessSpawn {
         
         processId = pid
         readStream()
-        terminationStatus = waitSpawn(pid: pid)
+        terminationStatus = try waitSpawn(pid: pid)
     }
     
     deinit {
@@ -148,12 +155,20 @@ final class ProcessSpawn {
         return (_WSTATUS(status) != 0) && (_WSTATUS(status) != 0x7f)
     }
     
-    private func waitSpawn(pid: pid_t) -> Int32 {
+    private func waitSpawn(pid: pid_t) throws -> Int32 {
         var status: CInt = 0
         
         while waitpid(pid, &status, 0) < 0 {
-            if errno != EINTR {
-                preconditionFailure("waitpid() failed")
+            switch errno {
+            case EINTR:
+                continue
+                
+            case ECHILD:
+                throw SpawnError.noChildProcess(text: "PID: \(pid); ECHILD", code: ECHILD)
+                
+            default:
+                let error = String(cString: strerror(errno))
+                throw SpawnError.childProcessFailure(text: error, code: errno)
             }
         }
         
