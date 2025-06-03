@@ -146,6 +146,9 @@ final class ProcessSpawn {
             throw SpawnError.canNotCreatePosixSpawn
         }
         
+        posix_spawn_file_actions_destroy(&childFDActions)
+        childFDActions = nil
+        
         processId = pid
         readStream()
         terminationStatus = try waitSpawn(pid: pid)
@@ -154,6 +157,11 @@ final class ProcessSpawn {
     deinit {
         if let threadPayloadRef {
             threadPayloadRef.deallocate()
+        }
+        
+        if childFDActions != nil {
+            posix_spawn_file_actions_destroy(&childFDActions)
+            childFDActions = nil
         }
     }
     
