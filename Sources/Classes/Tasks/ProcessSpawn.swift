@@ -80,7 +80,32 @@ final class ProcessSpawn {
         let output: OutputClosure?
         let pid: pid_t
         
-        var isCancelled = false
+        private let _isCancelledLock = NSLock()
+        private var _isCancelled: Bool = false
+        
+        var isCancelled: Bool {
+            get {
+                _isCancelledLock.lock()
+                defer { _isCancelledLock.unlock() }
+                return _isCancelled
+            }
+            
+            set {
+                _isCancelledLock.lock()
+                defer { _isCancelledLock.unlock() }
+                _isCancelled = newValue
+            }
+        }
+        
+        init(
+            outputPipe: UnsafeMutablePointer<Int32>,
+            output: OutputClosure?,
+            pid: pid_t
+        ) {
+            self.outputPipe = outputPipe
+            self.output = output
+            self.pid = pid
+        }
     }
     
     private var threadPayload: Payload!
@@ -90,8 +115,13 @@ final class ProcessSpawn {
     /// Pipes: 0 - for reading, 1: - for writing
     private var outputPipe: [Int32] = [-1, -1]
     
-    public init(args: [String], envs: [String], workingPath: String?, output: OutputClosure? = nil) throws {
-        (self.args, self.output, self.workingPath)  = (args, output, workingPath)
+    public init(
+        args: [String],
+        envs: [String],
+        workingPath: String?,
+        output: OutputClosure? = nil
+    ) throws {
+        (self.args, self.output, self.workingPath) = (args, output, workingPath)
         
         if pipe(&outputPipe) < 0 {
             if let message = strerror(errno) {
@@ -107,8 +137,8 @@ final class ProcessSpawn {
         posix_spawn_file_actions_addclose(&childFDActions, outputPipe[0])
         posix_spawn_file_actions_addclose(&childFDActions, outputPipe[1])
         
-        let argv: [UnsafeMutablePointer<CChar>?] = args.map{ $0.withCString(strdup) }
-        let envp: [UnsafeMutablePointer<CChar>?] = envs.map{ $0.withCString(strdup) }
+        let argv: [UnsafeMutablePointer<CChar>?] = args.map { $0.withCString(strdup) }
+        let envp: [UnsafeMutablePointer<CChar>?] = envs.map { $0.withCString(strdup) }
         defer { for case let arg? in argv { free(arg) } }
         defer { for case let env? in envp { free(env) } }
         
@@ -210,7 +240,7 @@ final class ProcessSpawn {
         }
         
         outputPipe.withUnsafeMutableBufferPointer { pipe in
-            threadPayload = Payload(outputPipe: pipe.baseAddress!, output: output, pid: pid, isCancelled: false)
+            threadPayload = Payload(outputPipe: pipe.baseAddress!, output: output, pid: pid)
         }
         
         threadPayloadRef = UnsafeMutablePointer<Payload>.allocate(capacity: 1)
