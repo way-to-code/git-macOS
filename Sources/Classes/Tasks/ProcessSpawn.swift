@@ -75,7 +75,7 @@ final class ProcessSpawn {
     #endif
     
     /// Payload information to be passed to a posix thread
-    private struct Payload {
+    private final class Payload {
         let pipe: Pipe
         let output: OutputClosure?
         let pid: pid_t
@@ -83,7 +83,7 @@ final class ProcessSpawn {
         private let _isCancelledLock = NSLock()
         private var _isCancelled: Bool = false
         
-        var isCancelled: Bool {
+        private(set) var isCancelled: Bool {
             get {
                 _isCancelledLock.lock()
                 defer { _isCancelledLock.unlock() }
@@ -105,6 +105,10 @@ final class ProcessSpawn {
             self.pipe = pipe
             self.output = output
             self.pid = pid
+        }
+        
+        func cancel() {
+            isCancelled = true
         }
     }
     
@@ -143,8 +147,6 @@ final class ProcessSpawn {
         childFDActions = nil
         
         processId = pid
-        readStream()
-        terminationStatus = try waitSpawn(pid: pid)
     }
     
     deinit {
@@ -159,11 +161,19 @@ final class ProcessSpawn {
         }
     }
     
+    func run() throws {
+        readStream()
+        terminationStatus = try waitSpawn(pid: pid)
+    }
+    
     func cancel() {
-        threadPayload?.isCancelled = true
+        threadPayload?.cancel()
+        pipe.closePipe(.read)
         
         if let threadId = tid {
             pthread_cancel(threadId)
+            pthread_join(threadId, nil)
+            tid = nil
         }
     }
     
@@ -221,13 +231,21 @@ final class ProcessSpawn {
             let pipe = payload.pipe
             pipe.closePipe(.write)
             
+            // Set up cancellation
+            pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, nil)
+            pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, nil)
+            
             let bufferSize: size_t = ProcessSpawn.bufferSize
             let dynamicBuffer = UnsafeMutablePointer<UInt8>.allocate(capacity: bufferSize)
             defer { dynamicBuffer.deallocate() }
             
             while !payload.isCancelled {
+                pthread_testcancel()
+                
                 let readBytes = read(pipe.getPipe(.read), dynamicBuffer, bufferSize)
                 guard readBytes > 0 else { break }
+                
+                pthread_testcancel()
                 
                 let array = Array(UnsafeBufferPointer(start: dynamicBuffer, count: readBytes))
                 let tmp = array  + [UInt8(0)]

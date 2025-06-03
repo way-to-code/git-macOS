@@ -100,6 +100,8 @@ class RepositoryTask {
             }
         })
         
+        try process?.run()
+        
         guard let process = process else {
             try __self.finish(terminationStatus: -1)
             return

@@ -28,7 +28,7 @@ class LogTest: XCTestCase, RepositoryTest {
         }
         
         // ensure there are proper number of records
-        XCTAssert(log.records.count == 2)
+        XCTAssertEqual(log.records.count, 2)
     }
     
     /// Tests fetching log from different threads simulateosly
